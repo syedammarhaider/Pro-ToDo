@@ -19,7 +19,7 @@
                     
                     <!-- Title Field - Title ka field -->
                     <div class="mb-3">
-                        <label for="title" class="form-label">Title *</label>
+                        <label for="title" class="form-label text-black">Title *</label>
                         <input type="text" 
                                class="form-control @error('title') is-invalid @enderror" 
                                id="title" 
@@ -33,7 +33,7 @@
                     
                     <!-- Description Field - Description ka field -->
                     <div class="mb-3">
-                        <label for="description" class="form-label">Description</label>
+                        <label for="description" class="form-label text-black">Description</label>
                         <textarea class="form-control @error('description') is-invalid @enderror" 
                                   id="description" 
                                   name="description" 
@@ -46,7 +46,7 @@
                     <div class="row">
                         <!-- Priority Field - Priority ka field -->
                         <div class="col-md-6 mb-3">
-                            <label for="priority" class="form-label">Priority *</label>
+                            <label for="priority" class="form-label text-black">Priority *</label>
                             <select class="form-select @error('priority') is-invalid @enderror" 
                                     id="priority" 
                                     name="priority" 
@@ -61,8 +61,8 @@
                         </div>
                         
                         <!-- Completed Status - Completion status -->
-                        <div class="col-md-6 mb-3">
-                            <label class="form-label">Status</label>
+                        <div class=" col-md-6 mb-3">
+                            <label class="form-label text-black">Status</label>
                             <div class="form-check">
                                 <input class="form-check-input" 
                                        type="checkbox" 
@@ -70,7 +70,7 @@
                                        name="completed" 
                                        value="1" 
                                        {{ old('completed', $todo->completed) ? 'checked' : '' }}>
-                                <label class="form-check-label" for="completed">
+                                <label class="text-white form-check-label" for="completed">
                                     Mark as Completed
                                 </label>
                             </div>
@@ -80,7 +80,7 @@
                     <div class="row">
                         <!-- Due Date Field - Due date ka field -->
                         <div class="col-md-6 mb-3">
-                            <label for="due_date" class="form-label">Due Date</label>
+                            <label for="due_date" class="form-label text-black">Due Date</label>
                             <input type="date" 
                                    class="form-control @error('due_date') is-invalid @enderror" 
                                    id="due_date" 
@@ -103,20 +103,6 @@
                                 <div class="invalid-feedback">{{ $message }}</div>
                             @enderror
                         </div>
-                    </div>
-                    
-                    <!-- Tags Field - Tags ka field -->
-                    <div class="mb-3">
-                        <label for="tags" class="form-label">Tags</label>
-                        <input type="text" 
-                               class="form-control @error('tags') is-invalid @enderror" 
-                               id="tags" 
-                               name="tags" 
-                               value="{{ old('tags', $todo->tags ? implode(',', $todo->tags) : '') }}" 
-                               placeholder="Separate with commas">
-                        @error('tags')
-                            <div class="invalid-feedback">{{ $message }}</div>
-                        @enderror
                     </div>
                     
                     <!-- Form Buttons - Form ke buttons -->

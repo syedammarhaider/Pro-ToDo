@@ -23,6 +23,8 @@ return new class extends Migration
             $table->integer('position')->default(0); // Tarteeb - Display order
             $table->softDeletes(); // Soft delete ke liye - For soft deletion
             $table->timestamps(); // Creation aur update timestamps
+
+            
         });
     }
 

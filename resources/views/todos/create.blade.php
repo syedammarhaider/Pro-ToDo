@@ -113,23 +113,6 @@
                             @enderror
                             <small class="form-text text-muted">Optional category for organization</small>
                         </div>
-                        
-                        <!-- Tags Field - Tags ka field -->
-                        <div class="col-md-6 mb-3">
-                            <label for="tags" class="form-label">
-                                <i class="fas fa-tags me-1"></i> Tags
-                            </label>
-                            <input type="text" 
-                                   class="form-control @error('tags') is-invalid @enderror" 
-                                   id="tags" 
-                                   name="tags" 
-                                   value="{{ old('tags') }}" 
-                                   placeholder="e.g., urgent, important, home">
-                            @error('tags')
-                                <div class="invalid-feedback">{{ $message }}</div>
-                            @enderror
-                            <small class="form-text text-muted">Separate tags with commas</small>
-                        </div>
                     </div>
                     
                     <!-- Form Buttons - Form ke buttons -->

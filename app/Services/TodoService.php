@@ -19,25 +19,58 @@ class TodoService
 
     public function getTodos(array $filters = [], array $sort = []): LengthAwarePaginator
     {
-        $query = Todo::query();
+        $cacheKey = 'todos_' . md5(serialize($filters) . serialize($sort) . request('page', 1));
 
-        // Apply filters
-        $this->applyFilters($query, $filters);
+        return Cache::remember($cacheKey, 60, function () use ($filters, $sort, $cacheKey) {
+            // Track cache keys for efficient clearing
+            $cacheKeys = Cache::get('todo_cache_keys', []);
+            $cacheKeys[] = $cacheKey;
+            $cacheKeys = array_unique($cacheKeys);
+            Cache::put('todo_cache_keys', $cacheKeys, 3600);
 
-        // Apply sorting
-        $this->applySorting($query, $sort);
+            $query = Todo::query()->select([
+                'id', 'title', 'description', 'priority', 'completed',
+                'due_date', 'category', 'position', 'created_at', 'updated_at'
+            ]);
 
-        return $query->paginate(15)->withQueryString();
+            // Apply filters
+            $this->applyFilters($query, $filters);
+
+            // Apply sorting
+            $this->applySorting($query, $sort);
+
+            return $query->paginate(50)->withQueryString();
+        });
     }
 
     public function createTodo(array $data): Todo
     {
-        return $this->createTodoAction->execute($data);
+        $todo = $this->createTodoAction->execute($data);
+
+        // Clear all caches when creating new todo
+        $cacheKeys = Cache::get('todo_cache_keys', []);
+        foreach ($cacheKeys as $key) {
+            Cache::forget($key);
+        }
+        Cache::forget('todo_cache_keys');
+        Cache::forget('todo_stats');
+
+        return $todo;
     }
 
     public function updateTodo(Todo $todo, array $data): Todo
     {
-        return $this->updateTodoAction->execute($todo, $data);
+        $updatedTodo = $this->updateTodoAction->execute($todo, $data);
+
+        // Clear all caches when updating todo
+        $cacheKeys = Cache::get('todo_cache_keys', []);
+        foreach ($cacheKeys as $key) {
+            Cache::forget($key);
+        }
+        Cache::forget('todo_cache_keys');
+        Cache::forget('todo_stats');
+
+        return $updatedTodo;
     }
 
     public function deleteTodo(Todo $todo): void
@@ -80,7 +113,7 @@ class TodoService
     private function applyFilters($query, array $filters): void
     {
         if (!empty($filters['search'])) {
-            $query->search($filters['search']);
+            $query->where('title', 'LIKE', '%' . $filters['search'] . '%');
         }
 
         if (!empty($filters['status'])) {

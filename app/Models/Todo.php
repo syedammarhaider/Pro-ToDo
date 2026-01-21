@@ -21,7 +21,6 @@ class Todo extends Model
         'completed',
         'due_date',
         'category',
-        'tags',
         'position',
     ];
 
@@ -32,7 +31,6 @@ class Todo extends Model
     protected $casts = [
         'completed' => 'boolean',
         'due_date' => 'date',
-        'tags' => 'array',
         'position' => 'integer',
     ];
 
@@ -62,7 +60,7 @@ class Todo extends Model
     {
         return $query->where('completed', true);
     }
-
+    
     /**
      * Scope for priority filtering
      * Priority ke hisab se filter karna

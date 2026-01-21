@@ -47,20 +47,7 @@
                 </div>
             </form>
 
-            <!-- User Info/Dark Mode - User info ya dark mode -->
-            <div class="navbar-nav">
-                <div class="nav-item dropdown">
-                    <a class="nav-link dropdown-toggle" href="#" role="button" data-bs-toggle="dropdown">
-                        <i class="fas fa-user-circle me-1"></i> User
-                    </a>
-                    <ul class="dropdown-menu dropdown-menu-end">
-                        <li><a class="dropdown-item" href="#"><i class="fas fa-cog me-2"></i> Settings</a></li>
-                        <li><a class="dropdown-item" href="#"><i class="fas fa-moon me-2"></i> Dark Mode</a></li>
-                        <li><hr class="dropdown-divider"></li>
-                        <li><a class="dropdown-item" href="#"><i class="fas fa-sign-out-alt me-2"></i> Logout</a></li>
-                    </ul>
-                </div>
-            </div>
+           
         </div>
     </div>
 </nav>
@@ -73,25 +60,25 @@
                 <div class="col-md-3 mb-3">
                     <div class="p-3 bg-primary bg-opacity-10 rounded">
                         <h3 class="text-primary">{{ App\Models\Todo::count() }}</h3>
-                        <small class="text-muted">Total Todos</small>
+                        <small class="text-white">Total Todos</small>
                     </div>
                 </div>
                 <div class="col-md-3 mb-3">
                     <div class="p-3 bg-success bg-opacity-10 rounded">
                         <h3 class="text-success">{{ App\Models\Todo::completed()->count() }}</h3>
-                        <small class="text-muted">Completed</small>
+                        <small class="text-white">Completed</small>
                     </div>
                 </div>
                 <div class="col-md-3 mb-3">
                     <div class="p-3 bg-warning bg-opacity-10 rounded">
                         <h3 class="text-warning">{{ App\Models\Todo::active()->count() }}</h3>
-                        <small class="text-muted">Active</small>
+                        <small class="text-white">Active</small>
                     </div>
                 </div>
                 <div class="col-md-3 mb-3">
                     <div class="p-3 bg-danger bg-opacity-10 rounded">
                         <h3 class="text-danger">{{ App\Models\Todo::overdue()->count() }}</h3>
-                        <small class="text-muted">Overdue</small>
+                        <small class="text-white">Overdue</small>
                     </div>
                 </div>
             </div>

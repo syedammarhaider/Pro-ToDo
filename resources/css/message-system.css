@@ -1,0 +1,177 @@
+/* Message System Styles - Single source for message styling */
+
+.message-container {
+  position: fixed;
+  top: 20px;
+  right: 20px;
+  z-index: 99999;
+  display: flex;
+  flex-direction: column;
+  gap: 12px;
+  max-width: 380px;
+  width: 100%;
+  pointer-events: none;
+}
+
+.message {
+  background: var(--glass-bg);
+  backdrop-filter: blur(20px);
+  border: 1.5px solid var(--glass-border);
+  border-radius: 20px;
+  padding: 1.25rem 1.5rem;
+  box-shadow: 0 20px 40px rgba(0,0,0,0.4);
+  transform: translateX(120%);
+  transition: transform 0.5s cubic-bezier(0.68,-0.55,0.265,1.55);
+  pointer-events: all;
+  position: relative;
+  overflow: hidden;
+  border-left: 5px solid;
+  animation: messageFloat 3s ease-in-out infinite;
+}
+
+.message.show {
+  transform: translateX(0);
+}
+
+.message.success {
+  border-left-color: var(--accent-green);
+  background: linear-gradient(135deg, rgba(0,255,136,0.1), rgba(9,18,54,0.8));
+}
+
+.message.error {
+  border-left-color: var(--accent-red);
+  background: linear-gradient(135deg, rgba(255,75,92,0.1), rgba(9,18,54,0.8));
+}
+
+.message.info {
+  border-left-color: var(--accent-cyan);
+  background: linear-gradient(135deg, rgba(0,210,255,0.1), rgba(9,18,54,0.8));
+}
+
+.message.warning {
+  border-left-color: var(--accent-yellow);
+  background: linear-gradient(135deg, rgba(255,193,7,0.1), rgba(9,18,54,0.8));
+}
+
+.message::before {
+  content: '';
+  position: absolute;
+  top: 0;
+  left: 0;
+  right: 0;
+  height: 1px;
+  background: linear-gradient(90deg, transparent, rgba(255,255,255,0.2), transparent);
+}
+
+.message-content {
+  display: flex;
+  align-items: center;
+  gap: 1rem;
+}
+
+.message-icon {
+  font-size: 1.5rem;
+  min-width: 40px;
+  height: 40px;
+  background: rgba(255,255,255,0.1);
+  border-radius: 12px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.message.success .message-icon {
+  color: var(--accent-green);
+}
+
+.message.error .message-icon {
+  color: var(--accent-red);
+}
+
+.message.info .message-icon {
+  color: var(--accent-cyan);
+}
+
+.message.warning .message-icon {
+  color: var(--accent-yellow);
+}
+
+.message-text h5 {
+  font-size: 1rem;
+  font-weight: 600;
+  margin-bottom: 0.25rem;
+  color: white;
+}
+
+.message-text p {
+  font-size: 0.875rem;
+  color: var(--text-secondary);
+  margin: 0;
+  line-height: 1.4;
+}
+
+.message-close {
+  position: absolute;
+  top: 12px;
+  right: 12px;
+  background: rgba(255,255,255,0.1);
+  border: none;
+  color: var(--text-secondary);
+  width: 24px;
+  height: 24px;
+  border-radius: 8px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  cursor: pointer;
+  font-size: 0.75rem;
+  transition: all 0.2s;
+}
+
+.message-close:hover {
+  background: rgba(255,255,255,0.2);
+  color: white;
+}
+
+@keyframes messageFloat {
+  0%, 100% { 
+    transform: translateX(0) translateY(0); 
+  }
+  50% { 
+    transform: translateX(0) translateY(-5px); 
+  }
+}
+
+/* Responsive adjustments */
+@media (max-width: 768px) {
+  .message-container {
+    right: 10px;
+    max-width: 320px;
+  }
+}
+
+@media (max-width: 480px) {
+  .message-container {
+    top: 10px;
+    right: 10px;
+    max-width: calc(100% - 20px);
+  }
+  
+  .message {
+    padding: 1rem;
+  }
+  
+  .message-icon {
+    font-size: 1.25rem;
+    min-width: 32px;
+    height: 32px;
+  }
+  
+  .message-text h5 {
+    font-size: 0.9rem;
+  }
+  
+  .message-text p {
+    font-size: 0.8rem;
+  }
+}

@@ -923,6 +923,8 @@
             to {opacity: 1;}
         }
     </style>
+    <!-- Custom CSS - Apna custom CSS -->
+    <link rel="stylesheet" href="{{ asset('css/message-system.css') }}">
     @yield('styles')
 </head>
 <body>
@@ -964,6 +966,7 @@
     <script src="https://code.jquery.com/jquery-3.7.0.min.js"></script>
     
     <!-- Custom JavaScript - Apna custom JavaScript -->
+    <script src="{{ asset('js/message-system.js') }}"></script>
     <script>
         // Auto-dismiss alerts - Alerts ko khud band karna
         setTimeout(() => {

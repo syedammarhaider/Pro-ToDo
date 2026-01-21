@@ -68,6 +68,15 @@ class TodoController extends Controller
    public function destroy(Todo $todo)
 {
     $this->todoService->deleteTodo($todo);
+
+    // Check if request is AJAX
+    if (request()->expectsJson()) {
+        return response()->json([
+            'success' => true,
+            'message' => 'Todo deleted successfully.'
+        ]);
+    }
+
     return back()->with('success', 'Todo moved to trash.');
 }
 /////////////////////////////////////////////////////////////////////////////////
@@ -102,6 +111,15 @@ class TodoController extends Controller
  public function complete(Todo $todo)
 {
     $this->todoService->completeTodo($todo);
+    
+    // Check if request is AJAX
+    if (request()->expectsJson()) {
+        return response()->json([
+            'success' => true,
+            'message' => 'Todo marked as completed.'
+        ]);
+    }
+    
     return redirect()->route('todos.index')->with('success', 'Todo marked as completed.');
 }
 /////////////////////////////////////////////////////////////////////////////////
@@ -110,6 +128,14 @@ class TodoController extends Controller
     public function incomplete(Todo $todo)
 {
     $todo->update(['completed' => false]);
+
+    // Check if request is AJAX
+    if (request()->expectsJson()) {
+        return response()->json([
+            'success' => true,
+            'message' => 'Todo marked as incomplete.'
+        ]);
+    }
 
     return redirect()->back()->with('success', 'Todo marked as incomplete!');
 }
@@ -128,6 +154,14 @@ class TodoController extends Controller
     public function bulkDelete(Request $request)
     {
         Todo::whereIn('id', $request->ids)->delete();
+
+        // Clear all caches when bulk deleting todos
+        $cacheKeys = \Illuminate\Support\Facades\Cache::get('todo_cache_keys', []);
+        foreach ($cacheKeys as $key) {
+            \Illuminate\Support\Facades\Cache::forget($key);
+        }
+        \Illuminate\Support\Facades\Cache::forget('todo_cache_keys');
+        \Illuminate\Support\Facades\Cache::forget('todo_stats');
 
         return back()->with('success', 'Todos deleted.');
     }
@@ -163,15 +197,10 @@ class TodoController extends Controller
             'priority'    => 'required|in:low,medium,high',
             'due_date'    => $update ? 'nullable|date' : 'nullable|date|after:today',
             'category'    => 'nullable|string|max:50',
-            'tags'        => 'nullable|string',
             'completed'   => 'sometimes|boolean',
         ];
 
         $data = $request->validate($rules);
-
-        if (!empty($data['tags'])) {
-            $data['tags'] = array_map('trim', explode(',', $data['tags']));
-        }
 
         return $data;
     }
