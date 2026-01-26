@@ -39,7 +39,7 @@ class TodoService
             // Apply sorting
             $this->applySorting($query, $sort);
 
-            return $query->paginate(50)->withQueryString();
+            return $query->paginate(10)->withQueryString();
         });
     }
 

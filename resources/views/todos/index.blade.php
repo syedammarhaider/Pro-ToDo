@@ -847,13 +847,9 @@ body::before {
                                         <a href="{{ route('todos.edit', $todo) }}" class="btn-micro btn-primary" title="Edit" onclick="event.stopPropagation()">
                                             <i class="fas fa-edit"></i>
                                         </a>
-                                        <form action="{{ route('todos.destroy', $todo) }}" method="POST" onclick="event.stopPropagation()" class="d-inline">
-                                            @csrf
-                                            @method('DELETE')
-                                            <button type="submit" class="btn-micro btn-danger" onclick="handleTodoAction(this.closest('form'), 'delete', event); return false;" title="Delete">
-                                                <i class="fas fa-trash"></i>
-                                            </button>
-                                        </form>
+                                        <button class="delete-todo btn-micro btn-danger" data-url="{{ route('todos.destroy', $todo->id) }}" data-method="DELETE" title="Delete" onclick="event.stopPropagation()">
+                                            <i class="fas fa-trash"></i>
+                                        </button>
                                     </div>
                                 </div>
                                 <div class="todo-footer-micro">
@@ -1034,7 +1030,14 @@ body::before {
       if (response.ok) {
         const result = await response.json();
         showMessage(result.message, 'success');
-        if (action === 'delete') {
+        
+        // Instant UI update for complete/incomplete actions
+        if (action === 'complete' || action === 'incomplete') {
+          // Update UI immediately without waiting for queue
+          updateTodoUI(todoItem, action === 'complete');
+          updateTodoActions(todoItem, todoId, action === 'complete');
+          updateStatistics(); // Update stats in background
+        } else if (action === 'delete') {
           todoItem.style.transition = 'all 0.3s ease-out';
           todoItem.style.opacity = '0';
           todoItem.style.transform = 'scale(0.8)';
@@ -1052,9 +1055,8 @@ body::before {
                   </a>
                 </div>`;
             }
+            updateStatistics();
           }, 300);
-        } else {
-          updateTodoActions(todoItem, todoId, action === 'complete');
         }
       } else {
         const errorData = await response.json().catch(() => ({}));
@@ -1062,6 +1064,45 @@ body::before {
       }
     } catch {
       showMessage('Network error. Please try again.', 'error');
+    }
+  }
+
+  // Instant UI update function
+  function updateTodoUI(todoItem, isCompleted) {
+    const title = todoItem.querySelector('.todo-title-micro');
+    if (isCompleted) {
+      todoItem.classList.add('completed');
+      title.style.textDecoration = 'line-through';
+      title.style.opacity = '0.6';
+      title.style.color = 'rgba(255,255,255,0.7)';
+    } else {
+      todoItem.classList.remove('completed');
+      title.style.textDecoration = 'none';
+      title.style.opacity = '1';
+      title.style.color = 'white';
+    }
+  }
+
+  // Update statistics without page reload
+  async function updateStatistics() {
+    try {
+      const response = await fetch('{{ route("todos.statistics") }}', {
+        headers: {
+          'X-CSRF-TOKEN': '{{ csrf_token() }}',
+          'Accept': 'application/json'
+        }
+      });
+      if (response.ok) {
+        const stats = await response.json();
+        // Update statistics display if it exists
+        const statsElement = document.querySelector('[data-stats]');
+        if (statsElement) {
+          // Update your stats display here
+          console.log('Statistics updated:', stats);
+        }
+      }
+    } catch (error) {
+      console.log('Failed to update statistics:', error);
     }
   }
 
@@ -1223,6 +1264,28 @@ body::before {
   window.toggleAllCheckboxes = toggleAllCheckboxes;
   window.bulkComplete = bulkComplete;
   window.bulkDelete = bulkDelete;
+
+  // Simple delete functionality
+  document.querySelectorAll('.delete-todo').forEach(btn => {
+    btn.addEventListener('click', function(e){
+        e.preventDefault();
+        fetch(this.dataset.url, {
+            method: this.dataset.method,
+            headers: {
+                'X-CSRF-TOKEN': '{{ csrf_token() }}',
+                'Accept': 'application/json'
+            }
+        })
+        .then(res => res.json())
+        .then(data => {
+            if(data.success){
+                this.closest('.todo-item-micro').remove(); // remove todo item instantly
+            } else {
+                alert('Error!');
+            }
+        });
+    });
+  });
 })();
 </script>
 @endsection

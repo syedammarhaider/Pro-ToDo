@@ -7,7 +7,7 @@ use Illuminate\Contracts\Queue\ShouldQueue;
 use Illuminate\Foundation\Queue\Queueable;
 use Illuminate\Support\Facades\Log;
 
-class ProcessTodoCompletion implements ShouldQueue
+class ProcessTodoIncompletion implements ShouldQueue
 {
     use Queueable;
 
@@ -18,14 +18,14 @@ class ProcessTodoCompletion implements ShouldQueue
      */
     public function handle(): void
     {
-        // Mark todo as completed in database
-        $this->todo->update(['completed' => true]);
+        // Mark todo as incomplete in database
+        $this->todo->update(['completed' => false]);
         
-        // Clear cache after completion
+        // Clear cache after incompletion
         \Illuminate\Support\Facades\Cache::forget('todo_stats');
         
-        // Log the completion
-        Log::info("Todo '{$this->todo->title}' (ID: {$this->todo->id}) has been marked as completed asynchronously.");
+        // Log the incompletion
+        Log::info("Todo '{$this->todo->title}' (ID: {$this->todo->id}) has been marked as incomplete asynchronously.");
         
         // Additional heavy operations can go here:
         // - Send email notifications
