@@ -4,10 +4,7 @@ namespace App\Http\Controllers;
 
 use App\Models\Todo;
 use App\Services\TodoService;
-use App\Jobs\ProcessTodoCompletion;
-use App\Jobs\ProcessTodoIncompletion;
 use Illuminate\Http\Request;
-use Illuminate\Support\Facades\Cache;
 use Illuminate\Support\Facades\Gate;
 
 class TodoController extends Controller
@@ -20,15 +17,8 @@ class TodoController extends Controller
         $filters = $request->only(['search', 'status', 'priority', 'category']);
         $sort = $request->only(['sort', 'direction']);
 
-        $todos = Todo::when($filters['search'] ?? null, function($q, $search){
-                    $q->where('title', 'like', "%$search%");
-                })
-                ->when($filters['status'] ?? null, function($q, $status){
-                    $q->where('completed', $status === 'completed');
-                })
-                ->orderBy($sort['sort'] ?? 'created_at', $sort['direction'] ?? 'desc')
-                ->paginate(10); // only 10 per page
-
+        // Always fetch fresh data
+        $todos = $this->todoService->getTodos($filters, $sort);
         $categories = Todo::distinct()->pluck('category')->filter();
 
         return view('todos.index', [
@@ -48,7 +38,6 @@ class TodoController extends Controller
     {
         $validatedData = $this->validateTodo($request);
         $this->todoService->createTodo($validatedData);
-        Cache::flush(); // Clear cache after create
 
         return redirect()->route('todos.index')->with('success', 'Todo created successfully.');
     }
@@ -70,7 +59,6 @@ class TodoController extends Controller
     {
         $validatedData = $this->validateTodo($request, true);
         $this->todoService->updateTodo($todo, $validatedData);
-        Cache::flush(); // Clear cache after update
 
         return redirect()->route('todos.index')->with('success', 'Todo updated successfully.');
     }
@@ -79,7 +67,6 @@ class TodoController extends Controller
     public function destroy(Todo $todo)
     {
         $todo->delete();
-        Cache::flush();
 
         return request()->expectsJson()
             ? response()->json(['success' => true, 'message' => 'Todo moved to trash.'])
@@ -90,7 +77,7 @@ class TodoController extends Controller
     public function trash()
     {
         Gate::authorize('delete todos');
-        $trashedTodos = Todo::onlyTrashed()->paginate(10);
+        $trashedTodos = Todo::onlyTrashed()->paginate(15);
 
         return view('todos.trash', compact('trashedTodos'));
     }
@@ -118,7 +105,8 @@ class TodoController extends Controller
     // Mark as complete
     public function complete(Todo $todo)
     {
-        ProcessTodoCompletion::dispatch($todo); // background job
+        $todo->update(['completed' => true]);
+        Cache::flush();
 
         return request()->expectsJson()
             ? response()->json(['success' => true, 'message' => 'Todo marked as completed.'])
@@ -128,7 +116,8 @@ class TodoController extends Controller
     // Mark as incomplete
     public function incomplete(Todo $todo)
     {
-        ProcessTodoIncompletion::dispatch($todo); // background job
+        $todo->update(['completed' => false]);
+        Cache::flush();
 
         return request()->expectsJson()
             ? response()->json(['success' => true, 'message' => 'Todo marked as incomplete.'])
@@ -149,12 +138,7 @@ class TodoController extends Controller
     // Bulk delete todos
     public function bulkDelete(Request $request)
     {
-        foreach ($request->ids as $id) {
-            $todo = Todo::find($id);
-            if ($todo) {
-                $todo->delete();
-            }
-        }
+        Todo::whereIn('id', $request->ids)->delete();
         Cache::flush();
 
         return back()->with('success', 'Todos deleted.');
@@ -173,9 +157,7 @@ class TodoController extends Controller
     public function statistics()
     {
         Gate::authorize('view todos');
-        $stats = Cache::remember('todo_stats', 60, function() {
-            return $this->todoService->getStatistics();
-        });
+        $stats = $this->todoService->getStatistics();
 
         return view('todos.partials.stats', compact('stats'));
     }

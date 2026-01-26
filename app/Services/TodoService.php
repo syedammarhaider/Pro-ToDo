@@ -39,7 +39,7 @@ class TodoService
             // Apply sorting
             $this->applySorting($query, $sort);
 
-            return $query->paginate(10)->withQueryString();
+            return $query->paginate(50)->withQueryString();
         });
     }
 
@@ -47,12 +47,7 @@ class TodoService
     {
         $todo = $this->createTodoAction->execute($data);
 
-        // Clear all caches when creating new todo
-        $cacheKeys = Cache::get('todo_cache_keys', []);
-        foreach ($cacheKeys as $key) {
-            Cache::forget($key);
-        }
-        Cache::forget('todo_cache_keys');
+        // Clear statistics cache only when creating new todo
         Cache::forget('todo_stats');
 
         return $todo;
@@ -62,12 +57,7 @@ class TodoService
     {
         $updatedTodo = $this->updateTodoAction->execute($todo, $data);
 
-        // Clear all caches when updating todo
-        $cacheKeys = Cache::get('todo_cache_keys', []);
-        foreach ($cacheKeys as $key) {
-            Cache::forget($key);
-        }
-        Cache::forget('todo_cache_keys');
+        // Clear statistics cache only when updating todo
         Cache::forget('todo_stats');
 
         return $updatedTodo;

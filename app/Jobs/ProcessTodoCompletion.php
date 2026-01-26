@@ -18,19 +18,21 @@ class ProcessTodoCompletion implements ShouldQueue
      */
     public function handle(): void
     {
-        // Mark todo as completed in database
-        $this->todo->update(['completed' => true]);
-        
-        // Clear cache after completion
-        \Illuminate\Support\Facades\Cache::forget('todo_stats');
-        
-        // Log the completion
-        Log::info("Todo '{$this->todo->title}' (ID: {$this->todo->id}) has been marked as completed asynchronously.");
-        
-        // Additional heavy operations can go here:
+        // Simulate async processing for todo completion
+        // This could be sending notifications, updating related records, etc.
+
+        Log::info("Processing completion for Todo ID: {$this->todo->id}");
+
+        // Example: Send notification or perform additional logic
+        // For scalability, this job can handle heavy operations without blocking the response
+
+        // In a real scenario, this might:
         // - Send email notifications
         // - Update analytics
         // - Trigger webhooks
         // - Process related tasks
+
+        // For now, just log the completion
+        Log::info("Todo '{$this->todo->title}' has been marked as completed asynchronously.");
     }
 }
