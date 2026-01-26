@@ -104,7 +104,6 @@ class TodoController extends Controller
     public function complete(Todo $todo)
     {
         $todo->update(['completed' => true]);
-        Cache::flush();
 
         return request()->expectsJson()
             ? response()->json(['success' => true, 'message' => 'Todo marked as completed.'])
@@ -115,7 +114,6 @@ class TodoController extends Controller
     public function incomplete(Todo $todo)
     {
         $todo->update(['completed' => false]);
-        Cache::flush();
 
         return request()->expectsJson()
             ? response()->json(['success' => true, 'message' => 'Todo marked as incomplete.'])
@@ -128,7 +126,6 @@ class TodoController extends Controller
         foreach ($request->positions as $position => $id) {
             Todo::whereId($id)->update(['position' => $position]);
         }
-        Cache::flush();
 
         return response()->json(['success' => true]);
     }
@@ -137,7 +134,6 @@ class TodoController extends Controller
     public function bulkDelete(Request $request)
     {
         Todo::whereIn('id', $request->ids)->delete();
-        Cache::flush();
 
         return back()->with('success', 'Todos deleted.');
     }
@@ -146,7 +142,6 @@ class TodoController extends Controller
     public function bulkComplete(Request $request)
     {
         Todo::whereIn('id', $request->ids)->update(['completed' => true]);
-        Cache::flush();
 
         return back()->with('success', 'Todos completed.');
     }

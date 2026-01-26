@@ -129,10 +129,7 @@ body::before {
   position: fixed;
   top: 20px; right: 20px;
   z-index: 99999;
-  display: flex;
-  flex-direction: column;
-  gap: 12px;
-  max-width: 380px;
+  max-width: 350px;
   width: 100%;
   pointer-events: none;
 }
@@ -140,15 +137,16 @@ body::before {
   background: var(--glass-bg);
   backdrop-filter: blur(20px);
   border: 1.5px solid var(--glass-border);
-  border-radius: 20px;
-  padding: 1.25rem 1.5rem;
-  box-shadow: 0 20px 40px rgba(0,0,0,0.4);
-  transform: translateX(120%);
-  transition: transform 0.5s cubic-bezier(0.68,-0.55,0.265,1.55);
-  pointer-events: all;
+  border-radius: 12px;
+  padding: 1rem 1.25rem;
+  margin-bottom: 0.75rem;
+  color: white;
+  box-shadow: 0 6px 24px rgba(0,0,0,0.25);
+  transform: translateX(100%);
+  transition: all 0.3s cubic-bezier(0.68, -0.55, 0.265, 1.55);
   position: relative;
   overflow: hidden;
-  border-left: 5px solid;
+  border-left: 4px solid;
   animation: messageFloat 3s ease-in-out infinite;
 }
 .message.show {
@@ -180,13 +178,13 @@ body::before {
 .message-content {
   display: flex;
   align-items: center;
-  gap: 1rem;
+  gap: 0.75rem;
 }
 .message-icon {
-  font-size: 1.5rem;
-  min-width: 40px; height: 40px;
+  font-size: 1.2rem;
+  min-width: 32px; height: 32px;
   background: rgba(255,255,255,0.1);
-  border-radius: 12px;
+  border-radius: 10px;
   display: flex;
   align-items: center;
   justify-content: center;
@@ -204,28 +202,28 @@ body::before {
   color: var(--accent-yellow);
 }
 .message-text h5 {
-  font-size: 1rem;
+  font-size: 0.875rem;
   font-weight: 600;
-  margin-bottom: 0.25rem;
+  margin-bottom: 0.15rem;
   color: white;
 }
 .message-text p {
-  font-size: 0.875rem;
+  font-size: 0.75rem;
   color: var(--text-secondary);
   margin: 0;
-  line-height: 1.4;
+  line-height: 1.3;
 }
 .message-close {
   position: absolute;
-  top: 12px; right: 12px;
+  top: 8px; right: 8px;
   background: rgba(255,255,255,0.1);
   border: none;
   color: var(--text-secondary);
-  width: 24px; height: 24px;
-  border-radius: 8px;
+  width: 20px; height: 20px;
+  border-radius: 6px;
   display: flex; align-items: center; justify-content: center;
   cursor: pointer;
-  font-size: 0.75rem;
+  font-size: 0.65rem;
   transition: all 0.2s;
 }
 .message-close:hover {
@@ -292,6 +290,36 @@ body::before {
 
 /* Mobile layout - new pattern */
 @media (max-width: 576px) {
+  .message-container {
+    top: 10px; right: 10px;
+    max-width: 280px;
+  }
+  .message {
+    padding: 0.75rem 1rem;
+    margin-bottom: 0.5rem;
+    border-radius: 10px;
+  }
+  .message-content {
+    gap: 0.5rem;
+  }
+  .message-icon {
+    font-size: 1rem;
+    min-width: 24px; height: 24px;
+    border-radius: 8px;
+  }
+  .message-text h5 {
+    font-size: 0.75rem;
+    margin-bottom: 0.1rem;
+  }
+  .message-text p {
+    font-size: 0.65rem;
+  }
+  .message-close {
+    top: 6px; right: 6px;
+    width: 16px; height: 16px;
+    font-size: 0.55rem;
+    border-radius: 4px;
+  }
   .todo-grid {
     gap: 10px;
   }
