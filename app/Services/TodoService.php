@@ -19,27 +19,31 @@ class TodoService
 
     public function getTodos(array $filters = [], array $sort = []): LengthAwarePaginator
     {
-        // Real-time data - no caching for instant updates
-        $query = Todo::query()->select([
-            'id', 'title', 'description', 'priority', 'completed',
-            'due_date', 'category', 'position', 'created_at', 'updated_at'
-        ]);
+        // Ultra-fast caching with smart invalidation
+        $cacheKey = 'todos_' . md5(serialize($filters) . serialize($sort) . request('page', 1));
 
-        // Apply filters
-        $this->applyFilters($query, $filters);
+        return Cache::remember($cacheKey, 30, function () use ($filters, $sort) {
+            $query = Todo::query()->select([
+                'id', 'title', 'description', 'priority', 'completed',
+                'due_date', 'category', 'position', 'created_at', 'updated_at'
+            ]);
 
-        // Apply sorting
-        $this->applySorting($query, $sort);
+            // Apply filters
+            $this->applyFilters($query, $filters);
 
-        return $query->paginate(50)->withQueryString();
+            // Apply sorting
+            $this->applySorting($query, $sort);
+
+            return $query->paginate(50)->withQueryString();
+        });
     }
 
     public function createTodo(array $data): Todo
     {
         $todo = $this->createTodoAction->execute($data);
 
-        // Clear statistics cache only when creating new todo
-        Cache::forget('todo_stats');
+        // Clear all todo caches and statistics when creating new todo
+        $this->clearTodoCaches();
 
         return $todo;
     }
@@ -48,8 +52,8 @@ class TodoService
     {
         $updatedTodo = $this->updateTodoAction->execute($todo, $data);
 
-        // Clear statistics cache only when updating todo
-        Cache::forget('todo_stats');
+        // Clear all todo caches and statistics when updating todo
+        $this->clearTodoCaches();
 
         return $updatedTodo;
     }
@@ -122,5 +126,20 @@ class TodoService
         $direction = isset($sort['direction']) && $sort['direction'] === 'desc' ? 'desc' : 'asc';
 
         $query->orderBy($sortBy, $direction);
+    }
+
+    private function clearTodoCaches(): void
+    {
+        // Clear all todo-related caches using wildcard pattern
+        $cacheKeys = Cache::store('redis')->getRedis()->keys('laravel-cache:todo_*');
+        if (!empty($cacheKeys)) {
+            foreach ($cacheKeys as $key) {
+                $cleanKey = str_replace('laravel-cache:', '', $key);
+                Cache::forget($cleanKey);
+            }
+        }
+
+        // Clear statistics cache
+        Cache::forget('todo_stats');
     }
 }
