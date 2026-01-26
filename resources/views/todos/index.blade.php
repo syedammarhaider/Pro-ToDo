@@ -894,14 +894,6 @@ body::before {
                                                 <i class="fas fa-tag"></i> {{ $todo->category }}
                                             </span>
                                         @endif
-                                        @if($todo->due_date)
-                                            <span class="due-date-micro" style="color: white !important;">
-                                                <i class="fas fa-calendar-day"></i> {{ $todo->due_date->format('M d') }}
-                                                @if($todo->isOverdue())
-                                                    <span style="color: var(--accent-red); font-weight: bold;">!</span>
-                                                @endif
-                                            </span>
-                                        @endif
                                     </div>
                                     <a href="{{ route('todos.show', $todo) }}" class="text-decoration-none" onclick="event.stopPropagation()">
                                         <small style="color: white !important;"><i class="fas fa-eye"></i> View</small>
