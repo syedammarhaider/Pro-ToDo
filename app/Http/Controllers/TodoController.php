@@ -87,7 +87,6 @@ class TodoController extends Controller
     {
         Gate::authorize('delete todos');
         Todo::withTrashed()->findOrFail($id)->restore();
-        Cache::flush();
 
         return back()->with('success', 'Todo restored.');
     }
@@ -97,7 +96,6 @@ class TodoController extends Controller
     {
         Gate::authorize('delete todos');
         Todo::withTrashed()->findOrFail($id)->forceDelete();
-        Cache::flush();
 
         return back()->with('success', 'Todo permanently deleted.');
     }

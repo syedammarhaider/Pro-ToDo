@@ -1148,7 +1148,17 @@ body::before {
       });
       if (res.ok) {
         showMessage(`${ids.length} todo${ids.length>1?'s':''} marked as completed!`, 'success');
-        setTimeout(() => location.reload(), 1500);
+        // Update DOM instantly instead of reloading
+        checked.forEach(cb => {
+          const todoItem = cb.closest('.todo-item-micro');
+          todoItem.classList.add('completed');
+          const title = todoItem.querySelector('.todo-title-micro');
+          title.style.textDecoration = 'line-through';
+          title.style.opacity = '0.6';
+          title.style.color = 'rgba(255,255,255,0.7)';
+          cb.checked = false;
+        });
+        document.getElementById('selectAll').checked = false;
       } else showMessage('Failed to complete todos', 'error');
     } catch {
       showMessage('Network error. Please try again.', 'error');
@@ -1169,7 +1179,29 @@ body::before {
       });
       if (res.ok) {
         showMessage(`${ids.length} todo${ids.length>1?'s':''} deleted successfully!`, 'success');
-        setTimeout(() => location.reload(), 1500);
+        // Remove items instantly instead of reloading
+        checked.forEach(cb => {
+          const todoItem = cb.closest('.todo-item-micro');
+          todoItem.style.transition = 'all 0.3s ease-out';
+          todoItem.style.opacity = '0';
+          todoItem.style.transform = 'scale(0.8)';
+          setTimeout(() => {
+            todoItem.remove();
+            if(document.querySelectorAll('.todo-item-micro').length === 0) {
+              const todoGrid = document.getElementById('todoGrid');
+              todoGrid.innerHTML = `
+                <div class="empty-state-micro fade-in" role="alert" aria-live="polite" aria-atomic="true">
+                  <div class="empty-icon-micro" aria-hidden="true"><i class="fas fa-clipboard-list"></i></div>
+                  <h5>No todos found</h5>
+                  <p>Start organizing your tasks and boost productivity!</p>
+                  <a href="{{ route('todos.create') }}" class="btn-primary-micro" role="button" aria-label="Create your first todo">
+                    <i class="fas fa-plus-circle"></i> Create First Todo
+                  </a>
+                </div>`;
+            }
+          }, 300);
+        });
+        document.getElementById('selectAll').checked = false;
       } else showMessage('Failed to delete todos', 'error');
     } catch {
       showMessage('Network error. Please try again.', 'error');

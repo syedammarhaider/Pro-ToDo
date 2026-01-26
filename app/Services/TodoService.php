@@ -19,28 +19,19 @@ class TodoService
 
     public function getTodos(array $filters = [], array $sort = []): LengthAwarePaginator
     {
-        $cacheKey = 'todos_' . md5(serialize($filters) . serialize($sort) . request('page', 1));
+        // Real-time data - no caching for instant updates
+        $query = Todo::query()->select([
+            'id', 'title', 'description', 'priority', 'completed',
+            'due_date', 'category', 'position', 'created_at', 'updated_at'
+        ]);
 
-        return Cache::remember($cacheKey, 60, function () use ($filters, $sort, $cacheKey) {
-            // Track cache keys for efficient clearing
-            $cacheKeys = Cache::get('todo_cache_keys', []);
-            $cacheKeys[] = $cacheKey;
-            $cacheKeys = array_unique($cacheKeys);
-            Cache::put('todo_cache_keys', $cacheKeys, 3600);
+        // Apply filters
+        $this->applyFilters($query, $filters);
 
-            $query = Todo::query()->select([
-                'id', 'title', 'description', 'priority', 'completed',
-                'due_date', 'category', 'position', 'created_at', 'updated_at'
-            ]);
+        // Apply sorting
+        $this->applySorting($query, $sort);
 
-            // Apply filters
-            $this->applyFilters($query, $filters);
-
-            // Apply sorting
-            $this->applySorting($query, $sort);
-
-            return $query->paginate(50)->withQueryString();
-        });
+        return $query->paginate(50)->withQueryString();
     }
 
     public function createTodo(array $data): Todo
