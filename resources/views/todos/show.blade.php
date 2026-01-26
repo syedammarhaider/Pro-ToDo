@@ -231,13 +231,13 @@ p {
             <div class="card-header d-flex justify-content-between align-items-center"
                  style="border-left: 5px solid var(--{{ $todo->getPriorityColor() }})">
                 <div>
-                    <h4 class="text-black mb-0 d-flex align-items-center">
+                    <h4 class="text-white mb-0 d-flex align-items-center">
                         @if($todo->completed)
                             <i class="fas fa-check-circle text-success me-2"></i>
                         @endif
                         {{ $todo->title }}
                     </h4>
-                    <small class="text-black">
+                    <small class="text-white">
                         Created {{ $todo->created_at->diffForHumans() }}
                     </small>
                 </div>
@@ -253,12 +253,12 @@ p {
                     <div class="col-md-6">
                         <div class="card mb-3 bg-transparent border-0">
                             <div class="card-body p-0">
-                                <h6 class="text-black mb-3 d-flex align-items-center">
+                                <h6 class="text-white mb-3 d-flex align-items-center">
                                     <i class="fas fa-info-circle me-2 text-info"></i> Details
                                 </h6>
                                 <div class="mb-3">
                                     <div class="d-flex justify-content-between align-items-center py-2 border-bottom border-secondary">
-                                        <span class="text-black">Status:</span>
+                                        <span class="text-white">Status:</span>
                                         <span class="badge bg-{{ $todo->completed ? 'success' : ($todo->isOverdue() ? 'danger' : 'warning') }} px-3 py-2">
                                             {{ $todo->getStatusText() }}
                                         </span>
@@ -267,7 +267,7 @@ p {
                                 @if($todo->category)
                                 <div class="mb-3">
                                     <div class="d-flex justify-content-between align-items-center py-2 border-bottom border-secondary">
-                                        <span class="text-black">Category:</span>
+                                        <span class="text-white">Category:</span>
                                         <span class="badge bg-info px-3 py-2">{{ $todo->category }}</span>
                                     </div>
                                 </div>
@@ -275,8 +275,8 @@ p {
                                 @if($todo->due_date)
                                 <div class="mb-3">
                                     <div class="d-flex justify-content-between align-items-center py-2 border-bottom border-secondary">
-                                        <span class="text-black">Due Date:</span>
-                                        <span class="text-black">{{ $todo->due_date->format('F d, Y') }}
+                                        <span class="text-white">Due Date:</span>
+                                        <span class="text-white">{{ $todo->due_date->format('F d, Y') }}
                                             @if($todo->isOverdue())
                                                 <span class="badge bg-danger ms-2">Overdue</span>
                                             @endif
@@ -286,8 +286,8 @@ p {
                                 @endif
                                 <div class="mb-2">
                                     <div class="d-flex justify-content-between align-items-center py-2">
-                                        <span class="text-black">Last Updated:</span>
-                                        <span class="text-black">{{ $todo->updated_at->diffForHumans() }}</span>
+                                        <span class="text-white">Last Updated:</span>
+                                        <span class="text-white">{{ $todo->updated_at->diffForHumans() }}</span>
                                     </div>
                                 </div>
                             </div>

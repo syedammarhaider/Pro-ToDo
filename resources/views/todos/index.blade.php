@@ -308,11 +308,11 @@ body::before {
     border-radius: 8px;
   }
   .message-text h5 {
-    font-size: 0.75rem;
+    font-size: 0.85rem;
     margin-bottom: 0.1rem;
   }
   .message-text p {
-    font-size: 0.65rem;
+    font-size: 0.75rem;
   }
   .message-close {
     top: 6px; right: 6px;
@@ -329,63 +329,63 @@ body::before {
     gap: 0.3rem;
     margin-bottom: 0.3rem;
   }
-  
+
   .todo-checkbox-micro {
     position: relative;
     top: 0;
     left: 0;
-    width: 14px !important;
-    height: 14px !important;
+    width: 16px !important;
+    height: 16px !important;
     margin-bottom: 0.2rem;
   }
-  
+
   .todo-title-micro {
-    font-size: 0.6rem !important;
+    font-size: 0.8rem !important;
     font-weight: 600 !important;
     margin-bottom: 0.3rem !important;
     text-align: left;
     padding: 0 !important;
     line-height: 1.2;
   }
-  
+
   .todo-actions-micro {
     justify-content: flex-start;
     order: 3;
     margin: 0.2rem 0;
     gap: 0.4rem !important;
   }
-  
+
   .todo-actions-micro .btn-micro {
-    width: 22px !important;
-    height: 22px !important;
-    min-width: 22px !important;
-    font-size: 0.6rem !important;
-    padding: 0.3rem !important;
+    width: 28px !important;
+    height: 28px !important;
+    min-width: 28px !important;
+    font-size: 0.7rem !important;
+    padding: 0.4rem !important;
     margin: 0 0.2rem !important;
   }
-  
+
   .todo-footer-micro {
     flex-direction: column;
     align-items: flex-start;
     padding-top: 0.3rem !important;
     gap: 0.2rem;
   }
-  
+
   .todo-meta-micro {
     order: 4;
     gap: 0.15rem !important;
     margin-bottom: 0.2rem;
   }
-  
+
   .priority-badge-micro,
   .category-tag-micro,
   .due-date-micro {
-    font-size: 0.35rem !important;
-    padding: 0.05rem 0.2rem !important;
+    font-size: 0.5rem !important;
+    padding: 0.08rem 0.3rem !important;
     margin-right: 0.15rem !important;
     border-radius: 6px !important;
   }
-  
+
   .todo-footer-micro a {
     order: 5;
     align-self: center;
@@ -393,20 +393,20 @@ body::before {
     width: 100%;
     text-align: center;
   }
-  
+
   .todo-footer-micro a small {
-    padding: 0.3rem 0.8rem !important;
-    font-size: 0.6rem !important;
+    padding: 0.4rem 1rem !important;
+    font-size: 0.7rem !important;
     font-weight: 600 !important;
     background: linear-gradient(135deg, var(--accent-purple), var(--accent-pink));
     border-radius: 12px !important;
     color: white !important;
     text-decoration: none !important;
   }
-  
+
   .todo-item-micro {
-    padding: 0.4rem !important;
-    min-height: 90px !important;
+    padding: 0.6rem !important;
+    min-height: 110px !important;
     text-align: left;
   }
 }
