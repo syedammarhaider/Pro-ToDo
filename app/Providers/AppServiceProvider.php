@@ -59,22 +59,20 @@ class AppServiceProvider extends ServiceProvider
             logger()->error('Query took longer than 500ms');
         });
 
-        // Optimize database connections
+        // Optimize SQLite database connections
         config(['database.connections.sqlite.foreign_key_constraints' => false]);
         config(['database.connections.sqlite.journal_mode' => 'WAL']);
         config(['database.connections.sqlite.synchronous' => 'NORMAL']);
 
-        // Cache optimizations
-        config(['cache.stores.redis.connection' => 'cache']);
-        config(['cache.stores.redis.lock_connection' => 'default']);
+        // Cache optimizations - using database cache
+        config(['cache.default' => 'database']);
 
-        // Session optimizations
-        config(['session.driver' => 'redis']);
+        // Session optimizations - using database sessions
+        config(['session.driver' => 'database']);
         config(['session.lifetime' => 120]);
 
-        // Queue optimizations
-        config(['queue.default' => 'redis']);
-        config(['queue.connections.redis.retry_after' => 90]);
+        // Queue optimizations - using database queues
+        config(['queue.default' => 'database']);
 
         // Filesystem optimizations
         config(['filesystems.default' => 'local']);

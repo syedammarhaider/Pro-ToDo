@@ -130,16 +130,19 @@ class TodoService
 
     private function clearTodoCaches(): void
     {
-        // Clear all todo-related caches using wildcard pattern
-        $cacheKeys = Cache::store('redis')->getRedis()->keys('laravel-cache:todo_*');
-        if (!empty($cacheKeys)) {
-            foreach ($cacheKeys as $key) {
-                $cleanKey = str_replace('laravel-cache:', '', $key);
-                Cache::forget($cleanKey);
-            }
-        }
-
         // Clear statistics cache
         Cache::forget('todo_stats');
+
+        // For database/file cache, we can't easily clear by pattern
+        // so we'll clear a few common cache keys that might exist
+        $commonKeys = [
+            'todos_' . md5(serialize([]) . serialize(['sort' => 'position', 'direction' => 'asc']) . '1'),
+            'todos_' . md5(serialize(['status' => 'active']) . serialize(['sort' => 'position', 'direction' => 'asc']) . '1'),
+            'todos_' . md5(serialize(['status' => 'completed']) . serialize(['sort' => 'position', 'direction' => 'asc']) . '1'),
+        ];
+
+        foreach ($commonKeys as $key) {
+            Cache::forget($key);
+        }
     }
 }
