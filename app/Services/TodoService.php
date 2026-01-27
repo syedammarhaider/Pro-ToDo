@@ -61,13 +61,15 @@ class TodoService
     public function deleteTodo(Todo $todo): void
     {
         $todo->delete();
-        Cache::forget('todo_stats');
+        // Clear all caches after delete
+        $this->clearTodoCaches();
     }
 
     public function completeTodo(Todo $todo): void
     {
         $todo->update(['completed' => true]);
-        Cache::forget('todo_stats');
+        // Clear all caches after complete action
+        $this->clearTodoCaches();
 
         // Dispatch job for async processing
         ProcessTodoCompletion::dispatch($todo);
@@ -76,7 +78,8 @@ class TodoService
     public function bulkComplete(array $ids): void
     {
         Todo::whereIn('id', $ids)->update(['completed' => true]);
-        Cache::forget('todo_stats');
+        // Clear all caches after bulk complete
+        $this->clearTodoCaches();
     }
 
     public function getStatistics(): array
@@ -133,16 +136,8 @@ class TodoService
         // Clear statistics cache
         Cache::forget('todo_stats');
 
-        // For database/file cache, we can't easily clear by pattern
-        // so we'll clear a few common cache keys that might exist
-        $commonKeys = [
-            'todos_' . md5(serialize([]) . serialize(['sort' => 'position', 'direction' => 'asc']) . '1'),
-            'todos_' . md5(serialize(['status' => 'active']) . serialize(['sort' => 'position', 'direction' => 'asc']) . '1'),
-            'todos_' . md5(serialize(['status' => 'completed']) . serialize(['sort' => 'position', 'direction' => 'asc']) . '1'),
-        ];
-
-        foreach ($commonKeys as $key) {
-            Cache::forget($key);
-        }
+        // Clear all todo-related cache keys by flushing the entire cache
+        // This ensures immediate consistency after any todo modification
+        Cache::flush();
     }
 }

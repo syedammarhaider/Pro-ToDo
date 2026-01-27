@@ -66,7 +66,7 @@ class TodoController extends Controller
     // Soft delete todo
     public function destroy(Todo $todo)
     {
-        $todo->delete();
+        $this->todoService->deleteTodo($todo);
 
         return request()->expectsJson()
             ? response()->json(['success' => true, 'message' => 'Todo moved to trash.'])
@@ -103,7 +103,7 @@ class TodoController extends Controller
     // Mark as complete
     public function complete(Todo $todo)
     {
-        $todo->update(['completed' => true]);
+        $this->todoService->completeTodo($todo);
 
         return request()->expectsJson()
             ? response()->json(['success' => true, 'message' => 'Todo marked as completed.'])
@@ -114,6 +114,8 @@ class TodoController extends Controller
     public function incomplete(Todo $todo)
     {
         $todo->update(['completed' => false]);
+        // Clear caches after incomplete action
+        $this->todoService->clearTodoCaches();
 
         return request()->expectsJson()
             ? response()->json(['success' => true, 'message' => 'Todo marked as incomplete.'])
@@ -134,6 +136,8 @@ class TodoController extends Controller
     public function bulkDelete(Request $request)
     {
         Todo::whereIn('id', $request->ids)->delete();
+        // Clear caches after bulk delete
+        $this->todoService->clearTodoCaches();
 
         return back()->with('success', 'Todos deleted.');
     }
@@ -141,7 +145,7 @@ class TodoController extends Controller
     // Bulk mark complete
     public function bulkComplete(Request $request)
     {
-        Todo::whereIn('id', $request->ids)->update(['completed' => true]);
+        $this->todoService->bulkComplete($request->ids);
 
         return back()->with('success', 'Todos completed.');
     }
