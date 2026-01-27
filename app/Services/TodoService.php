@@ -19,10 +19,10 @@ class TodoService
 
     public function getTodos(array $filters = [], array $sort = []): LengthAwarePaginator
     {
-        // Ultra-fast caching with smart invalidation
+        // Ultra-fast caching with smart invalidation - increased cache time for better performance
         $cacheKey = 'todos_' . md5(serialize($filters) . serialize($sort) . request('page', 1));
 
-        return Cache::remember($cacheKey, 30, function () use ($filters, $sort) {
+        return Cache::remember($cacheKey, 300, function () use ($filters, $sort) {
             $query = Todo::query()->select([
                 'id', 'title', 'description', 'priority', 'completed',
                 'due_date', 'category', 'position', 'created_at', 'updated_at'

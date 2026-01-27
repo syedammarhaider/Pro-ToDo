@@ -39,7 +39,6 @@ body::before {
 }
 .page-header {
   margin-bottom:1.5rem;
-  transition: all 0.4s cubic-bezier(0.4,0,0.2,1);
   background: rgba(255,255,255,0.04);
   backdrop-filter: blur(15px);
   -webkit-backdrop-filter: blur(15px);
@@ -147,7 +146,6 @@ body::before {
   position: relative;
   overflow: hidden;
   border-left: 4px solid;
-  animation: messageFloat 3s ease-in-out infinite;
 }
 .message.show {
   transform: translateX(0);
@@ -278,7 +276,6 @@ body::before {
   display: grid;
   grid-template-columns: repeat(2, 1fr);
   gap: 16px;
-  animation: slideUp 0.5s ease-out;
 }
 
 /* Responsive adjustments */
@@ -425,7 +422,6 @@ body::before {
   justify-content: space-between;
 }
 .todo-item-micro:hover {
-  transform: translateY(-5px) scale(1.02);
   box-shadow: 0 20px 40px rgba(0,0,0,0.4), 0 0 0 1px rgba(255,255,255,0.05);
 }
 .todo-item-micro.low {
@@ -585,10 +581,7 @@ body::before {
   font-size: 0.9rem;
   margin-bottom: 1.5rem;
 }
-@keyframes float {
-  0%, 100% { transform: translateY(0); }
-  50% { transform: translateY(-10px); }
-}
+
 .visually-hidden {
   position: absolute;
   width: 1px; height: 1px;
@@ -626,11 +619,6 @@ body::before {
 @keyframes highlightPulse {
   0%, 100% { 
     background: linear-gradient(135deg, rgba(255,215,0,0.4), rgba(255,193,7,0.6));
-    box-shadow: 0 0 8px rgba(255,215,0,0.5);
-  }
-  50% { 
-    background: linear-gradient(135deg, rgba(255,215,0,0.6), rgba(255,193,7,0.8));
-    box-shadow: 0 0 12px rgba(255,215,0,0.7);
   }
 }
 
@@ -1229,31 +1217,6 @@ body::before {
   }
 
   document.addEventListener('DOMContentLoaded', () => {
-    document.querySelectorAll('.btn, .todo-item-micro').forEach(el => {
-      el.addEventListener('click', e => {
-        if(el.classList.contains('todo-item-micro') && ['INPUT','A','BUTTON'].includes(e.target.tagName)) return;
-        const ripple = document.createElement('span');
-        const rect = el.getBoundingClientRect();
-        const size = Math.max(rect.width, rect.height);
-        const x = e.clientX - rect.left - size / 2;
-        const y = e.clientY - rect.top - size / 2;
-        ripple.style.cssText = `
-          position: absolute;
-          border-radius: 50%;
-          background: rgba(255, 255, 255, 0.4);
-          transform: scale(0);
-          animation: ripple 0.6s linear;
-          width: ${size}px;
-          height: ${size}px;
-          left: ${x}px;
-          top: ${y}px;
-          pointer-events: none;`;
-        el.style.position = 'relative';
-        el.style.overflow = 'hidden';
-        el.appendChild(ripple);
-        setTimeout(() => ripple.remove(), 600);
-      });
-    });
     if(!sessionStorage.getItem('welcomeShown')) {
       setTimeout(() => showMessage('Welcome to your todo manager! Tap todos to select multiple.', 'info', 2000), 1000);
       sessionStorage.setItem('welcomeShown', 'true');
