@@ -64,15 +64,15 @@ class AppServiceProvider extends ServiceProvider
         config(['database.connections.sqlite.journal_mode' => 'WAL']);
         config(['database.connections.sqlite.synchronous' => 'NORMAL']);
 
-        // ULTRA-FAST Cache optimizations - using file cache for maximum speed
-        config(['cache.default' => 'file']);
+        // Cache optimizations - using database cache
+        config(['cache.default' => 'database']);
 
-        // ULTRA-FAST Session optimizations - using file sessions for speed
-        config(['session.driver' => 'file']);
+        // Session optimizations - using database sessions
+        config(['session.driver' => 'database']);
         config(['session.lifetime' => 120]);
 
-        // Queue optimizations - using sync for development speed (no async overhead)
-        config(['queue.default' => 'sync']);
+        // Queue optimizations - using database queues
+        config(['queue.default' => 'database']);
 
         // Filesystem optimizations
         config(['filesystems.default' => 'local']);
