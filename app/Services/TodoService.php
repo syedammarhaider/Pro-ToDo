@@ -131,7 +131,7 @@ class TodoService
         $query->orderBy($sortBy, $direction);
     }
 
-    private function clearTodoCaches(): void
+    public function clearTodoCaches(): void
     {
         // Clear statistics cache
         Cache::forget('todo_stats');
