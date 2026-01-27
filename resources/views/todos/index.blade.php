@@ -146,7 +146,6 @@ body::before {
   position: relative;
   overflow: hidden;
   border-left: 4px solid;
-  animation: messageFloat 3s ease-in-out infinite;
 }
 .message.show {
   transform: translateX(0);
@@ -851,14 +850,14 @@ body::before {
                                         @if(!$todo->completed)
                                             <form action="{{ route('todos.complete', $todo) }}" method="POST" onclick="event.stopPropagation()">
                                                 @csrf
-                                            <button type="submit" class="btn-micro btn-success" title="Mark Complete" aria-pressed="false" onclick="handleTodoAction(this.closest('form'), 'complete', event); return false;">
+                                            <button type="button" class="btn-micro btn-success" title="Mark Complete" aria-pressed="false" onclick="handleTodoAction(this.closest('form'), 'complete', event);">
                                                 <i class="fas fa-check"></i>
                                             </button>
                                             </form>
                                         @else
                                             <form action="{{ route('todos.incomplete', $todo) }}" method="POST" onclick="event.stopPropagation()">
                                                 @csrf
-                                                <button type="submit" class="btn-micro btn-warning" title="Mark Incomplete" aria-pressed="true" onclick="handleTodoAction(this.closest('form'), 'incomplete', event); return false;">
+                                                <button type="button" class="btn-micro btn-warning" title="Mark Incomplete" aria-pressed="true" onclick="handleTodoAction(this.closest('form'), 'incomplete', event);">
                                                     <i class="fas fa-rotate-left"></i>
                                                 </button>
                                             </form>
@@ -869,7 +868,7 @@ body::before {
                                         <form action="{{ route('todos.destroy', $todo) }}" method="POST" onclick="event.stopPropagation()" class="d-inline">
                                             @csrf
                                             @method('DELETE')
-                                            <button type="submit" class="btn-micro btn-danger" onclick="handleTodoAction(this.closest('form'), 'delete', event); return false;" title="Delete">
+                                            <button type="button" class="btn-micro btn-danger" onclick="handleTodoAction(this.closest('form'), 'delete', event);" title="Delete">
                                                 <i class="fas fa-trash"></i>
                                             </button>
                                         </form>
@@ -1220,35 +1219,6 @@ body::before {
   }
 
   document.addEventListener('DOMContentLoaded', () => {
-    document.querySelectorAll('.btn, .todo-item-micro').forEach(el => {
-      el.addEventListener('click', e => {
-        if(el.classList.contains('todo-item-micro') && ['INPUT','A','BUTTON'].includes(e.target.tagName)) return;
-        const ripple = document.createElement('span');
-        const rect = el.getBoundingClientRect();
-        const size = Math.max(rect.width, rect.height);
-        const x = e.clientX - rect.left - size / 2;
-        const y = e.clientY - rect.top - size / 2;
-        ripple.style.cssText = `
-          position: absolute;
-          border-radius: 50%;
-          background: rgba(255, 255, 255, 0.4);
-          transform: scale(0);
-          animation: ripple 0.6s linear;
-          width: ${size}px;
-          height: ${size}px;
-          left: ${x}px;
-          top: ${y}px;
-          pointer-events: none;`;
-        el.style.position = 'relative';
-        el.style.overflow = 'hidden';
-        el.appendChild(ripple);
-        setTimeout(() => ripple.remove(), 600);
-      });
-    });
-    if(!sessionStorage.getItem('welcomeShown')) {
-      setTimeout(() => showMessage('Welcome to your todo manager! Tap todos to select multiple.', 'info', 2000), 1000);
-      sessionStorage.setItem('welcomeShown', 'true');
-    }
     const params = new URLSearchParams(window.location.search);
     if(params.has('message')) {
       const msg = decodeURIComponent(params.get('message'));
