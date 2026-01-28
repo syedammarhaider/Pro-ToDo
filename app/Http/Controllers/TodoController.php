@@ -16,9 +16,10 @@ class TodoController extends Controller
     {
         $filters = $request->only(['search', 'status', 'priority', 'category']);
         $sort = $request->only(['sort', 'direction']);
+        $lastId = $request->integer('last_id');
 
-        // Always fetch fresh data
-        $todos = $this->todoService->getTodos($filters, $sort);
+        // Ultra-fast keyset pagination
+        $todos = $this->todoService->getTodos($filters, $sort, $lastId);
         $categories = Todo::distinct()->pluck('category')->filter();
 
         return view('todos.index', [

@@ -1,14 +1,14 @@
-# Performance Optimization Plan
+# Ultra-Fast Todo App Optimization
 
 ## Completed Tasks
-- [x] Analyze codebase and identify performance issues
-- [x] Get user approval for the plan
+- [ ] Analyze current codebase and identify optimization opportunities
+- [ ] Create optimization plan with keyset pagination, better caching, and cached statistics
 
 ## Pending Tasks
-- [ ] Remove Cache::flush() calls from TodoController
-- [ ] Update TodoService for selective cache invalidation
-- [ ] Test the changes on the live server
-
-## Files to Edit
-- app/Http/Controllers/TodoController.php
-- app/Services/TodoService.php
+- [ ] Implement keyset pagination in TodoService.php to replace offset pagination
+- [ ] Improve cache management - clear specific cache keys instead of flushing all
+- [ ] Update TodoController.php to handle keyset pagination parameters
+- [ ] Cache statistics in header.blade.php instead of direct DB queries
+- [ ] Test pagination performance improvements
+- [ ] Check Laravel logs for slow queries and verify optimizations
+- [ ] Verify cache invalidation works correctly after CRUD operations
