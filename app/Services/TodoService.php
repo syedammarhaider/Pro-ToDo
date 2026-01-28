@@ -17,12 +17,12 @@ class TodoService
         private UpdateTodoAction $updateTodoAction
     ) {}
 
-    public function getTodos(array $filters = [], array $sort = [], ?int $lastId = null): LengthAwarePaginator
+    public function getTodos(array $filters = [], array $sort = []): LengthAwarePaginator
     {
         // Ultra-fast caching with smart invalidation - increased cache time for better performance
-        $cacheKey = 'todos_' . md5(serialize($filters) . serialize($sort) . ($lastId ?? 0));
+        $cacheKey = 'todos_' . md5(serialize($filters) . serialize($sort) . request('page', 1));
 
-        return Cache::remember($cacheKey, 300, function () use ($filters, $sort, $lastId) {
+        return Cache::remember($cacheKey, 300, function () use ($filters, $sort) {
             $query = Todo::query()->select([
                 'id', 'title', 'description', 'priority', 'completed',
                 'due_date', 'category', 'position', 'created_at', 'updated_at'
@@ -33,11 +33,6 @@ class TodoService
 
             // Apply sorting
             $this->applySorting($query, $sort);
-
-            // Keyset pagination for ultra-fast performance (10x faster than offset)
-            if ($lastId) {
-                $query->where('id', '>', $lastId);
-            }
 
             return $query->paginate(50)->withQueryString();
         });
@@ -136,28 +131,13 @@ class TodoService
         $query->orderBy($sortBy, $direction);
     }
 
-    private function registerCacheKey(string $key): void
-    {
-        $cacheKeys = Cache::get('todo_cache_keys', []);
-        if (!in_array($key, $cacheKeys)) {
-            $cacheKeys[] = $key;
-            Cache::put('todo_cache_keys', $cacheKeys, 300); // Same TTL as todo caches
-        }
-    }
-
     public function clearTodoCaches(): void
     {
         // Clear statistics cache
         Cache::forget('todo_stats');
 
-        // Clear all todo-related cache keys by pattern matching
-        // This is more efficient than flushing the entire cache
-        $cacheKeys = Cache::get('todo_cache_keys', []);
-        foreach ($cacheKeys as $key) {
-            Cache::forget($key);
-        }
-
-        // Clear the cache keys registry
-        Cache::forget('todo_cache_keys');
+        // Clear all todo-related cache keys by flushing the entire cache
+        // This ensures immediate consistency after any todo modification
+        Cache::flush();
     }
 }

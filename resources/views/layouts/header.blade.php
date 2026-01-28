@@ -59,25 +59,25 @@
             <div class="row text-center">
                 <div class="col-md-3 mb-3">
                     <div class="p-3 bg-primary bg-opacity-10 rounded">
-                        <h3 class="text-primary">{{ app(App\Services\TodoService::class)->getStatistics()['total'] }}</h3>
+                        <h3 class="text-primary">{{ App\Models\Todo::count() }}</h3>
                         <small class="text-white">Total Todos</small>
                     </div>
                 </div>
                 <div class="col-md-3 mb-3">
                     <div class="p-3 bg-success bg-opacity-10 rounded">
-                        <h3 class="text-success">{{ app(App\Services\TodoService::class)->getStatistics()['completed'] }}</h3>
+                        <h3 class="text-success">{{ App\Models\Todo::completed()->count() }}</h3>
                         <small class="text-white">Completed</small>
                     </div>
                 </div>
                 <div class="col-md-3 mb-3">
                     <div class="p-3 bg-warning bg-opacity-10 rounded">
-                        <h3 class="text-warning">{{ app(App\Services\TodoService::class)->getStatistics()['active'] }}</h3>
+                        <h3 class="text-warning">{{ App\Models\Todo::active()->count() }}</h3>
                         <small class="text-white">Active</small>
                     </div>
                 </div>
                 <div class="col-md-3 mb-3">
                     <div class="p-3 bg-danger bg-opacity-10 rounded">
-                        <h3 class="text-danger">{{ app(App\Services\TodoService::class)->getStatistics()['overdue'] }}</h3>
+                        <h3 class="text-danger">{{ App\Models\Todo::overdue()->count() }}</h3>
                         <small class="text-white">Overdue</small>
                     </div>
                 </div>
