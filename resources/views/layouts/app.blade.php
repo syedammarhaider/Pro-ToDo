@@ -7,9 +7,9 @@
     <title>@yield('title', 'Professional Todo App')</title>
     
     <!-- Bootstrap CSS - UI framework -->
-    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" rel="stylesheet">
+    <link href="//cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" rel="stylesheet">
     <!-- Font Awesome Icons - Icons ke liye -->
-    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <link rel="stylesheet" href="//cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
     <!-- Custom CSS - Apna custom styling -->
     <style>
         /* CSS Variables - Theme colors */
@@ -961,9 +961,9 @@
     @include('layouts.footer')
 
     <!-- Bootstrap JS - Bootstrap JavaScript -->
-    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js"></script>
+    <script src="//cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js"></script>
     <!-- jQuery (Optional) - jQuery agar zaroori ho -->
-    <script src="https://code.jquery.com/jquery-3.7.0.min.js"></script>
+    <script src="//code.jquery.com/jquery-3.7.0.min.js"></script>
     
     <!-- Custom JavaScript - Apna custom JavaScript -->
     <script src="{{ asset('js/message-system.js') }}"></script>
