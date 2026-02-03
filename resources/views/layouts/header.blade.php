@@ -36,16 +36,44 @@
             <!-- Search Form - Search ka form -->
             <form class="d-flex me-3" action="{{ route('todos.index') }}" method="GET">
                 <div class="input-group">
-                    <input type="text" 
-                           class="form-control" 
-                           name="search" 
-                           placeholder="Search todos..." 
+                    <input type="text"
+                           class="form-control"
+                           name="search"
+                           placeholder="Search todos..."
                            value="{{ request('search') }}">
                     <button class="btn btn-outline-light" type="submit">
                         <i class="fas fa-search"></i>
                     </button>
                 </div>
             </form>
+
+            <!-- User Authentication Links -->
+            @auth
+                <div class="dropdown">
+                    <button class="btn btn-outline-light dropdown-toggle" type="button" id="userDropdown" data-bs-toggle="dropdown" aria-expanded="false">
+                        <i class="fas fa-user me-1"></i>{{ Auth::user()->name }}
+                    </button>
+                    <ul class="dropdown-menu" aria-labelledby="userDropdown">
+                        <li><a class="dropdown-item" href="{{ route('profile.edit') }}"><i class="fas fa-user-edit me-1"></i>Profile</a></li>
+                        <li><hr class="dropdown-divider"></li>
+                        <li>
+                            <form method="POST" action="{{ route('logout') }}">
+                                @csrf
+                                <button type="submit" class="dropdown-item">
+                                    <i class="fas fa-sign-out-alt me-1"></i>Logout
+                                </button>
+                            </form>
+                        </li>
+                    </ul>
+                </div>
+            @else
+                <a href="{{ route('login') }}" class="btn btn-outline-light me-2">
+                    <i class="fas fa-sign-in-alt me-1"></i>Login
+                </a>
+                <a href="{{ route('register') }}" class="btn btn-primary">
+                    <i class="fas fa-user-plus me-1"></i>Register
+                </a>
+            @endauth
 
            
         </div>

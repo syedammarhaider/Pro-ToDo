@@ -5,6 +5,7 @@ namespace App\Http\Controllers;
 use App\Models\Todo;
 use App\Services\TodoService;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Gate;
 
 class TodoController extends Controller
@@ -38,6 +39,7 @@ class TodoController extends Controller
     public function store(Request $request)
     {
         $validatedData = $this->validateTodo($request);
+        $validatedData['user_id'] = Auth::id();
         $this->todoService->createTodo($validatedData);
 
         return redirect()->route('todos.index')->with('success', 'Todo created successfully.');
