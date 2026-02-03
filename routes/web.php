@@ -7,12 +7,13 @@ use Illuminate\Support\Facades\Route;
 use Inertia\Inertia;
 
 Route::get('/', function () {
-    return Inertia::render('Welcome', [
-        'canLogin' => Route::has('login'),
-        'canRegister' => Route::has('register'),
-        'laravelVersion' => Application::VERSION,
-        'phpVersion' => PHP_VERSION,
-    ]);
+    // If user is authenticated, redirect to todos
+    if (auth()->check()) {
+        return redirect()->route('todos.index');
+    }
+
+    // If not authenticated, redirect to login
+    return redirect()->route('login');
 });
 
 Route::get('/dashboard', function () {
