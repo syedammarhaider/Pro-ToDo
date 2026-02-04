@@ -930,7 +930,7 @@ body::before {
             <div class="d-flex align-items-center gap-4">
                 <div class="welcome-section">
                     <h1 tabindex="0" class="welcome-text">
-                         Welcome, <span class="user-name">{{ Auth::user()->name }}</span>!
+                         Welc, <span class="user-name">{{ Auth::user()->name }}</span>!
                     </h1>
                 </div>
                 <div class="todos-count-badge">
