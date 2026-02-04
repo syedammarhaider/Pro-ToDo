@@ -16,7 +16,8 @@
         <script src="https://unpkg.com/react-dom@18/umd/react-dom.production.min.js"></script>
         <script src="https://unpkg.com/@inertiajs/react@1.0.0/dist/inertia-react.prod.min.js"></script>
         <script>
-            window.Inertia = InertiaReact;
+            const { Inertia } = InertiaReact;
+            window.Inertia = Inertia;
         </script>
         @inertiaHead
     </head>
