@@ -16,9 +16,45 @@ export default function Login({ status, canResetPassword }) {
     const submit = (e) => {
         e.preventDefault();
 
-        post(route('login'), {
-            onFinish: () => reset('password'),
-        });
+        // Create a hidden form and submit it traditionally
+        const form = document.createElement('form');
+        form.method = 'POST';
+        form.action = '/login';
+        form.style.display = 'none';
+        
+        // Add CSRF token
+        const csrfToken = document.querySelector('meta[name="csrf-token"]')?.getAttribute('content');
+        if (csrfToken) {
+            const csrfInput = document.createElement('input');
+            csrfInput.type = 'hidden';
+            csrfInput.name = '_token';
+            csrfInput.value = csrfToken;
+            form.appendChild(csrfInput);
+        }
+
+        // Add form fields
+        const emailInput = document.createElement('input');
+        emailInput.type = 'hidden';
+        emailInput.name = 'email';
+        emailInput.value = data.email;
+        form.appendChild(emailInput);
+
+        const passwordInput = document.createElement('input');
+        passwordInput.type = 'hidden';
+        passwordInput.name = 'password';
+        passwordInput.value = data.password;
+        form.appendChild(passwordInput);
+
+        if (data.remember) {
+            const rememberInput = document.createElement('input');
+            rememberInput.type = 'hidden';
+            rememberInput.name = 'remember';
+            rememberInput.value = '1';
+            form.appendChild(rememberInput);
+        }
+
+        document.body.appendChild(form);
+        form.submit();
     };
 
     return (

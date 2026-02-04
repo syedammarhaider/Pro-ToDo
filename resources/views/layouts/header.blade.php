@@ -15,18 +15,6 @@
         <div class="collapse navbar-collapse" id="navbarNav">
             <ul class="navbar-nav me-auto">
                 <li class="nav-item">
-                    <a class="nav-link {{ request()->routeIs('todos.index') ? 'active' : '' }}" 
-                       href="{{ route('todos.index') }}">
-                        <i class="fas fa-list me-1"></i> All Todos
-                    </a>
-                </li>
-                <li class="nav-item">
-                    <a class="nav-link {{ request()->routeIs('todos.create') ? 'active' : '' }}" 
-                       href="{{ route('todos.create') }}">
-                        <i class="fas fa-plus-circle me-1"></i> New Todo
-                    </a>
-                </li>
-                <li class="nav-item">
                     <a class="nav-link" href="#stats" data-bs-toggle="collapse">
                         <i class="fas fa-chart-bar me-1"></i> Statistics
                     </a>

@@ -21,7 +21,7 @@ class TodoController extends Controller
 
         // Ultra-fast keyset pagination
         $todos = $this->todoService->getTodos($filters, $sort, $lastId);
-        $categories = Todo::distinct()->pluck('category')->filter();
+        $categories = Todo::where('user_id', Auth::id())->distinct()->pluck('category')->filter();
 
         return view('todos.index', [
             'todos' => $todos,

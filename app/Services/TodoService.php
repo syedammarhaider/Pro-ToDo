@@ -20,13 +20,15 @@ class TodoService
     public function getTodos(array $filters = [], array $sort = []): LengthAwarePaginator
     {
         // Ultra-fast caching with smart invalidation - increased cache time for better performance
-        $cacheKey = 'todos_' . md5(serialize($filters) . serialize($sort) . request('page', 1));
+        $cacheKey = 'todos_' . auth()->id() . '_' . md5(serialize($filters) . serialize($sort) . request('page', 1));
 
         return Cache::remember($cacheKey, 300, function () use ($filters, $sort) {
-            $query = Todo::query()->select([
-                'id', 'title', 'description', 'priority', 'completed',
-                'due_date', 'category', 'position', 'created_at', 'updated_at'
-            ]);
+            $query = Todo::query()
+                ->where('user_id', auth()->id())
+                ->select([
+                    'id', 'title', 'description', 'priority', 'completed',
+                    'due_date', 'category', 'position', 'created_at', 'updated_at'
+                ]);
 
             // Apply filters
             $this->applyFilters($query, $filters);
@@ -84,14 +86,14 @@ class TodoService
 
     public function getStatistics(): array
     {
-        return Cache::remember('todo_stats', 300, function () {
+        return Cache::remember('todo_stats_' . auth()->id(), 300, function () {
             return [
-                'total' => Todo::count(),
-                'completed' => Todo::completed()->count(),
-                'active' => Todo::active()->count(),
-                'overdue' => Todo::overdue()->count(),
-                'high_priority' => Todo::priority('high')->count(),
-                'by_category' => Todo::groupBy('category')
+                'total' => Todo::where('user_id', auth()->id())->count(),
+                'completed' => Todo::where('user_id', auth()->id())->completed()->count(),
+                'active' => Todo::where('user_id', auth()->id())->active()->count(),
+                'overdue' => Todo::where('user_id', auth()->id())->overdue()->count(),
+                'high_priority' => Todo::where('user_id', auth()->id())->priority('high')->count(),
+                'by_category' => Todo::where('user_id', auth()->id())->groupBy('category')
                     ->select('category', \DB::raw('count(*) as total'))
                     ->get(),
             ];
