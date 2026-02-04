@@ -943,7 +943,7 @@ body::before {
             <div class="d-flex gap-3">
                 <a href="{{ route('profile.edit') }}" class="action-btn profile-btn" role="button" aria-label="Edit profile">
                     <i class="fas fa-user"></i>
-                    <span class="btn-text">Profile</span>
+                    <span class="btn-text">Prile</span>
                 </a>
                 <form action="{{ route('logout') }}" method="POST" class="d-inline">
                     @csrf
