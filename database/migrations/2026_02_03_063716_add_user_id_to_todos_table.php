@@ -12,7 +12,8 @@ return new class extends Migration
     public function up(): void
     {
         Schema::table('todos', function (Blueprint $table) {
-            //
+            $table->foreignId('user_id')->nullable()->constrained()->onDelete('cascade');
+            $table->index('user_id');
         });
     }
 
@@ -22,7 +23,9 @@ return new class extends Migration
     public function down(): void
     {
         Schema::table('todos', function (Blueprint $table) {
-            //
+            $table->dropForeign(['user_id']);
+            $table->dropIndex(['user_id']);
+            $table->dropColumn('user_id');
         });
     }
 };

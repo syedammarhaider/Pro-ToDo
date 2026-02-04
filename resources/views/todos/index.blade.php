@@ -734,7 +734,7 @@ body::before {
         <div class="d-flex justify-content-between align-items-center" >
             <div class="d-flex align-items-center gap-3">
                 <h1 tabindex="0">
-                    Welcome, {{ $auth->user->name }}! 
+                    Welcome, {{ Auth::user()->name }}! 
                     <span aria-label="{{ $todos->total() }} todos total" class="badge bg-info ms-3">{{ $todos->total() }} Todos</span>
                 </h1>
             </div>

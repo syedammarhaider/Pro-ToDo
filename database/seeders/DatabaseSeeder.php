@@ -18,19 +18,10 @@ class DatabaseSeeder extends Seeder
             RoleAndPermissionSeeder::class,
         ]);
 
-        // Create test user
-        $user = User::factory()->create([
-            'name' => 'Test User',
-            'email' => 'test@example.com',
-            'password' => bcrypt('password'),
-        ]);
-        
-        // Assign admin role to the test user
-        $user->assignRole('admin');
-
-        // Create todos
+        // Create 50 fake users with 20 todos each
         $this->call([
-            TodoSeeder::class,
+            UserSeeder::class,
+            UserTodoSeeder::class,
         ]);
     }
 }
