@@ -48,14 +48,14 @@ jobs:
         script: |
           cd /var/www/laravel
           git pull origin master
-          composer install --no-dev --optimize-autoloader
+          composer install --no-dev --optimize-autoloader --no-interaction
           npm install
           npm run build
           php artisan cache:clear
           php artisan config:clear
           php artisan route:clear
           php artisan view:clear
-          sudo chown -R www-data:www-data /var/www/laravel
+          sudo chown -R ec2-user:ec2-user /var/www/laravel
           sudo chmod -R 755 /var/www/laravel/storage
           sudo chmod -R 755 /var/www/laravel/bootstrap/cache
           sudo systemctl restart nginx

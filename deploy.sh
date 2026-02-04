@@ -10,11 +10,11 @@ cd /var/www/laravel
 
 # Pull latest changes from GitHub
 echo "📥 Pulling latest code from GitHub..."
-git pull origin main
+git pull origin master
 
 # Install/update composer dependencies
 echo "📦 Installing composer dependencies..."
-composer install --no-dev --optimize-autoloader
+composer install --no-dev --optimize-autoloader --no-interaction
 
 # Install/update npm dependencies and build assets
 echo "🔨 Building frontend assets..."
@@ -30,11 +30,11 @@ php artisan view:clear
 
 # Set proper permissions
 echo "🔐 Setting proper permissions..."
-sudo chown -R www-data:www-data /var/www/laravel
+sudo chown -R ec2-user:ec2-user /var/www/laravel
 sudo chmod -R 755 /var/www/laravel/storage
 sudo chmod -R 755 /var/www/laravel/bootstrap/cache
 
-# Restart services if needed
+# Restart services
 echo "🔄 Restarting services..."
 sudo systemctl restart nginx
 sudo systemctl restart php-fpm
