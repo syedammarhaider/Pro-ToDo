@@ -734,13 +734,27 @@ body::before {
         <div class="d-flex justify-content-between align-items-center" >
             <div class="d-flex align-items-center gap-3">
                 <h1 tabindex="0">
-                    <span aria-label="{{ $todos->total() }} todos total"> Total Todos {{ $todos->total() }} </span>
+                    Welcome, {{ $auth->user->name }}! 
+                    <span aria-label="{{ $todos->total() }} todos total" class="badge bg-info ms-3">{{ $todos->total() }} Todos</span>
                 </h1>
             </div>
-            <a href="{{ route('todos.create') }}" class="btn-primary-micro" role="button" aria-label="Create new todo">
-                <i class="fas fa-plus-circle" aria-hidden="true"></i>
-                <span class="d-none d-sm-inline">New Todo</span>
-            </a>
+            <div class="d-flex gap-2">
+                <a href="{{ route('profile.edit') }}" class="btn btn-outline-light btn-sm" role="button" aria-label="Edit profile">
+                    <i class="fas fa-user"></i>
+                    <span class="d-none d-sm-inline">Profile</span>
+                </a>
+                <form action="{{ route('logout') }}" method="POST" class="d-inline">
+                    @csrf
+                    <button type="submit" class="btn btn-danger btn-sm" aria-label="Logout">
+                        <i class="fas fa-sign-out-alt"></i>
+                        <span class="d-none d-sm-inline">Logout</span>
+                    </button>
+                </form>
+                <a href="{{ route('todos.create') }}" class="btn-primary-micro" role="button" aria-label="Create new todo">
+                    <i class="fas fa-plus-circle" aria-hidden="true"></i>
+                    <span class="d-none d-sm-inline">New Todo</span>
+                </a>
+            </div>
         </div>
     </header>
 

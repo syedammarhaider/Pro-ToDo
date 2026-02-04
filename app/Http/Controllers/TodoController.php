@@ -26,6 +26,7 @@ class TodoController extends Controller
         return view('todos.index', [
             'todos' => $todos,
             'categories' => $categories,
+            'auth' => ['user' => Auth::user()],
         ]);
     }
 
