@@ -1,3 +1,3 @@
-- [ ] Update vite.config.ts to change input from 'resources/js/app.tsx' to 'resources/js/app.jsx'
-- [ ] Run 'npm run build' to regenerate the manifest and assets
-- [ ] Verify the manifest.json is generated in public/build/
+- [x] Update vite.config.ts to change input from 'resources/js/app.tsx' to 'resources/js/app.jsx'
+- [x] Run 'npm run build' to regenerate the manifest and assets
+- [x] Verify the manifest.json is generated in public/build/
