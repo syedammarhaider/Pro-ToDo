@@ -72,23 +72,218 @@ body::before {
   filter: drop-shadow(0 0 8px rgba(0,112,243,0.6));
   flex-shrink: 0;
 }
-.page-header .badge {
-  background: #f81ce5 !important;
-  color: #fff !important;
-  font-size: 1.25rem !important;
-  font-weight: 900 !important;
-  padding: 0.4rem 0.9rem !important;
-  border-radius: 14px;
-  box-shadow: 0 0 15px rgba(248,28,229,0.6);
-  border: none;
-  margin-left: 10px;
-  display: inline-block !important;
-  flex-shrink: 0 !important;
+/* Unique Professional Header Styles */
+.welcome-section {
+  display: flex;
+  align-items: center;
+}
+
+.welcome-text {
+  font-size: 2rem;
+  font-weight: 700;
+  margin: 0;
+  background: linear-gradient(135deg, #667eea, #764ba2, #f093fb);
+  -webkit-background-clip: text;
+  -webkit-text-fill-color: transparent;
+  background-clip: text;
+  color: transparent;
+  text-shadow: 0 0 30px rgba(102, 126, 234, 0.3);
+}
+
+.user-name {
+  background: linear-gradient(135deg, #f093fb, #f5576c);
+  -webkit-background-clip: text;
+  -webkit-text-fill-color: transparent;
+  background-clip: text;
+  color: transparent;
+  font-weight: 800;
+}
+
+.todos-count-badge {
+  background: linear-gradient(135deg, #f81ce5, #7000ff);
+  color: #ffffff;
+  padding: 0.8rem 1.2rem;
+  border-radius: 12px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  min-width: 90px;
+  height: 48px;
+  box-shadow: 0 4px 15px rgba(248, 28, 229, 0.3);
+  border: 2px solid rgba(255, 255, 255, 0.2);
+  position: relative;
+  overflow: hidden;
+  transition: all 0.3s ease;
+  margin: 0;
+}
+
+.todos-count-badge::before {
+  content: '';
+  position: absolute;
+  top: -2px;
+  left: -2px;
+  right: -2px;
+  bottom: -2px;
+  background: linear-gradient(45deg, #f81ce5, #7000ff, #f81ce5);
+  z-index: -1;
+  border-radius: 12px;
+  opacity: 0.6;
+  animation: borderGlow 3s linear infinite;
+}
+
+.todos-count-badge:hover {
+  transform: translateY(-2px);
+  box-shadow: 0 8px 25px rgba(248, 28, 229, 0.5);
+}
+
+.count-content {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  gap: 0.1rem;
+}
+
+.count-number {
+  font-size: 1.4rem;
+  font-weight: 900;
   line-height: 1;
-  visibility: visible !important;
-  opacity: 1 !important;
-  position: relative !important;
-  z-index: 10 !important;
+}
+
+.count-label {
+  font-size: 0.7rem;
+  font-weight: 600;
+  text-transform: uppercase;
+  letter-spacing: 0.5px;
+  opacity: 0.9;
+}
+
+.action-btn {
+  display: inline-flex;
+  align-items: center;
+  gap: 0.5rem;
+  padding: 0.8rem 1.2rem;
+  border-radius: 12px;
+  font-weight: 600;
+  text-decoration: none;
+  transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+  border: none;
+  position: relative;
+  overflow: hidden;
+  color: white;
+  margin: 0;
+}
+
+.action-btn::before {
+  content: '';
+  position: absolute;
+  top: 0;
+  left: -100%;
+  width: 100%;
+  height: 100%;
+  background: linear-gradient(90deg, transparent, rgba(255,255,255,0.3), transparent);
+  transition: left 0.5s;
+}
+
+.action-btn:hover::before {
+  left: 100%;
+}
+
+.action-btn.profile-btn {
+  background: linear-gradient(135deg, #667eea, #764ba2);
+  box-shadow: 0 4px 15px rgba(102, 126, 234, 0.3);
+  margin: 0;
+}
+
+.action-btn.profile-btn:hover {
+  transform: translateY(-2px);
+  box-shadow: 0 8px 25px rgba(102, 126, 234, 0.5);
+}
+
+.action-btn.logout-btn {
+  background: linear-gradient(135deg, #f093fb, #f5576c);
+  box-shadow: 0 4px 15px rgba(240, 147, 251, 0.3);
+  margin: 0;
+}
+
+.action-btn.logout-btn:hover {
+  transform: translateY(-2px);
+  box-shadow: 0 8px 25px rgba(240, 147, 251, 0.5);
+}
+
+.action-btn.create-btn {
+  background: linear-gradient(135deg, #f81ce5, #7000ff);
+  box-shadow: 0 4px 15px rgba(248, 28, 229, 0.3);
+  margin: 0;
+}
+
+.action-btn.create-btn:hover {
+  transform: translateY(-2px);
+  box-shadow: 0 8px 25px rgba(248, 28, 229, 0.5);
+}
+
+.btn-text {
+  font-weight: 600;
+}
+
+@keyframes borderGlow {
+  0% {
+    transform: rotate(0deg);
+  }
+  100% {
+    transform: rotate(360deg);
+  }
+}
+
+/* Responsive Design */
+@media (max-width: 768px) {
+  .welcome-text {
+    font-size: 1.5rem;
+  }
+  
+  .todos-count-badge {
+    min-width: 80px;
+    padding: 0.6rem 1rem;
+  }
+  
+  .count-number {
+    font-size: 1.4rem;
+  }
+  
+  .count-label {
+    font-size: 0.7rem;
+  }
+  
+  .action-btn {
+    padding: 0.6rem 1rem;
+  }
+  
+  .btn-text {
+    display: none;
+  }
+}
+
+@media (max-width: 576px) {
+  .d-flex.gap-4 {
+    gap: 1rem !important;
+  }
+  
+  .welcome-text {
+    font-size: 1.3rem;
+  }
+  
+  .todos-count-badge {
+    min-width: 70px;
+    padding: 0.5rem 0.8rem;
+  }
+  
+  .count-number {
+    font-size: 1.2rem;
+  }
+  
+  .count-label {
+    font-size: 0.6rem;
+  }
 }
 .btn-primary-micro {
   background: linear-gradient(135deg,#f81ce5,#7000ff);
@@ -732,27 +927,34 @@ body::before {
 <div class="container-fluid px-2 px-md-3">
     <header class="page-header compact" id="pageHeader" role="banner">
         <div class="d-flex justify-content-between align-items-center" >
-            <div class="d-flex align-items-center gap-3">
-                <h1 tabindex="0">
-                    Welcome, {{ Auth::user()->name }}! 
-                    <span aria-label="{{ $todos->total() }} todos total" class="badge bg-info ms-3">{{ $todos->total() }} Todos</span>
-                </h1>
+            <div class="d-flex align-items-center gap-4">
+                <div class="welcome-section">
+                    <h1 tabindex="0" class="welcome-text">
+                         Welcome, <span class="user-name">{{ Auth::user()->name }}</span>!
+                    </h1>
+                </div>
+                <div class="todos-count-badge">
+                    <div class="count-content">
+                        <div class="count-number">{{ $todos->total() }}</div>
+                        <div class="count-label">Todos</div>
+                    </div>
+                </div>
             </div>
-            <div class="d-flex gap-2">
-                <a href="{{ route('profile.edit') }}" class="btn btn-outline-light btn-sm" role="button" aria-label="Edit profile">
+            <div class="d-flex gap-3">
+                <a href="{{ route('profile.edit') }}" class="action-btn profile-btn" role="button" aria-label="Edit profile">
                     <i class="fas fa-user"></i>
-                    <span class="d-none d-sm-inline">Profile</span>
+                    <span class="btn-text">Profile</span>
                 </a>
                 <form action="{{ route('logout') }}" method="POST" class="d-inline">
                     @csrf
-                    <button type="submit" class="btn btn-danger btn-sm" aria-label="Logout">
+                    <button type="submit" class="action-btn logout-btn" aria-label="Logout">
                         <i class="fas fa-sign-out-alt"></i>
-                        <span class="d-none d-sm-inline">Logout</span>
+                        <span class="btn-text">Logout</span>
                     </button>
                 </form>
-                <a href="{{ route('todos.create') }}" class="btn-primary-micro" role="button" aria-label="Create new todo">
-                    <i class="fas fa-plus-circle" aria-hidden="true"></i>
-                    <span class="d-none d-sm-inline">New Todo</span>
+                <a href="{{ route('todos.create') }}" class="action-btn create-btn" role="button" aria-label="Create new todo">
+                    <i class="fas fa-plus-circle"></i>
+                    <span class="btn-text">New Todo</span>
                 </a>
             </div>
         </div>
@@ -768,7 +970,7 @@ body::before {
                 </button>
                 <div id="filterContent" style="display:none;">
                     <form action="{{ route('todos.index') }}" method="GET" class="row g-2" role="search" aria-label="Todo search and filters">
-                        <div class="col-12 col-md-6 col-lg-3">
+                        <div class="col-12 col-md-6 col-lg-2">
                             <input type="search" name="search" class="form-control-micro" placeholder="🔍 Search todos..." value="{{ request('search') }}" aria-label="Search todos">
                         </div>
                         <div class="col-12 col-md-6 col-lg-2">
@@ -787,7 +989,22 @@ body::before {
                                 <option value="high" {{ request('priority') == 'high' ? 'selected' : '' }}>🔴 High</option>
                             </select>
                         </div>
-                        <div class="col-12 col-md-6 col-lg-3">
+                        <div class="col-12 col-md-6 col-lg-2">
+                            <select name="sort" class="form-select-micro" aria-label="Sort by">
+                                <option value="">📅 Sort by</option>
+                                <option value="due_date" {{ request('sort') == 'due_date' ? 'selected' : '' }}>📅 Due Date</option>
+                                <option value="priority" {{ request('sort') == 'priority' ? 'selected' : '' }}>🎯 Priority</option>
+                                <option value="created_at" {{ request('sort') == 'created_at' ? 'selected' : '' }}>🕐 Created</option>
+                            </select>
+                        </div>
+                        <div class="col-12 col-md-6 col-lg-2">
+                            <select name="direction" class="form-select-micro" aria-label="Sort direction">
+                                <option value="">↕️ Order</option>
+                                <option value="asc" {{ request('direction') == 'asc' ? 'selected' : '' }}>⬆️ Ascending</option>
+                                <option value="desc" {{ request('direction') == 'desc' ? 'selected' : '' }}>⬇️ Descending</option>
+                            </select>
+                        </div>
+                        <div class="col-12 col-md-6 col-lg-2">
                             <select name="category" class="form-select-micro" aria-label="Filter by category">
                                 <option value="">🏷️ Category</option>
                                 @foreach($categories as $category)

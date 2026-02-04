@@ -127,10 +127,21 @@ class TodoService
     private function applySorting($query, array $sort): void
     {
         $allowedSorts = ['position', 'due_date', 'priority', 'created_at'];
-        $sortBy = isset($sort['sort']) && in_array($sort['sort'], $allowedSorts) ? $sort['sort'] : 'position';
+        $sortBy = isset($sort['sort']) && in_array($sort['sort'], $allowedSorts) ? $sort['sort'] : 'due_date';
         $direction = isset($sort['direction']) && $sort['direction'] === 'desc' ? 'desc' : 'asc';
 
-        $query->orderBy($sortBy, $direction);
+        // Default sorting: by due_date first, then by priority
+        if (!isset($sort['sort'])) {
+            // Sort by due_date (earliest first), then by priority (high to low)
+            $query->orderBy('due_date', 'asc')
+                  ->orderByRaw("CASE priority 
+                    WHEN 'high' THEN 1 
+                    WHEN 'medium' THEN 2 
+                    WHEN 'low' THEN 3 
+                    ELSE 4 END");
+        } else {
+            $query->orderBy($sortBy, $direction);
+        }
     }
 
     public function clearTodoCaches(): void

@@ -23,8 +23,8 @@ Route::middleware('auth')->group(function () {
 
     // Todo routes
     Route::resource('todos', TodoController::class);
-    Route::get('/todos/{todo}/complete', [TodoController::class, 'complete'])->name('todos.complete');
-    Route::get('/todos/{todo}/incomplete', [TodoController::class, 'incomplete'])->name('todos.incomplete');
+    Route::post('/todos/{todo}/complete', [TodoController::class, 'complete'])->name('todos.complete');
+    Route::post('/todos/{todo}/incomplete', [TodoController::class, 'incomplete'])->name('todos.incomplete');
     Route::post('/todos/update-positions', [TodoController::class, 'updatePositions'])->name('todos.update-positions');
     Route::post('/todos/bulk-delete', [TodoController::class, 'bulkDelete'])->name('todos.bulk-delete');
     Route::post('/todos/bulk-complete', [TodoController::class, 'bulkComplete'])->name('todos.bulk-complete');

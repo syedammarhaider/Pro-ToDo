@@ -32,6 +32,7 @@ class CreateTodoAction
             'priority' => $validated['priority'] ?? 'medium',
             'category' => $validated['category'] ?? null,
             'due_date' => $validated['due_date'] ?? null,
+            'user_id' => $data['user_id'] ?? Auth::id(),
         ]);
     }
 }
