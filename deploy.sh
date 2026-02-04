@@ -36,7 +36,7 @@ sudo chmod -R 755 /var/www/laravel/bootstrap/cache
 
 # Restart services
 echo "🔄 Restarting services..."
-sudo systemctl restart nginx
+sudo systemctl restart httpd
 sudo systemctl restart php-fpm
 
 echo "✅ Deployment completed successfully!"

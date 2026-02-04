@@ -58,5 +58,5 @@ jobs:
           sudo chown -R ec2-user:ec2-user /var/www/laravel
           sudo chmod -R 755 /var/www/laravel/storage
           sudo chmod -R 755 /var/www/laravel/bootstrap/cache
-          sudo systemctl restart nginx
+          sudo systemctl restart httpd
           sudo systemctl restart php-fpm
