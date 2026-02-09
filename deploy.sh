@@ -16,15 +16,6 @@ git pull origin main
 echo "📦 Installing composer dependencies..."
 composer install --no-dev --optimize-autoloader
 
-# Copy production environment file
-echo "📋 Setting up production environment..."
-if [ -f .env.production ]; then
-    cp .env.production .env
-    echo "✅ Production environment file copied"
-else
-    echo "⚠️  .env.production not found, using existing .env"
-fi
-
 # Install/update npm dependencies and build assets
 echo "🔨 Building frontend assets..."
 npm install
@@ -40,12 +31,7 @@ php artisan config:cache
 
 # Set proper permissions
 echo "🔐 Setting proper permissions..."
-sudo mkdir -p /var/www/laravel/storage/logs
-sudo mkdir -p /var/www/laravel/storage/framework/views
-sudo mkdir -p /var/www/laravel/storage/framework/sessions
-sudo mkdir -p /var/www/laravel/storage/framework/cache
-sudo mkdir -p /var/www/laravel/bootstrap/cache
-sudo chown -R apache:apache /var/www/laravel
+sudo chown -R www-data:www-data /var/www/laravel
 sudo chmod -R 755 /var/www/laravel/storage
 sudo chmod -R 755 /var/www/laravel/bootstrap/cache
 sudo touch /var/www/laravel/storage/logs/laravel.log
@@ -54,7 +40,7 @@ sudo chmod 664 /var/www/laravel/storage/logs/laravel.log
 
 # Restart services if needed
 echo "🔄 Restarting services..."
-sudo systemctl restart httpd
+sudo systemctl restart nginx
 sudo systemctl restart php-fpm
 
 echo "✅ Deployment completed successfully!"
