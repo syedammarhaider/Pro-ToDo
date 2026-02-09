@@ -1,9 +1,9 @@
-import Checkbox from '@/components/Checkbox';
-import InputError from '@/components/InputError';
-import InputLabel from '@/components/InputLabel';
-import PrimaryButton from '@/components/PrimaryButton';
-import TextInput from '@/components/TextInput';
-import GuestLayout from '@/layouts/GuestLayout';
+import Checkbox from '@/Components/Checkbox';
+import InputError from '@/Components/InputError';
+import InputLabel from '@/Components/InputLabel';
+import PrimaryButton from '@/Components/PrimaryButton';
+import TextInput from '@/Components/TextInput';
+import GuestLayout from '@/Layouts/GuestLayout';
 import { Head, Link, useForm } from '@inertiajs/react';
 
 export default function Login({ status, canResetPassword }) {
@@ -16,45 +16,9 @@ export default function Login({ status, canResetPassword }) {
     const submit = (e) => {
         e.preventDefault();
 
-        // Create a hidden form and submit it traditionally
-        const form = document.createElement('form');
-        form.method = 'POST';
-        form.action = '/login';
-        form.style.display = 'none';
-        
-        // Add CSRF token
-        const csrfToken = document.querySelector('meta[name="csrf-token"]')?.getAttribute('content');
-        if (csrfToken) {
-            const csrfInput = document.createElement('input');
-            csrfInput.type = 'hidden';
-            csrfInput.name = '_token';
-            csrfInput.value = csrfToken;
-            form.appendChild(csrfInput);
-        }
-
-        // Add form fields
-        const emailInput = document.createElement('input');
-        emailInput.type = 'hidden';
-        emailInput.name = 'email';
-        emailInput.value = data.email;
-        form.appendChild(emailInput);
-
-        const passwordInput = document.createElement('input');
-        passwordInput.type = 'hidden';
-        passwordInput.name = 'password';
-        passwordInput.value = data.password;
-        form.appendChild(passwordInput);
-
-        if (data.remember) {
-            const rememberInput = document.createElement('input');
-            rememberInput.type = 'hidden';
-            rememberInput.name = 'remember';
-            rememberInput.value = '1';
-            form.appendChild(rememberInput);
-        }
-
-        document.body.appendChild(form);
-        form.submit();
+        post(route('login'), {
+            onFinish: () => reset('password'),
+        });
     };
 
     return (
@@ -116,23 +80,15 @@ export default function Login({ status, canResetPassword }) {
                     </label>
                 </div>
 
-                <div className="mt-4 flex items-center justify-between">
-                    <div className="flex flex-col space-y-2">
-                        {canResetPassword && (
-                            <Link
-                                href={route('password.request')}
-                                className="rounded-md text-sm text-gray-600 underline hover:text-gray-900 focus:outline-none focus:ring-2 focus:ring-indigo-500 focus:ring-offset-2"
-                            >
-                                Forgot your password?
-                            </Link>
-                        )}
+                <div className="mt-4 flex items-center justify-end">
+                    {canResetPassword && (
                         <Link
-                            href={route('register')}
+                            href={route('password.request')}
                             className="rounded-md text-sm text-gray-600 underline hover:text-gray-900 focus:outline-none focus:ring-2 focus:ring-indigo-500 focus:ring-offset-2"
                         >
-                            Create account
+                            Forgot your password?
                         </Link>
-                    </div>
+                    )}
 
                     <PrimaryButton className="ms-4" disabled={processing}>
                         Log in

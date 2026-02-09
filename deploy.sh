@@ -10,11 +10,20 @@ cd /var/www/laravel
 
 # Pull latest changes from GitHub
 echo "📥 Pulling latest code from GitHub..."
-git pull origin master
+git pull origin main
 
 # Install/update composer dependencies
 echo "📦 Installing composer dependencies..."
-composer install --no-dev --optimize-autoloader --no-interaction
+composer install --no-dev --optimize-autoloader
+
+# Copy production environment file
+echo "📋 Setting up production environment..."
+if [ -f .env.production ]; then
+    cp .env.production .env
+    echo "✅ Production environment file copied"
+else
+    echo "⚠️  .env.production not found, using existing .env"
+fi
 
 # Install/update npm dependencies and build assets
 echo "🔨 Building frontend assets..."
@@ -30,11 +39,11 @@ php artisan view:clear
 
 # Set proper permissions
 echo "🔐 Setting proper permissions..."
-sudo chown -R ec2-user:ec2-user /var/www/laravel
+sudo chown -R apache:apache /var/www/laravel
 sudo chmod -R 755 /var/www/laravel/storage
 sudo chmod -R 755 /var/www/laravel/bootstrap/cache
 
-# Restart services
+# Restart services if needed
 echo "🔄 Restarting services..."
 sudo systemctl restart httpd
 sudo systemctl restart php-fpm

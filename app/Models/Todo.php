@@ -143,4 +143,12 @@ class Todo extends Model
         if ($this->isOverdue()) return 'Overdue';
         return 'Pending';
     }
+
+    /**
+     * Relationship with User
+     */
+    public function user(): BelongsTo
+    {
+        return $this->belongsTo(User::class);
+    }
 }
