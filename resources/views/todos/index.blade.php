@@ -567,6 +567,7 @@
 </script>
 @endsection
 
+@section('styles')
 <style>
   .todo-grid {
     gap: 0.15rem !important;
