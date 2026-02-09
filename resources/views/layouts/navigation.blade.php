@@ -175,7 +175,7 @@
                     <span>Edit Profile</span>
                 </a>
                 
-                <a href="{{ route('todos.trashed') }}" class="mobile-menu-item">
+                <a href="{{ route('todos.trash') }}" class="mobile-menu-item">
                     <i class="fas fa-trash-restore"></i>
                     <span>Trashed Todos</span>
                 </a>
