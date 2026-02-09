@@ -3,6 +3,11 @@
 @section('title', 'All Todos - Professional Todo App')
 
 @section('content')
+<!-- Debug: Current page location -->
+<div style="position: fixed; top: 10px; left: 10px; background: rgba(0,0,0,0.8); color: white; padding: 5px; border-radius: 5px; font-size: 12px; z-index: 9999;">
+    Page: {{ request()->fullUrl() }}
+</div>
+
 <div class="message-container" id="messageContainer" aria-live="assertive" aria-atomic="true" aria-relevant="additions"></div>
 
 <div class="quick-actions-bar" id="quickActionsBar" role="toolbar" aria-label="Quick actions">
