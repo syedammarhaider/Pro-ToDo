@@ -32,6 +32,14 @@ class AuthenticatedSessionController extends Controller
     }
 
     /**
+     * Handle GET requests to logout (for backward compatibility).
+     */
+    public function show(): RedirectResponse
+    {
+        return redirect()->route('login');
+    }
+
+    /**
      * Destroy an authenticated session.
      */
     public function destroy(Request $request): RedirectResponse
