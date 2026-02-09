@@ -95,7 +95,7 @@
                             <span>Edit Profile</span>
                         </a>
                         
-                        <a href="{{ route('todos.trashed') }}" class="dropdown-item">
+                        <a href="{{ route('todos.trash') }}" class="dropdown-item">
                             <i class="fas fa-trash-restore"></i>
                             <span>Trashed Todos</span>
                         </a>
