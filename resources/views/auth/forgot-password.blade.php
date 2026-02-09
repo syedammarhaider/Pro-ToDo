@@ -1,25 +1,224 @@
-<x-guest-layout>
-    <div class="mb-4 text-sm text-gray-600">
-        {{ __('Forgot your password? No problem. Just let us know your email address and we will email you a password reset link that will allow you to choose a new one.') }}
-    </div>
+<!DOCTYPE html>
+<html lang="{{ str_replace('_', '-', app()->getLocale()) }}">
+    <head>
+        <meta charset="utf-8">
+        <meta name="viewport" content="width=device-width, initial-scale=1">
+        <meta name="csrf-token" content="{{ csrf_token() }}">
 
-    <!-- Session Status -->
-    <x-auth-session-status class="mb-4" :status="session('status')" />
+        <title>Forgot Password - Professional Todo App</title>
 
-    <form method="POST" action="{{ route('password.email') }}">
-        @csrf
+        <!-- Fonts -->
+        <link rel="preconnect" href="https://fonts.bunny.net">
+        <link href="https://fonts.bunny.net/css?family=figtree:400,500,600&display=swap" rel="stylesheet" />
+        
+        <!-- CSS -->
+        <link rel="stylesheet" href="/css/app.css">
+        <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&display=swap">
+        <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+        
+        <style>
+            body {
+                background: linear-gradient(135deg,var(--bg-main) 0%,#1a2a6c 50%,var(--card-dark) 100%);
+                color: var(--text-primary);
+                font-family:'Inter',sans-serif;
+                min-height:100vh;
+                display: flex;
+                align-items: center;
+                justify-content: center;
+                margin: 0;
+                padding: 20px;
+            }
+            
+            .auth-container {
+                background: var(--glass-bg);
+                backdrop-filter: blur(25px) saturate(180%);
+                -webkit-backdrop-filter: blur(25px) saturate(180%);
+                border:1.5px solid var(--glass-border);
+                border-radius:28px;
+                box-shadow: 0 25px 50px -12px rgba(0,0,0,0.5), inset 0 1px 0 0 rgba(255,255,255,0.1);
+                padding: 2.5rem;
+                width: 100%;
+                max-width: 400px;
+            }
+            
+            .auth-header {
+                text-align: center;
+                margin-bottom: 2rem;
+            }
+            
+            .auth-title {
+                font-size: 2rem;
+                font-weight: 700;
+                background: linear-gradient(135deg, #667eea, #764ba2, #f093fb);
+                -webkit-background-clip: text;
+                -webkit-text-fill-color: transparent;
+                background-clip: text;
+                color: transparent;
+                margin-bottom: 0.5rem;
+            }
+            
+            .auth-subtitle {
+                color: var(--text-secondary);
+                font-size: 0.9rem;
+                line-height: 1.5;
+            }
+            
+            .form-group {
+                margin-bottom: 1.5rem;
+            }
+            
+            .form-label {
+                display: block;
+                color: white;
+                font-weight: 500;
+                margin-bottom: 0.5rem;
+                font-size: 0.9rem;
+            }
+            
+            .form-input {
+                width: 100%;
+                background: rgba(255,255,255,0.07);
+                border: 1.5px solid rgba(255,255,255,0.12);
+                color: white;
+                border-radius: 14px;
+                padding: 0.75rem 1rem;
+                font-size: 0.9rem;
+                transition: all 0.3s ease;
+            }
+            
+            .form-input:focus {
+                background: rgba(255,255,255,0.12);
+                border-color: var(--accent-cyan);
+                box-shadow: 0 0 0 0.25rem rgba(0,210,255,0.2);
+                color: white;
+                outline: none;
+            }
+            
+            .form-input::placeholder {
+                color: rgba(255,255,255,0.5);
+            }
+            
+            .btn-primary {
+                background: linear-gradient(135deg, #f81ce5, #7000ff);
+                color: white;
+                border: none;
+                padding: 0.75rem 1.5rem;
+                border-radius: 14px;
+                font-weight: 600;
+                text-decoration: none;
+                display: inline-flex;
+                align-items: center;
+                gap: 8px;
+                transition: all 0.3s ease;
+                box-shadow: 0 4px 15px rgba(248,28,229,0.3);
+                cursor: pointer;
+                font-size: 0.9rem;
+                width: 100%;
+                justify-content: center;
+            }
+            
+            .btn-primary:hover {
+                transform: translateY(-2px);
+                box-shadow: 0 8px 25px rgba(248,28,229,0.5);
+            }
+            
+            .btn-link {
+                color: var(--accent-cyan);
+                text-decoration: none;
+                font-size: 0.9rem;
+                transition: color 0.3s ease;
+            }
+            
+            .btn-link:hover {
+                color: var(--accent-blue);
+                text-decoration: underline;
+            }
+            
+            .alert {
+                padding: 0.75rem 1rem;
+                border-radius: 12px;
+                margin-bottom: 1.5rem;
+                border-left: 4px solid;
+            }
+            
+            .alert-success {
+                border-left-color: var(--accent-green);
+                background: linear-gradient(135deg, rgba(0,255,136,0.1), rgba(9,18,54,0.8));
+                color: white;
+            }
+            
+            .alert-error {
+                border-left-color: var(--accent-red);
+                background: linear-gradient(135deg, rgba(255,75,92,0.1), rgba(9,18,54,0.8));
+                color: white;
+            }
+            
+            .text-error {
+                color: var(--accent-red);
+                font-size: 0.8rem;
+                margin-top: 0.25rem;
+            }
+            
+            .auth-footer {
+                text-align: center;
+                margin-top: 2rem;
+                padding-top: 1.5rem;
+                border-top: 1px solid rgba(255,255,255,0.1);
+            }
+            
+            .auth-footer p {
+                color: var(--text-secondary);
+                font-size: 0.9rem;
+            }
+        </style>
+    </head>
+    <body>
+        <div class="auth-container">
+            <div class="auth-header">
+                <h1 class="auth-title">Reset Password</h1>
+                <p class="auth-subtitle">No problem. Just let us know your email address and we will email you a password reset link.</p>
+            </div>
 
-        <!-- Email Address -->
-        <div>
-            <x-input-label for="email" :value="__('Email')" />
-            <x-text-input id="email" class="block mt-1 w-full" type="email" name="email" :value="old('email')" required autofocus />
-            <x-input-error :messages="$errors->get('email')" class="mt-2" />
+            <!-- Session Status -->
+            @if (session('status'))
+                <div class="alert alert-success">
+                    {{ session('status') }}
+                </div>
+            @endif
+
+            <form method="POST" action="{{ route('password.email') }}">
+                @csrf
+
+                <!-- Email Address -->
+                <div class="form-group">
+                    <label for="email" class="form-label">Email Address</label>
+                    <input id="email" 
+                           class="form-input" 
+                           type="email" 
+                           name="email" 
+                           value="{{ old('email') }}" 
+                           required 
+                           autofocus
+                           placeholder="Enter your email address">
+                    @error('email')
+                        <div class="text-error">{{ $message }}</div>
+                    @enderror
+                </div>
+
+                <button type="submit" class="btn-primary">
+                    <i class="fas fa-envelope"></i>
+                    Email Password Reset Link
+                </button>
+            </form>
+
+            <div class="auth-footer">
+                <p>
+                    Remember your password? 
+                    <a href="{{ route('login') }}" class="btn-link" style="font-weight: 600;">
+                        Back to login
+                    </a>
+                </p>
+            </div>
         </div>
-
-        <div class="flex items-center justify-end mt-4">
-            <x-primary-button>
-                {{ __('Email Password Reset Link') }}
-            </x-primary-button>
-        </div>
-    </form>
-</x-guest-layout>
+    </body>
+</html>
