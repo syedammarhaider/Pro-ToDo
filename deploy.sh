@@ -36,12 +36,21 @@ php artisan cache:clear
 php artisan config:clear
 php artisan route:clear
 php artisan view:clear
+php artisan config:cache
 
 # Set proper permissions
 echo "🔐 Setting proper permissions..."
+sudo mkdir -p /var/www/laravel/storage/logs
+sudo mkdir -p /var/www/laravel/storage/framework/views
+sudo mkdir -p /var/www/laravel/storage/framework/sessions
+sudo mkdir -p /var/www/laravel/storage/framework/cache
+sudo mkdir -p /var/www/laravel/bootstrap/cache
 sudo chown -R apache:apache /var/www/laravel
 sudo chmod -R 755 /var/www/laravel/storage
 sudo chmod -R 755 /var/www/laravel/bootstrap/cache
+sudo touch /var/www/laravel/storage/logs/laravel.log
+sudo chown apache:apache /var/www/laravel/storage/logs/laravel.log
+sudo chmod 664 /var/www/laravel/storage/logs/laravel.log
 
 # Restart services if needed
 echo "🔄 Restarting services..."
