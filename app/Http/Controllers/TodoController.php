@@ -23,9 +23,29 @@ class TodoController extends Controller
         $todos = $this->todoService->getTodos($filters, $sort, $lastId);
         $categories = Todo::where('user_id', Auth::id())->distinct()->pluck('category')->filter();
 
+        // Get statistics
+        $userId = Auth::id();
+        $totalTodos = Todo::where('user_id', $userId)->count();
+        $activeTodos = Todo::where('user_id', $userId)->where('completed', false)->count();
+        $completedTodos = Todo::where('user_id', $userId)->where('completed', true)->count();
+        $overdueTodos = Todo::where('user_id', $userId)
+                            ->where('completed', false)
+                            ->where('due_date', '<', now())
+                            ->count();
+        $highPriorityTodos = Todo::where('user_id', $userId)->where('priority', 'high')->count();
+        $mediumPriorityTodos = Todo::where('user_id', $userId)->where('priority', 'medium')->count();
+        $lowPriorityTodos = Todo::where('user_id', $userId)->where('priority', 'low')->count();
+
         return view('todos.index', [
             'todos' => $todos,
             'categories' => $categories,
+            'totalTodos' => $totalTodos,
+            'activeTodos' => $activeTodos,
+            'completedTodos' => $completedTodos,
+            'overdueTodos' => $overdueTodos,
+            'highPriorityTodos' => $highPriorityTodos,
+            'mediumPriorityTodos' => $mediumPriorityTodos,
+            'lowPriorityTodos' => $lowPriorityTodos,
         ]);
     }
 
