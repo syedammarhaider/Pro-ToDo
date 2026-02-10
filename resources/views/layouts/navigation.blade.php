@@ -1,280 +1,104 @@
-<!DOCTYPE html>
-<html lang="en">
-<head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=5.0, viewport-fit=cover">
-    <title>@yield('title', 'Professional Todo App')</title>
-    
-    <!-- Fonts & Icons -->
-    <link rel="preconnect" href="https://fonts.googleapis.com">
-    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800&display=swap" rel="stylesheet">
-    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
-    
-    <!-- Styles -->
-    <style>
-        {!! file_get_contents(public_path('css/app.css')) !!}
-    </style>
-    
-    @yield('styles')
-</head>
-<body>
-    <!-- Navigation -->
-    <nav class="glass-navbar">
-        <div class="nav-container">
-            <!-- Logo -->
-            <div class="nav-logo">
-                <a href="{{ route('todos.index') }}" class="logo-link">
-                    <div class="logo-icon">
-                        <i class="fas fa-tasks"></i>
-                    </div>
-                    <div class="logo-text">
-                        <span class="logo-main">Pro-ToDo</span>
-                        <span class="logo-sub">Professional</span>
-                    </div>
-                </a>
-            </div>
-
-            <!-- Search Bar (Desktop) -->
-            <div class="nav-search-desktop">
-                <form action="{{ route('todos.index') }}" method="GET" class="search-form">
-                    <div class="search-input-group">
-                        <i class="fas fa-search search-icon"></i>
-                        <input type="search" 
-                               name="search" 
-                               class="search-input" 
-                               placeholder="Search todos..." 
-                               value="{{ request('search') }}"
-                               aria-label="Search todos">
-                        @if(request('search'))
-                        <button type="button" class="search-clear" onclick="clearSearch()" aria-label="Clear search">
-                            <i class="fas fa-times"></i>
-                        </button>
-                        @endif
-                    </div>
-                    <button type="submit" class="search-submit" aria-label="Submit search">
-                        <i class="fas fa-arrow-right"></i>
-                    </button>
-                </form>
-            </div>
-
-            <!-- User Actions -->
-            <div class="nav-actions">
-                <!-- Search Toggle (Mobile) -->
-                <button class="nav-action-btn search-toggle" onclick="toggleMobileSearch()" aria-label="Toggle search">
-                    <i class="fas fa-search"></i>
-                </button>
-
-                <!-- Profile Dropdown -->
-                <div class="profile-dropdown">
-                    <button class="nav-action-btn profile-toggle" onclick="toggleProfileDropdown()" aria-label="User profile">
-                        <div class="user-avatar">
-                            {{ strtoupper(substr(Auth::user()->name, 0, 1)) }}
-                        </div>
-                        <span class="user-name-truncated">{{ strtok(Auth::user()->name, ' ') }}</span>
-                        <i class="fas fa-chevron-down dropdown-arrow"></i>
-                    </button>
-                    
-                    <div class="dropdown-menu" id="profileDropdown">
-                        <div class="dropdown-header">
-                            <div class="user-info">
-                                <div class="user-avatar-large">
-                                    {{ strtoupper(substr(Auth::user()->name, 0, 1)) }}
-                                </div>
-                                <div>
-                                    <h4 class="user-fullname">{{ Auth::user()->name }}</h4>
-                                    <p class="user-email">{{ Auth::user()->email }}</p>
-                                </div>
-                            </div>
-                        </div>
-                        
-                        <div class="dropdown-divider"></div>
-                        
-                        <a href="{{ route('profile.edit') }}" class="dropdown-item">
-                            <i class="fas fa-user-cog"></i>
-                            <span>Edit Profile</span>
-                        </a>
-                        
-                        <a href="{{ route('todos.trash') }}" class="dropdown-item">
-                            <i class="fas fa-trash-restore"></i>
-                            <span>Trashed Todos</span>
-                        </a>
-                        
-                        <a href="#" class="dropdown-item" onclick="toggleDarkMode()">
-                            <i class="fas fa-moon"></i>
-                            <span>Dark Mode</span>
-                            <div class="toggle-switch">
-                                <div class="toggle-slider"></div>
-                            </div>
-                        </a>
-                        
-                        <div class="dropdown-divider"></div>
-                        
-                        <form action="{{ route('logout') }}" method="POST" class="dropdown-logout-form">
-                            @csrf
-                            <button type="submit" class="dropdown-item logout-btn">
-                                <i class="fas fa-sign-out-alt"></i>
-                                <span>Logout</span>
-                            </button>
-                        </form>
-                    </div>
+<!-- Navigation Bar -->
+<nav x-data="{ open: false }" class="glass-effect border-b border-gray-100">
+    <!-- Primary Navigation Menu -->
+    <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+        <div class="flex justify-between h-16">
+            <div class="flex items-center">
+                <!-- App Title/Logo -->
+                <div class="shrink-0 flex items-center">
+                    <a href="{{ route('todos.index') }}" class="flex items-center gap-2 text-white hover:text-cyan-400 transition-colors">
+                        <i class="fas fa-tasks text-2xl bg-gradient-to-r from-cyan-400 to-purple-500 bg-clip-text text-transparent"></i>
+                        <span class="text-xl font-bold bg-gradient-to-r from-cyan-400 to-purple-500 bg-clip-text text-transparent">Pro-ToDo</span>
+                    </a>
                 </div>
 
-                <!-- Mobile Menu Toggle -->
-                <button class="nav-action-btn mobile-menu-toggle" onclick="toggleMobileMenu()" aria-label="Toggle menu">
-                    <i class="fas fa-bars"></i>
-                </button>
+                <!-- Navigation Links -->
+                <div class="hidden space-x-8 sm:-my-px sm:ms-10 sm:flex">
+                    <a href="{{ route('todos.index') }}" class="inline-flex items-center px-1 pt-1 text-sm font-medium text-white hover:text-cyan-400 transition-colors">
+                        <i class="fas fa-home me-2"></i>
+                        {{ __('Todos') }}
+                    </a>
+                </div>
             </div>
 
-            <!-- Mobile Search -->
-            <div class="nav-search-mobile" id="mobileSearch">
-                <form action="{{ route('todos.index') }}" method="GET" class="search-form mobile">
-                    <div class="search-input-group">
-                        <i class="fas fa-search search-icon"></i>
-                        <input type="search" 
-                               name="search" 
-                               class="search-input" 
-                               placeholder="Search todos..." 
-                               value="{{ request('search') }}"
-                               aria-label="Search todos">
-                        @if(request('search'))
-                        <button type="button" class="search-clear" onclick="clearSearch()" aria-label="Clear search">
-                            <i class="fas fa-times"></i>
-                        </button>
-                        @endif
-                        <button type="submit" class="search-submit" aria-label="Submit search">
-                            <i class="fas fa-arrow-right"></i>
-                        </button>
+            <!-- Settings Dropdown -->
+            <div class="hidden sm:flex sm:items-center sm:ms-6">
+                <div class="relative" x-data="{ dropdownOpen: false }">
+                    <button @click="dropdownOpen = !dropdownOpen" class="inline-flex items-center px-4 py-2 border border-transparent text-sm leading-4 font-medium rounded-lg text-white bg-white/10 hover:bg-white/20 focus:outline-none transition-all duration-200">
+                        <div class="flex items-center gap-2">
+                            <div class="w-8 h-8 rounded-full bg-gradient-to-r from-cyan-400 to-purple-500 flex items-center justify-center">
+                                <span class="text-white font-semibold text-sm">{{ substr(Auth::user()->name, 0, 1) }}</span>
+                            </div>
+                            <span class="hidden md:block">{{ Auth::user()->name }}</span>
+                        </div>
+                        <svg class="ms-2 h-4 w-4 transition-transform duration-200" :class="{'rotate-180': dropdownOpen}" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 20 20">
+                            <path fill-rule="evenodd" d="M5.293 7.293a1 1 0 011.414 0L10 10.586l3.293-3.293a1 1 0 111.414 0l-4 4a1 1 0 01-1.414 0z" clip-rule="evenodd" />
+                        </svg>
+                    </button>
+
+                    <!-- Dropdown -->
+                    <div x-show="dropdownOpen" 
+                         @click.away="dropdownOpen = false"
+                         x-transition:enter="transition ease-out duration-200"
+                         x-transition:enter-start="transform opacity-0 scale-95"
+                         x-transition:enter-end="transform opacity-100 scale-100"
+                         x-transition:leave="transition ease-in duration-75"
+                         x-transition:leave-start="transform opacity-100 scale-100"
+                         x-transition:leave-end="transform opacity-0 scale-95"
+                         class="absolute right-0 mt-2 w-48 rounded-lg glass-effect shadow-lg z-50">
+                        <div class="py-1">
+                            <a href="{{ route('profile.edit') }}" class="block px-4 py-2 text-sm text-white hover:bg-white/10 transition-colors">
+                                <i class="fas fa-user me-2"></i>
+                                {{ __('Profile') }}
+                            </a>
+                            <form method="POST" action="{{ route('logout') }}">
+                                @csrf
+                                <button type="submit" class="w-full text-left px-4 py-2 text-sm text-white hover:bg-white/10 transition-colors">
+                                    <i class="fas fa-sign-out-alt me-2"></i>
+                                    {{ __('Log Out') }}
+                                </button>
+                            </form>
+                        </div>
                     </div>
-                </form>
+                </div>
+            </div>
+
+            <!-- Mobile menu button -->
+            <div class="flex items-center sm:hidden">
+                <button @click="open = ! open" class="inline-flex items-center justify-center p-2 rounded-lg text-white hover:bg-white/10 focus:outline-none focus:bg-white/10 transition duration-150 ease-in-out">
+                    <svg class="h-6 w-6" stroke="currentColor" fill="none" viewBox="0 0 24 24">
+                        <path :class="{'hidden': open, 'inline-flex': ! open }" class="inline-flex" stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M4 6h16M4 12h16M4 18h16" />
+                        <path :class="{'hidden': ! open, 'inline-flex': open }" class="hidden" stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M6 18L18 6M6 6l12 12" />
+                    </svg>
+                </button>
             </div>
         </div>
+    </div>
 
-        <!-- Mobile Menu -->
-        <div class="mobile-menu" id="mobileMenu">
-            <div class="mobile-menu-header">
-                <h3>Menu</h3>
-                <button class="mobile-menu-close" onclick="toggleMobileMenu()" aria-label="Close menu">
-                    <i class="fas fa-times"></i>
-                </button>
-            </div>
-            
-            <div class="mobile-menu-content">
-                <a href="{{ route('todos.index') }}" class="mobile-menu-item">
-                    <i class="fas fa-list-check"></i>
-                    <span>All Todos</span>
+    <!-- Mobile Navigation Menu -->
+    <div :class="{'block': open, 'hidden': ! open }" class="glass-effect sm:hidden">
+        <div class="pt-2 pb-3 space-y-1">
+            <a href="{{ route('todos.index') }}" class="block px-4 py-2 text-base font-medium text-white hover:bg-white/10 transition-colors">
+                <i class="fas fa-home me-2"></i>
+                {{ __('Todos') }}
+            </a>
+        </div>
+
+        <!-- Mobile User Menu -->
+        <div class="pt-4 pb-1 border-t border-white/10">
+            <div class="mt-3 space-y-1">
+                <a href="{{ route('profile.edit') }}" class="block px-4 py-2 text-base font-medium text-white hover:bg-white/10 transition-colors">
+                    <i class="fas fa-user me-2"></i>
+                    {{ __('Profile') }}
                 </a>
-                
-                <a href="{{ route('todos.create') }}" class="mobile-menu-item">
-                    <i class="fas fa-plus-circle"></i>
-                    <span>New Todo</span>
-                </a>
-                
-                <a href="{{ route('profile.edit') }}" class="mobile-menu-item">
-                    <i class="fas fa-user-cog"></i>
-                    <span>Edit Profile</span>
-                </a>
-                
-                <a href="{{ route('todos.trash') }}" class="mobile-menu-item">
-                    <i class="fas fa-trash-restore"></i>
-                    <span>Trashed Todos</span>
-                </a>
-                
-                <div class="mobile-menu-divider"></div>
-                
-                <form action="{{ route('logout') }}" method="POST" class="mobile-logout-form">
+                <form method="POST" action="{{ route('logout') }}">
                     @csrf
-                    <button type="submit" class="mobile-menu-item logout-btn">
-                        <i class="fas fa-sign-out-alt"></i>
-                        <span>Logout</span>
+                    <button type="submit" class="w-full text-left px-4 py-2 text-base font-medium text-white hover:bg-white/10 transition-colors">
+                        <i class="fas fa-sign-out-alt me-2"></i>
+                        {{ __('Log Out') }}
                     </button>
                 </form>
             </div>
         </div>
-    </nav>
-
-    <!-- Main Content -->
-    <main class="main-content">
-        @yield('content')
-    </main>
-
-    <!-- Quick Actions Bar -->
-    @hasSection('content')
-        @if(!request()->routeIs('todos.create') && !request()->routeIs('todos.edit') && !request()->routeIs('todos.show'))
-            @yield('quick-actions')
-        @endif
-    @endif
-
-    <!-- Scripts -->
-    <script>
-        // Navigation functionality
-        function toggleMobileSearch() {
-            const mobileSearch = document.getElementById('mobileSearch');
-            mobileSearch.classList.toggle('active');
-        }
-
-        function toggleProfileDropdown() {
-            const dropdown = document.getElementById('profileDropdown');
-            dropdown.classList.toggle('show');
-            
-            // Close other dropdowns
-            document.querySelectorAll('.dropdown-menu.show').forEach(item => {
-                if (item !== dropdown) item.classList.remove('show');
-            });
-        }
-
-        function toggleMobileMenu() {
-            const mobileMenu = document.getElementById('mobileMenu');
-            mobileMenu.classList.toggle('active');
-            document.body.classList.toggle('no-scroll');
-        }
-
-        function clearSearch() {
-            const searchInput = document.querySelector('.search-input');
-            if (searchInput) {
-                searchInput.value = '';
-                searchInput.closest('form').submit();
-            }
-        }
-
-        function toggleDarkMode() {
-            document.documentElement.classList.toggle('dark-mode');
-            localStorage.setItem('darkMode', document.documentElement.classList.contains('dark-mode'));
-        }
-
-        // Close dropdowns when clicking outside
-        document.addEventListener('click', (e) => {
-            if (!e.target.closest('.profile-dropdown')) {
-                document.querySelectorAll('.dropdown-menu.show').forEach(item => {
-                    item.classList.remove('show');
-                });
-            }
-            
-            if (!e.target.closest('.mobile-menu-toggle') && !e.target.closest('.mobile-menu')) {
-                document.getElementById('mobileMenu').classList.remove('active');
-                document.body.classList.remove('no-scroll');
-            }
-        });
-
-        // Initialize dark mode
-        document.addEventListener('DOMContentLoaded', () => {
-            if (localStorage.getItem('darkMode') === 'true') {
-                document.documentElement.classList.add('dark-mode');
-            }
-            
-            // Close mobile menu on escape
-            document.addEventListener('keydown', (e) => {
-                if (e.key === 'Escape') {
-                    document.getElementById('mobileMenu').classList.remove('active');
-                    document.body.classList.remove('no-scroll');
-                    document.querySelectorAll('.dropdown-menu.show').forEach(item => {
-                        item.classList.remove('show');
-                    });
-                }
-            });
-        });
-    </script>
-    
-    @yield('scripts')
-</body>
-</html>
+    </div>
+</nav>

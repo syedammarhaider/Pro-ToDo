@@ -8,12 +8,15 @@
         <title>@yield('title', config('app.name', 'Laravel'))</title>
 
         <!-- Fonts -->
-        <link rel="preconnect" href="https://fonts.bunny.net">
-        <link href="https://fonts.bunny.net/css?family=figtree:400,500,600&display=swap" rel="stylesheet" />
+        <link rel="preconnect" href="https://fonts.googleapis.com">
+        <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+        <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800&display=swap" rel="stylesheet">
+        <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
 
-        <!-- Scripts -->
+        <!-- Styles -->
         <link rel="stylesheet" href="/css/app.css">
-        <link rel="stylesheet" href="https://fonts.bunny.net/css?family=figtree:400,500,600&display=swap">
+        
+        @yield('styles')
     </head>
     <body class="font-sans antialiased">
         <div class="min-h-screen">
@@ -33,5 +36,8 @@
                 @yield('content')
             </main>
         </div>
+
+        <!-- Scripts -->
+        @yield('scripts')
     </body>
 </html>

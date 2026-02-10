@@ -28,9 +28,6 @@ class AuthenticatedSessionController extends Controller
 
         $request->session()->regenerate();
 
-        // Debug: Log the redirect
-        \Log::info('Login successful, redirecting to todos.index');
-        
         return redirect()->route('todos.index');
     }
 
