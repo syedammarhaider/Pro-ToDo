@@ -1,4 +1,3 @@
-<!-- Navigation Bar -->
 <nav x-data="{ open: false }" class="glass-effect border-b border-gray-100">
     <!-- Primary Navigation Menu -->
     <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
@@ -32,7 +31,7 @@
                             <span class="hidden md:block">{{ Auth::user()->name }}</span>
                         </div>
                         <svg class="ms-2 h-4 w-4 transition-transform duration-200" :class="{'rotate-180': dropdownOpen}" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 20 20">
-                            <path fill-rule="evenodd" d="M5.293 7.293a1 1 0 011.414 0L10 10.586l3.293-3.293a1 1 0 111.414 0l-4 4a1 1 0 01-1.414 0z" clip-rule="evenodd" />
+                            <path fill-rule="evenodd" d="M5.293 7.293a1 1 0 011.414 0L10 10.586l3.293-3.293a1 1 0 111.414 1.414l-4 4a1 1 0 01-1.414 0l-4-4a1 1 0 010-1.414z" clip-rule="evenodd" />
                         </svg>
                     </button>
 
@@ -76,7 +75,7 @@
     </div>
 
     <!-- Mobile Navigation Menu -->
-    <div :class="{'block': open, 'hidden': ! open }" class="glass-effect sm:hidden">
+    <div :class="{'block': open, 'hidden': ! open}" class="glass-effect sm:hidden">
         <div class="pt-2 pb-3 space-y-1">
             <a href="{{ route('todos.index') }}" class="block px-4 py-2 text-base font-medium text-white hover:bg-white/10 transition-colors">
                 <i class="fas fa-home me-2"></i>
@@ -86,6 +85,18 @@
 
         <!-- Mobile User Menu -->
         <div class="pt-4 pb-1 border-t border-white/10">
+            <div class="px-4">
+                <div class="flex items-center gap-3">
+                    <div class="w-10 h-10 rounded-full bg-gradient-to-r from-cyan-400 to-purple-500 flex items-center justify-center">
+                        <span class="text-white font-semibold">{{ substr(Auth::user()->name, 0, 1) }}</span>
+                    </div>
+                    <div>
+                        <div class="font-medium text-base text-white">{{ Auth::user()->name }}</div>
+                        <div class="font-medium text-sm text-gray-300">{{ Auth::user()->email }}</div>
+                    </div>
+                </div>
+            </div>
+
             <div class="mt-3 space-y-1">
                 <a href="{{ route('profile.edit') }}" class="block px-4 py-2 text-base font-medium text-white hover:bg-white/10 transition-colors">
                     <i class="fas fa-user me-2"></i>
