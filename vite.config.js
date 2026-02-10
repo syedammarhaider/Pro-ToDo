@@ -20,5 +20,9 @@ export default defineConfig({
                 assetFileNames: `assets/[name]-[hash].[ext]`
             }
         }
+    },
+    define: {
+        __VUE_OPTIONS_API__: true,
+        __VUE_PROD_DEVTOOLS__: false,
     }
 });
