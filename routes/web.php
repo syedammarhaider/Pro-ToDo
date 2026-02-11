@@ -21,6 +21,10 @@ Route::middleware('auth')->group(function () {
     Route::get('/todos/{todo}/edit', [TodoController::class, 'edit'])->name('todos.edit');
     Route::patch('/todos/{todo}', [TodoController::class, 'update'])->name('todos.update');
     Route::delete('/todos/{todo}', [TodoController::class, 'destroy'])->name('todos.destroy');
+    
+    // Todo status routes
+    Route::post('/todos/{todo}/complete', [TodoController::class, 'complete'])->name('todos.complete');
+    Route::post('/todos/{todo}/incomplete', [TodoController::class, 'incomplete'])->name('todos.incomplete');
 });
 
 require __DIR__.'/auth.php';
