@@ -32,7 +32,7 @@ Route::middleware('auth')->group(function () {
 
     // Human Resources
     Route::get('/hr', function () {
-        return view('hr.index');
+        return 'Human Resources section - Coming Soon!';
     })->name('hr.index');
 });
 
