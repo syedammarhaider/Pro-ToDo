@@ -492,7 +492,7 @@
         showMessage(`Completing ${ids.length} todo${ids.length > 1 ? 's' : ''}...`, 'info');
         
         try {
-            const res = await fetch('{{ route("todos.bulk-complete") }}', {
+            const res = await fetch('{{ route("bulk-complete") }}', {
                 method: 'POST',
                 headers: { 'Content-Type': 'application/json', 'X-CSRF-TOKEN': '{{ csrf_token() }}' },
                 body: JSON.stringify({ ids })
