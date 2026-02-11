@@ -4,12 +4,6 @@
 
 @section('title', $todo->title)
 
-
-
-
-
-
-
 @section('content')
 
 <div class="row justify-content-center">
