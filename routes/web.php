@@ -12,9 +12,6 @@ Route::get('/hr', function () {
     return 'Human Resources section - Coming Soon!';
 })->name('hr.index');
 
-Route::get('/dashboard', function () {
-    return view('dashboard');
-})->middleware(['auth', 'verified'])->name('dashboard');
 
 Route::middleware('auth')->group(function () {
     Route::get('/profile', [ProfileController::class, 'edit'])->name('profile.edit');
@@ -37,11 +34,6 @@ Route::middleware('auth')->group(function () {
     // Bulk operations
     Route::post('/todos/bulk-complete', [TodoController::class, 'bulkComplete'])->name('todos.bulk-complete');
     Route::post('/todos/bulk-delete', [TodoController::class, 'bulkDelete'])->name('todos.bulk-delete');
-
-    // User Management (Admin only)
-    Route::middleware('role:admin')->group(function () {
-        Route::resource('users', UserController::class);
-    });
 
     // User Management (Admin only)
     Route::middleware('role:admin')->group(function () {
