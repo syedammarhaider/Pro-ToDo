@@ -8,6 +8,14 @@ Route::get('/', function () {
     return auth()->check() ? redirect()->route('todos.index') : redirect()->route('login');
 });
 
+Route::get('/hr', function () {
+    return 'Human Resources section - Coming Soon!';
+})->name('hr.index');
+
+Route::get('/dashboard', function () {
+    return view('dashboard');
+})->middleware(['auth', 'verified'])->name('dashboard');
+
 Route::middleware('auth')->group(function () {
     Route::get('/profile', [ProfileController::class, 'edit'])->name('profile.edit');
     Route::patch('/profile', [ProfileController::class, 'update'])->name('profile.update');
@@ -30,10 +38,10 @@ Route::middleware('auth')->group(function () {
     Route::post('/todos/bulk-complete', [TodoController::class, 'bulkComplete'])->name('todos.bulk-complete');
     Route::post('/todos/bulk-delete', [TodoController::class, 'bulkDelete'])->name('todos.bulk-delete');
 
-    // Human Resources
-    Route::get('/hr', function () {
-        return 'Human Resources section - Coming Soon!';
-    })->name('hr.index');
+    // User Management (Admin only)
+    Route::middleware('role:admin')->group(function () {
+        Route::resource('users', UserController::class);
+    });
 });
 
 require __DIR__.'/auth.php';
