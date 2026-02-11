@@ -27,8 +27,8 @@ Route::middleware('auth')->group(function () {
     Route::post('/todos/{todo}/incomplete', [TodoController::class, 'incomplete'])->name('todos.incomplete');
     
     // Bulk operations
-    Route::post('/todos/bulk-complete', [TodoController::class, 'bulkComplete'])->name('bulk-complete');
-    Route::post('/todos/bulk-delete', [TodoController::class, 'bulkDelete'])->name('bulk-delete');
+    Route::post('/todos/bulk-complete', [TodoController::class, 'bulkComplete'])->name('todos.bulk-complete');
+    Route::post('/todos/bulk-delete', [TodoController::class, 'bulkDelete'])->name('todos.bulk-delete');
 });
 
 require __DIR__.'/auth.php';
