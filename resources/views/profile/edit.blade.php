@@ -31,7 +31,7 @@
                 </div>
                 <div class="todos-count-badge">
                     <div class="count-content d-flex align-items-center gap-2">
-                        <span class="count-number">{{ Auth::user()->todos()->count() ?? 0 }}</span>
+                        <span class="count-number">{{ Auth::user()->todos()->count() }}</span>
                         <span class="count-label">Total Tasks</span>
                     </div>
                 </div>
@@ -274,6 +274,39 @@
                 </div>
                 <div class="card-body">
                     <div class="space-y-3">
+                        <!-- User ID -->
+                        <div class="d-flex justify-content-between align-items-center p-3 bg-light rounded-lg">
+                            <div class="d-flex align-items-center gap-2">
+                                <i class="fas fa-fingerprint text-primary"></i>
+                                <span class="fw-medium">User ID</span>
+                            </div>
+                            <span class="badge bg-primary text-white">
+                                #{{ Auth::user()->id }}
+                            </span>
+                        </div>
+                        
+                        <!-- Full Name -->
+                        <div class="d-flex justify-content-between align-items-center p-3 bg-light rounded-lg">
+                            <div class="d-flex align-items-center gap-2">
+                                <i class="fas fa-user text-primary"></i>
+                                <span class="fw-medium">Full Name</span>
+                            </div>
+                            <span class="badge bg-secondary text-white">
+                                {{ Auth::user()->name }}
+                            </span>
+                        </div>
+                        
+                        <!-- Email Address -->
+                        <div class="d-flex justify-content-between align-items-center p-3 bg-light rounded-lg">
+                            <div class="d-flex align-items-center gap-2">
+                                <i class="fas fa-envelope text-primary"></i>
+                                <span class="fw-medium">Email</span>
+                            </div>
+                            <small class="text-muted text-truncate" style="max-width: 150px;">
+                                {{ Auth::user()->email }}
+                            </small>
+                        </div>
+                        
                         <!-- Member Since -->
                         <div class="d-flex justify-content-between align-items-center p-3 bg-light rounded-lg">
                             <div class="d-flex align-items-center gap-2">
@@ -285,14 +318,14 @@
                             </span>
                         </div>
                         
-                        <!-- Account Status -->
+                        <!-- Last Updated -->
                         <div class="d-flex justify-content-between align-items-center p-3 bg-light rounded-lg">
                             <div class="d-flex align-items-center gap-2">
-                                <i class="fas fa-check-circle text-success"></i>
-                                <span class="fw-medium">Account Status</span>
+                                <i class="fas fa-clock text-info"></i>
+                                <span class="fw-medium">Last Updated</span>
                             </div>
-                            <span class="badge bg-success text-white">
-                                Active
+                            <span class="badge bg-info text-white">
+                                {{ Auth::user()->updated_at->format('M d, Y') }}
                             </span>
                         </div>
                         
@@ -318,6 +351,28 @@
                             @endif
                         </div>
                         
+                        <!-- Two Factor Status -->
+                        <div class="d-flex justify-content-between align-items-center p-3 bg-light rounded-lg">
+                            <div class="d-flex align-items-center gap-2">
+                                @if (Auth::user()->two_factor_secret)
+                                    <i class="fas fa-shield-alt text-success"></i>
+                                    <span class="fw-medium">2FA Status</span>
+                                @else
+                                    <i class="fas fa-shield-alt text-warning"></i>
+                                    <span class="fw-medium">2FA Status</span>
+                                @endif
+                            </div>
+                            @if (Auth::user()->two_factor_secret)
+                                <span class="badge bg-success text-white">
+                                    <i class="fas fa-lock me-1"></i>Enabled
+                                </span>
+                            @else
+                                <span class="badge bg-warning text-dark">
+                                    <i class="fas fa-unlock me-1"></i>Disabled
+                                </span>
+                            @endif
+                        </div>
+                        
                         <!-- Total Tasks -->
                         <div class="d-flex justify-content-between align-items-center p-3 bg-light rounded-lg">
                             <div class="d-flex align-items-center gap-2">
@@ -325,7 +380,18 @@
                                 <span class="fw-medium">Total Tasks</span>
                             </div>
                             <span class="badge bg-info text-white">
-                                {{ Auth::user()->todos()->count() ?? 0 }}
+                                {{ Auth::user()->todos()->count() }}
+                            </span>
+                        </div>
+                        
+                        <!-- Account Status -->
+                        <div class="d-flex justify-content-between align-items-center p-3 bg-light rounded-lg">
+                            <div class="d-flex align-items-center gap-2">
+                                <i class="fas fa-check-circle text-success"></i>
+                                <span class="fw-medium">Account Status</span>
+                            </div>
+                            <span class="badge bg-success text-white">
+                                Active
                             </span>
                         </div>
                     </div>
