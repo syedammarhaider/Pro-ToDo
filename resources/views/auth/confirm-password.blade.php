@@ -7,10 +7,10 @@
         @csrf
 
         <!-- Password -->
-        <div>
-            <x-input-label for="password" :value="__('Password')" />
+        <div class="mb-6">
+            <x-input-label for="password" :value="__('Password')" class="mb-2" />
 
-            <x-text-input id="password" class="block mt-1 w-full"
+            <x-text-input id="password" class="block mt-1 w-full px-4 py-3"
                             type="password"
                             name="password"
                             required autocomplete="current-password" />
