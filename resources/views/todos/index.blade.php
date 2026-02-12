@@ -136,17 +136,6 @@
                     </div>
                 </div>
             </div>
-            <div class="col-12 col-sm-6 col-md-3">
-                <div class="stat-card glass-effect">
-                    <div class="stat-icon">
-                        <i class="fas fa-sync-alt" id="realTimeIcon"></i>
-                    </div>
-                    <div class="stat-content">
-                        <div class="stat-number" id="lastUpdate">Live</div>
-                        <div class="stat-label">Real-time Updates</div>
-                    </div>
-                </div>
-            </div>
         </div>
     </section>
 
@@ -343,7 +332,7 @@
             @if($todos->hasPages())
                 <div class="card-footer bg-transparent border-top py-3">
                     <nav aria-label="Pagination navigation">
-                        {{ $todos->withQueryString()->links('vendor.pagination.simple-bootstrap-5') }}
+                        {{ $todos->withQueryString()->links('vendor.pagination.custom') }}
                     </nav>
                 </div>
             @endif
@@ -692,62 +681,6 @@
             }
         };
 
-        // Real-time Updates
-        let realTimeInterval;
-        let lastUpdateTime = Date.now();
-
-        window.startRealTimeUpdates = function() {
-            if (realTimeInterval) clearInterval(realTimeInterval);
-
-            realTimeInterval = setInterval(async () => {
-                try {
-                    const response = await fetch(window.location.href, {
-                        headers: {
-                            'X-Requested-With': 'XMLHttpRequest',
-                            'Accept': 'application/json'
-                        }
-                    });
-
-                    if (response.ok) {
-                        const data = await response.json();
-                        updateStats(data.stats);
-                        updateLastUpdate();
-                    }
-                } catch (error) {
-                    console.log('Real-time update failed:', error);
-                }
-            }, 30000); // Update every 30 seconds
-        };
-
-        window.updateStats = function(stats) {
-            if (stats) {
-                Object.keys(stats).forEach(key => {
-                    const element = document.querySelector(`[data-stat="${key}"]`);
-                    if (element) {
-                        element.textContent = stats[key];
-                    }
-                });
-            }
-        };
-
-        window.updateLastUpdate = function() {
-            const now = new Date();
-            const timeString = now.toLocaleTimeString([], { hour: '2-digit', minute: '2-digit' });
-            const lastUpdateElement = document.getElementById('lastUpdate');
-            if (lastUpdateElement) {
-                lastUpdateElement.textContent = timeString;
-            }
-
-            // Animate the real-time icon
-            const icon = document.getElementById('realTimeIcon');
-            if (icon) {
-                icon.style.animation = 'none';
-                setTimeout(() => {
-                    icon.style.animation = 'spin 1s ease-in-out';
-                }, 10);
-            }
-        };
-
         // Initialize
         document.addEventListener('DOMContentLoaded', function() {
             // Check URL parameters for filter visibility
@@ -757,9 +690,6 @@
                     if (window.toggleFilters) window.toggleFilters();
                 }, 100);
             }
-
-            // Start real-time updates
-            startRealTimeUpdates();
 
             // Handle message from session
             @if(session('success'))
