@@ -371,10 +371,32 @@
 <body>
     <!-- Theme Toggle Script -->
     <script>
-        (function() {
-            const theme = localStorage.getItem('theme') || 'light';
-            document.documentElement.setAttribute('data-theme', theme);
-        })();
+        document.addEventListener('DOMContentLoaded', function() {
+            const themeToggle = document.getElementById('themeToggle');
+            const themeIcon = document.getElementById('themeIcon');
+            const html = document.documentElement;
+            
+            // Set initial theme
+            const currentTheme = localStorage.getItem('theme') || 'light';
+            html.setAttribute('data-theme', currentTheme);
+            updateThemeIcon(currentTheme);
+            
+            // Theme toggle functionality
+            if (themeToggle && themeIcon) {
+                themeToggle.addEventListener('click', function() {
+                    const newTheme = html.getAttribute('data-theme') === 'dark' ? 'light' : 'dark';
+                    html.setAttribute('data-theme', newTheme);
+                    localStorage.setItem('theme', newTheme);
+                    updateThemeIcon(newTheme);
+                });
+            }
+            
+            function updateThemeIcon(theme) {
+                if (themeIcon) {
+                    themeIcon.className = theme === 'dark' ? 'fas fa-sun' : 'fas fa-moon';
+                }
+            }
+        });
     </script>
     
     <div class="min-vh-100">
@@ -390,31 +412,9 @@
         @include('layouts.footer')
     </div>
     
-    <!-- Message Container -->
-    <div class="message-container" id="messageContainer" aria-live="assertive"></div>
-    
-    <!-- Scripts -->
+    <!-- Bootstrap JS -->
     <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/js/bootstrap.bundle.min.js"></script>
-    
-    <!-- Theme Toggle Script -->
-    <script>
-        document.addEventListener('DOMContentLoaded', function() {
-            const themeToggle = document.getElementById('themeToggle');
-            const html = document.documentElement;
-            const icon = themeToggle?.querySelector('i');
-            
-            if (themeToggle) {
-                // Set initial icon
-                const currentTheme = html.getAttribute('data-theme');
-                icon.className = currentTheme === 'dark' ? 'fas fa-sun' : 'fas fa-moon';
-                
-                themeToggle.addEventListener('click', function() {
-                    const currentTheme = html.getAttribute('data-theme');
-                    const newTheme = currentTheme === 'dark' ? 'light' : 'dark';
-                    
-                    html.setAttribute('data-theme', newTheme);
-                    localStorage.setItem('theme', newTheme);
-                    icon.className = newTheme === 'dark' ? 'fas fa-sun' : 'fas fa-moon';
+</body>
                     
                     // Show message
                     if (window.showMessage) {
