@@ -66,7 +66,7 @@
                     <i class="fas fa-chevron-down ms-auto" id="filterArrow"></i>
                 </button>
                 
-                <div id="filterContent" style="display:block;">
+                <div id="filterContent" style="display:none;">
                     <form action="{{ route('todos.index') }}" method="GET" class="row g-2" role="search" aria-label="Todo search and filters">
                         <div class="col-12 col-md-6 col-lg-2">
                             <input type="search" name="search" class="form-control-micro" placeholder="🔍 Search tasks..." value="{{ request('search') }}" aria-label="Search todos">
@@ -249,7 +249,7 @@
             @if($todos->hasPages())
                 <div class="card-footer bg-transparent border-top py-3">
                     <nav aria-label="Pagination navigation">
-                        {{ $todos->withQueryString()->links('pagination::bootstrap-5') }}
+                        {{ $todos->withQueryString()->links('vendor.pagination.bootstrap-5-no-arrows') }}
                     </nav>
                 </div>
             @endif
