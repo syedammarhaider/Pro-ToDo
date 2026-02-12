@@ -849,10 +849,17 @@ footer::before {
 }
 
 @media (max-width: 992px) {
-    .page-header .d-flex {
+    .page-header .d-flex:first-child {
         flex-direction: column;
         align-items: flex-start !important;
         gap: 1rem;
+    }
+    
+    .page-header .d-flex:last-child {
+        flex-direction: row !important;
+        align-items: center !important;
+        justify-content: flex-end !important;
+        gap: 0.5rem;
     }
     
     .welcome-text {
