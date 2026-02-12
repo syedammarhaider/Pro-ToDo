@@ -106,7 +106,6 @@
                         </div>
                         <div class="col-12 col-md-6 col-lg-2">
                             <select name="category" class="form-select-micro" aria-label="Filter by category">
-                                <option value="">All Categories</option>
                                 @foreach($categories as $category)
                                     <option value="{{ $category }}" {{ request('category') == $category ? 'selected' : '' }}>
                                         {{ $category }}
