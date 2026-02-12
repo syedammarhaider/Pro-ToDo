@@ -23,7 +23,7 @@
 </head>
 <body class="font-sans antialiased">
     <div class="min-h-screen bg-gradient-to-br from-gray-50 to-gray-100">
-        @include('layouts.neo-navigation')
+        @include('layouts.navigation')
         
         <!-- Page Header with Glass Effect -->
         @isset($header)
@@ -43,7 +43,7 @@
             @yield('content')
         </main>
         
-        @include('layouts.neo-footer')
+        @include('layouts.footer')
     </div>
     
     <!-- Mobile Menu Toggle Script -->
