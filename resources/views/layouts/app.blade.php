@@ -6,7 +6,7 @@
     <meta name="csrf-token" content="{{ csrf_token() }}">
     <meta name="description" content="Professional Todo Management Application - Stay organized and productive">
     <meta name="theme-color" content="#6366f1">
-    <meta name="apple-mobile-web-app-capable" content="yes">
+    <meta name="mobile-web-app-capable" content="yes">
     <meta name="apple-mobile-web-app-status-bar-style" content="black-translucent">
     
     <title>@yield('title', config('app.name', 'PRO TODO'))</title>
@@ -20,9 +20,6 @@
 
     <!-- Bootstrap 5 (Lightweight) -->
     <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/css/bootstrap.min.css" rel="stylesheet">
-
-    <!-- Tailwind CSS -->
-    <script src="https://cdn.tailwindcss.com"></script>
 
     <!-- Custom CSS - External -->
     <link rel="stylesheet" href="{{ asset('css/app.css') }}?v=1.0.0">
