@@ -4,12 +4,10 @@
     <meta charset="utf-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=5.0, user-scalable=yes, viewport-fit=cover">
     <meta name="csrf-token" content="{{ csrf_token() }}">
-    <meta name="description" content="Professional Todo Management Application - Stay organized and productive">
+    <meta name="description" content="Professional Todo Management Application">
     <meta name="theme-color" content="#6366f1">
-    <meta name="apple-mobile-web-app-capable" content="yes">
-    <meta name="apple-mobile-web-app-status-bar-style" content="black-translucent">
     
-    <title>@yield('title', config('app.name', 'PRO TODO'))</title>
+    <title>@yield('title', 'PRO TODO')</title>
     
     <!-- Fonts -->
     <link rel="preconnect" href="https://fonts.bunny.net">
@@ -18,15 +16,12 @@
     <!-- Font Awesome 6 -->
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css">
     
-    <!-- Bootstrap 5 (Lightweight) -->
-    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/css/bootstrap.min.css" rel="stylesheet">
-    
-    <!-- Custom CSS - External -->
-    <link rel="stylesheet" href="{{ asset('css/app.css') }}?v=1.0.0">
+    <!-- Vite Assets - ONLY THIS, NO OTHER CSS -->
+    @vite(['resources/css/app.css', 'resources/js/app.jsx'])
     
     @stack('styles')
 </head>
-<body>
+<body class="antialiased bg-gray-50">
     <!-- Theme Toggle Script -->
     <script>
         (function() {
@@ -35,28 +30,26 @@
         })();
     </script>
     
-    <div class="min-vh-100">
+    <div class="min-h-screen flex flex-col">
         <!-- Navigation -->
         @include('layouts.navigation')
         
         <!-- Page Header -->
         @isset($header)
-            <header class="page-header container-fluid px-2 px-md-3 mt-20">
-                <div class="d-flex justify-content-between align-items-center">
-                    <h1 class="welcome-text mb-0">{{ $header }}</h1>
+            <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 w-full mt-20">
+                <div class="page-header flex justify-between items-center">
+                    <h1 class="welcome-text">{{ $header }}</h1>
                     @auth
-                        <div class="d-flex gap-2">
-                            <button id="themeToggle" class="theme-toggle">
-                                <i class="fas fa-moon"></i>
-                            </button>
-                        </div>
+                        <button id="themeToggle" class="theme-toggle">
+                            <i class="fas fa-moon"></i>
+                        </button>
                     @endauth
                 </div>
-            </header>
+            </div>
         @endisset
         
         <!-- Main Content -->
-        <main class="container-fluid px-2 px-md-3 py-4">
+        <main class="flex-1 max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 w-full py-6">
             @yield('content')
         </main>
         
@@ -65,19 +58,17 @@
     </div>
     
     <!-- Message Container -->
-    <div class="message-container" id="messageContainer" aria-live="assertive"></div>
-    
-    <!-- Scripts -->
-    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/js/bootstrap.bundle.min.js"></script>
+    <div class="message-container fixed top-4 right-4 z-50 max-w-md" id="messageContainer"></div>
     
     <!-- Theme Toggle Script -->
     <script>
         document.addEventListener('DOMContentLoaded', function() {
             const themeToggle = document.getElementById('themeToggle');
-            const html = document.documentElement;
-            const icon = themeToggle?.querySelector('i');
             
             if (themeToggle) {
+                const html = document.documentElement;
+                const icon = themeToggle.querySelector('i');
+                
                 // Set initial icon
                 const currentTheme = html.getAttribute('data-theme');
                 icon.className = currentTheme === 'dark' ? 'fas fa-sun' : 'fas fa-moon';
@@ -89,11 +80,6 @@
                     html.setAttribute('data-theme', newTheme);
                     localStorage.setItem('theme', newTheme);
                     icon.className = newTheme === 'dark' ? 'fas fa-sun' : 'fas fa-moon';
-                    
-                    // Show message
-                    if (window.showMessage) {
-                        window.showMessage(`${newTheme.charAt(0).toUpperCase() + newTheme.slice(1)} mode activated`, 'success', 2000);
-                    }
                 });
             }
         });
