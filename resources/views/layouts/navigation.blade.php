@@ -31,8 +31,7 @@
                         <i class="fas fa-list-check mr-2"></i>Dashboard
                     </a>
                     
-                    <a href="#stats" 
-                       data-bs-toggle="collapse"
+                    <a href="{{ route('todos.index') }}#analytics" 
                        class="px-3 py-2 text-sm font-medium text-gray-700 hover:bg-gray-50 hover:text-indigo-600 rounded-lg transition-all duration-200">
                         <i class="fas fa-chart-simple mr-2"></i>Analytics
                     </a>
@@ -111,8 +110,7 @@
                 <span>Dashboard</span>
             </a>
             
-            <a href="#stats" 
-               data-bs-toggle="collapse"
+            <a href="{{ route('todos.index') }}#analytics" 
                class="flex items-center space-x-3 px-3 py-2 rounded-lg text-gray-700 hover:bg-gray-50">
                 <i class="fas fa-chart-simple w-5"></i>
                 <span>Analytics</span>
