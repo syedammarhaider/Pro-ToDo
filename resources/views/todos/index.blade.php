@@ -61,28 +61,19 @@
     <!-- Filters Section -->
     <section>
         <div class="card glass-effect filters-card" id="filtersCard">
-            <div class="card-body p-2 p-md-3">
-                <!-- Mobile Toggle Button -->
-                <button class="filter-toggle-btn mb-3 w-100 d-flex align-items-center d-md-none" aria-expanded="false" aria-controls="filterContent" onclick="toggleFilters()">
+            <div class="card-body p-3">
+                <button class="filter-toggle-btn mb-3 w-100 d-flex align-items-center" aria-expanded="false" aria-controls="filterContent" onclick="toggleFilters()">
                     <i class="fas fa-sliders-h"></i>
                     <span class="fw-bold">Filters & Search</span>
                     <i class="fas fa-chevron-down ms-auto" id="filterArrow"></i>
                 </button>
                 
-                <!-- Desktop Title -->
-                <h5 class="d-none d-md-block mb-3 fw-bold">
-                    <i class="fas fa-sliders-h me-2"></i>Filters & Search
-                </h5>
-                
-                <div id="filterContent">
-                    <form action="{{ route('todos.index') }}" method="GET" class="row g-2 g-md-3" role="search" aria-label="Todo search and filters">
-                        <!-- Search - Full width on mobile -->
-                        <div class="col-12 col-md-6 col-lg-3">
+                <div id="filterContent" style="display:none;">
+                    <form action="{{ route('todos.index') }}" method="GET" class="row g-2" role="search" aria-label="Todo search and filters">
+                        <div class="col-12 col-md-6 col-lg-2">
                             <input type="search" name="search" class="form-control-micro" placeholder="🔍 Search tasks..." value="{{ request('search') }}" aria-label="Search todos">
                         </div>
-                        
-                        <!-- Status - Compact on mobile -->
-                        <div class="col-6 col-md-6 col-lg-3 d-none d-md-block">
+                        <div class="col-12 col-md-6 col-lg-2">
                             <select name="status" class="form-select-micro" aria-label="Filter by status">
                                 <option value="">📊 All Status</option>
                                 <option value="active" {{ request('status') == 'active' ? 'selected' : '' }}>▶ Active</option>
@@ -90,9 +81,7 @@
                                 <option value="overdue" {{ request('status') == 'overdue' ? 'selected' : '' }}>⏰ Overdue</option>
                             </select>
                         </div>
-                        
-                        <!-- Priority - Compact on mobile -->
-                        <div class="col-6 col-md-6 col-lg-3 d-none d-md-block">
+                        <div class="col-12 col-md-6 col-lg-2">
                             <select name="priority" class="form-select-micro" aria-label="Filter by priority">
                                 <option value="">🎯 All Priority</option>
                                 <option value="low" {{ request('priority') == 'low' ? 'selected' : '' }}>🟢 Low</option>
@@ -100,9 +89,7 @@
                                 <option value="high" {{ request('priority') == 'high' ? 'selected' : '' }}>🔴 High</option>
                             </select>
                         </div>
-                        
-                        <!-- Sort By - Compact on mobile -->
-                        <div class="col-6 col-md-6 col-lg-3 d-none d-md-block">
+                        <div class="col-12 col-md-6 col-lg-2">
                             <select name="sort" class="form-select-micro" aria-label="Sort by">
                                 <option value="">📅 Sort By</option>
                                 <option value="due_date" {{ request('sort') == 'due_date' ? 'selected' : '' }}>📅 Due Date</option>
@@ -110,9 +97,7 @@
                                 <option value="created_at" {{ request('sort') == 'created_at' ? 'selected' : '' }}>🕐 Created</option>
                             </select>
                         </div>
-                        
-                        <!-- Direction - Compact on mobile -->
-                        <div class="col-6 col-md-6 col-lg-3 d-none d-md-block">
+                        <div class="col-12 col-md-6 col-lg-2">
                             <select name="direction" class="form-select-micro" aria-label="Sort direction">
                                 <option value="">↕️ Order</option>
                                 <option value="asc" {{ request('direction') == 'asc' ? 'selected' : '' }}>⬆️ Ascending</option>
@@ -120,15 +105,14 @@
                             </select>
                         </div>
                        
-                        <!-- Apply/Reset Buttons - Full width on mobile -->
-                        <div class="col-12 col-lg-3">
+                        <div class="col-12 col-lg-2">
                             <div class="d-flex gap-2">
-                                <button type="submit" class="btn btn-primary flex-fill" style="min-height:38px;" aria-label="Apply filters">
-                                    <i class="fas fa-filter d-none d-md-inline"></i>
+                                <button type="submit" class="btn btn-primary flex-fill" style="min-height:42px;" aria-label="Apply filters">
+                                    <i class="fas fa-filter"></i>
                                     <span>Apply</span>
                                 </button>
-                                <a href="{{ route('todos.index') }}" class="btn btn-secondary flex-fill" style="min-height:38px;" aria-label="Reset filters">
-                                    <i class="fas fa-rotate-right d-none d-md-inline"></i>
+                                <a href="{{ route('todos.index') }}" class="btn btn-secondary flex-fill" style="min-height:42px;" aria-label="Reset filters">
+                                    <i class="fas fa-rotate-right"></i>
                                     <span>Reset</span>
                                 </a>
                             </div>
