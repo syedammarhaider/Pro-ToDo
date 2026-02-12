@@ -54,6 +54,30 @@
     <!-- Message Container -->
     <div class="message-container" id="messageContainer" aria-live="assertive"></div>
     
+    <!-- Message Display Script -->
+    <script>
+        window.showMessage = function(message, type = 'info', duration = 3000) {
+            const messageContainer = document.getElementById('messageContainer');
+            const messageDiv = document.createElement('div');
+            messageDiv.className = 'message';
+            messageDiv.innerHTML = `
+                <div class="d-flex align-items-center">
+                    <i class="fas fa-${type === 'success' ? 'check-circle text-success' : type === 'error' ? 'exclamation-circle text-danger' : 'info-circle text-info'} me-2"></i>
+                    <span>${message}</span>
+                </div>
+            `;
+            
+            messageContainer.appendChild(messageDiv);
+            
+            setTimeout(() => {
+                messageDiv.style.opacity = '0';
+                setTimeout(() => {
+                    messageContainer.removeChild(messageDiv);
+                }, 300);
+            }, duration);
+        };
+    </script>
+    
     <!-- Scripts -->
     <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/js/bootstrap.bundle.min.js"></script>
     

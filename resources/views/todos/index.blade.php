@@ -25,7 +25,7 @@
     <!-- Page Header -->
     <header class="page-header compact" id="pageHeader" role="banner">
         <div class="d-flex justify-content-between align-items-center flex-wrap gap-3">
-            <div class="welcome-section d-flex align-items-center gap-3">
+            <div class="welcome-section d-flex align-items-center gap-3 flex-grow-1">
                 <h1 tabindex="0" class="welcome-text" style="font-size: 1rem !important; margin: 0;">
                     Welcome, <span class="user-name">{{ Auth::user()->name }}</span>!
                 </h1>
@@ -249,7 +249,7 @@
             @if($todos->hasPages())
                 <div class="card-footer bg-transparent border-top py-3">
                     <nav aria-label="Pagination navigation">
-                        {{ $todos->withQueryString()->links('vendor.pagination.bootstrap-5-no-arrows') }}
+                        {{ $todos->withQueryString()->links('vendor.pagination.professional') }}
                     </nav>
                 </div>
             @endif

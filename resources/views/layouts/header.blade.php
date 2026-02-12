@@ -65,6 +65,11 @@
 
 
 
+            <!-- Theme Toggle Button -->
+            <button class="btn btn-outline-light me-3" id="themeToggle" type="button" title="Toggle Dark/Light Mode">
+                <i class="fas fa-moon"></i>
+            </button>
+
             <!-- User Authentication Links -->
 
             @auth
