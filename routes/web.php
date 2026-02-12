@@ -39,9 +39,9 @@ Route::middleware('auth')->group(function () {
     Route::post('/todos/bulk-delete', [TodoController::class, 'bulkDelete'])->name('todos.bulk-delete');
 
     // User Management (Admin only)
-    Route::middleware('role:admin')->group(function () {
-        Route::resource('users', UserController::class);
-    });
+    // Route::middleware('role:admin')->group(function () {
+    //     Route::resource('users', UserController::class);
+    // });
 });
 
 require __DIR__.'/auth.php';

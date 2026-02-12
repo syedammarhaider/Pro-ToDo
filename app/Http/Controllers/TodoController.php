@@ -159,10 +159,9 @@ class TodoController extends Controller
     public function trash()
 
     {
+        // Gate::authorize('delete todos');
 
-        Gate::authorize('delete todos');
-
-        $trashedTodos = Todo::onlyTrashed()->paginate(15);
+        $trashedTodos = Todo::onlyTrashed()->where('user_id', Auth::id())->paginate(15);
 
 
 
@@ -177,10 +176,10 @@ class TodoController extends Controller
     public function restore($id)
 
     {
+        // Gate::authorize('delete todos');
 
-        Gate::authorize('delete todos');
-
-        Todo::withTrashed()->findOrFail($id)->restore();
+        $todo = Todo::withTrashed()->where('user_id', Auth::id())->findOrFail($id);
+        $todo->restore();
 
 
 
@@ -195,10 +194,10 @@ class TodoController extends Controller
     public function forceDelete($id)
 
     {
+        // Gate::authorize('delete todos');
 
-        Gate::authorize('delete todos');
-
-        Todo::withTrashed()->findOrFail($id)->forceDelete();
+        $todo = Todo::withTrashed()->where('user_id', Auth::id())->findOrFail($id);
+        $todo->forceDelete();
 
 
 
