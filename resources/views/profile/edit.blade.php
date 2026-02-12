@@ -55,13 +55,13 @@
     <div class="row g-3 g-md-4">
         <!-- Profile Information Section -->
         <div class="col-12 col-lg-8">
-            <div class="card glass-effect border-0 mb-4">
-                <div class="card-header bg-gradient-primary text-white d-flex align-items-center gap-3">
-                    <div class="icon-box">
-                        <i class="fas fa-user-edit"></i>
+            <div class="card glass-effect border-0 mb-4 shadow-lg">
+                <div class="card-header bg-gradient-primary text-white d-flex align-items-center gap-3 py-4">
+                    <div class="icon-box bg-white bg-opacity-25 rounded-circle p-3">
+                        <i class="fas fa-user-edit fs-4"></i>
                     </div>
                     <div>
-                        <h5 class="card-title mb-0">Profile Information</h5>
+                        <h5 class="card-title mb-0 fs-4">Profile Information</h5>
                         <small class="opacity-75">Update your personal details</small>
                     </div>
                 </div>
@@ -73,7 +73,7 @@
                         <div class="row g-3">
                             <!-- Name Field -->
                             <div class="col-12">
-                                <label for="name" class="form-label fw-semibold">
+                                <label for="name" class="form-label fw-semibold fs-6">
                                     <i class="fas fa-user me-2 text-primary"></i>Full Name
                                 </label>
                                 <input 
@@ -81,13 +81,14 @@
                                     name="name" 
                                     id="name" 
                                     value="{{ old('name', Auth::user()->name) }}"
-                                    class="form-control form-control-lg"
+                                    class="form-control form-control-lg border-2 border-primary-subtle"
                                     required
                                     autocomplete="name"
                                     placeholder="Enter your full name"
+                                    style="border-radius: 12px; transition: all 0.3s ease;"
                                 >
                                 @error('name')
-                                    <div class="invalid-feedback d-block mt-2">
+                                    <div class="invalid-feedback d-block mt-2 fs-6">
                                         <i class="fas fa-exclamation-circle me-1"></i>{{ $message }}
                                     </div>
                                 @enderror
@@ -95,7 +96,7 @@
                             
                             <!-- Email Field -->
                             <div class="col-12">
-                                <label for="email" class="form-label fw-semibold">
+                                <label for="email" class="form-label fw-semibold fs-6">
                                     <i class="fas fa-envelope me-2 text-primary"></i>Email Address
                                 </label>
                                 <input 
@@ -103,41 +104,22 @@
                                     name="email" 
                                     id="email" 
                                     value="{{ old('email', Auth::user()->email) }}"
-                                    class="form-control form-control-lg"
+                                    class="form-control form-control-lg border-2 border-primary-subtle"
                                     required
                                     autocomplete="email"
                                     placeholder="Enter your email address"
+                                    style="border-radius: 12px; transition: all 0.3s ease;"
                                 >
                                 @error('email')
-                                    <div class="invalid-feedback d-block mt-2">
+                                    <div class="invalid-feedback d-block mt-2 fs-6">
                                         <i class="fas fa-exclamation-circle me-1"></i>{{ $message }}
                                     </div>
                                 @enderror
-                                
-                                @if (Auth::user()->hasVerifiedEmail())
-                                    <div class="alert alert-success alert-sm mt-3 d-flex align-items-center">
-                                        <i class="fas fa-check-circle me-2"></i>
-                                        <span class="fw-medium">Email verified</span>
-                                    </div>
-                                @else
-                                    <div class="alert alert-warning alert-sm mt-3 d-flex align-items-center justify-content-between">
-                                        <div>
-                                            <i class="fas fa-exclamation-triangle me-2"></i>
-                                            <span>Email not verified</span>
-                                        </div>
-                                        <button type="button" class="btn btn-sm btn-outline-primary" onclick="document.getElementById('send-verification').submit();">
-                                            <i class="fas fa-paper-plane me-1"></i>Send verification
-                                        </button>
-                                    </div>
-                                    <form id="send-verification" method="POST" action="{{ route('verification.send') }}" class="hidden">
-                                        @csrf
-                                    </form>
-                                @endif
                             </div>
                             
                             <!-- Submit Button -->
                             <div class="col-12">
-                                <button type="submit" class="btn btn-primary btn-lg px-5">
+                                <button type="submit" class="btn btn-primary btn-lg px-5" style="border-radius: 12px; padding: 12px 30px; font-weight: 600; transition: all 0.3s ease; box-shadow: 0 4px 15px rgba(13, 110, 253, 0.3);">
                                     <i class="fas fa-save me-2"></i>Save Changes
                                 </button>
                                 
@@ -153,13 +135,13 @@
             </div>
 
             <!-- Password Update Section -->
-            <div class="card glass-effect border-0">
-                <div class="card-header bg-gradient-warning text-white d-flex align-items-center gap-3">
-                    <div class="icon-box">
-                        <i class="fas fa-key"></i>
+            <div class="card glass-effect border-0 shadow-lg">
+                <div class="card-header bg-gradient-warning text-white d-flex align-items-center gap-3 py-4">
+                    <div class="icon-box bg-white bg-opacity-25 rounded-circle p-3">
+                        <i class="fas fa-key fs-4"></i>
                     </div>
                     <div>
-                        <h5 class="card-title mb-0">Update Password</h5>
+                        <h5 class="card-title mb-0 fs-4">Update Password</h5>
                         <small class="opacity-75">Change your account password</small>
                     </div>
                 </div>
@@ -262,13 +244,13 @@
         <!-- Sidebar -->
         <div class="col-12 col-lg-4">
             <!-- Account Summary Card -->
-            <div class="card glass-effect border-0 mb-4">
-                <div class="card-header bg-gradient-info text-white d-flex align-items-center gap-3">
-                    <div class="icon-box">
-                        <i class="fas fa-info-circle"></i>
+            <div class="card glass-effect border-0 mb-4 shadow-lg">
+                <div class="card-header bg-gradient-info text-white d-flex align-items-center gap-3 py-4">
+                    <div class="icon-box bg-white bg-opacity-25 rounded-circle p-3">
+                        <i class="fas fa-info-circle fs-4"></i>
                     </div>
                     <div>
-                        <h5 class="card-title mb-0">Account Summary</h5>
+                        <h5 class="card-title mb-0 fs-4">Account Summary</h5>
                         <small class="opacity-75">Your account details</small>
                     </div>
                 </div>
@@ -355,13 +337,13 @@
             </div>
 
             <!-- Danger Zone Card -->
-            <div class="card glass-effect border-0 border-danger">
-                <div class="card-header bg-gradient-danger text-white d-flex align-items-center gap-3">
-                    <div class="icon-box">
-                        <i class="fas fa-exclamation-triangle"></i>
+            <div class="card glass-effect border-0 border-danger border-2 shadow-lg">
+                <div class="card-header bg-gradient-danger text-white d-flex align-items-center gap-3 py-4">
+                    <div class="icon-box bg-white bg-opacity-25 rounded-circle p-3">
+                        <i class="fas fa-exclamation-triangle fs-4"></i>
                     </div>
                     <div>
-                        <h5 class="card-title mb-0">Danger Zone</h5>
+                        <h5 class="card-title mb-0 fs-4">Danger Zone</h5>
                         <small class="opacity-75">Irreversible actions</small>
                     </div>
                 </div>
