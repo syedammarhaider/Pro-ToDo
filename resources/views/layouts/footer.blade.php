@@ -155,24 +155,57 @@
 <style>
 /* Ultra Professional Footer Styles */
 footer {
-    backdrop-filter: blur(10px);
-    -webkit-backdrop-filter: blur(10px);
+    backdrop-filter: blur(15px);
+    -webkit-backdrop-filter: blur(15px);
+    position: relative;
+    overflow: hidden;
+}
+
+footer::before {
+    content: '';
+    position: absolute;
+    top: 0;
+    left: 0;
+    right: 0;
+    bottom: 0;
+    background: linear-gradient(135deg,
+        rgba(79, 70, 229, 0.02) 0%,
+        rgba(245, 158, 11, 0.02) 25%,
+        rgba(34, 197, 94, 0.02) 50%,
+        rgba(239, 68, 68, 0.02) 75%,
+        rgba(139, 92, 246, 0.02) 100%);
+    pointer-events: none;
 }
 
 /* Subtle Hover Effects */
+footer .rounded-4 {
+    transition: all 0.4s cubic-bezier(0.4, 0, 0.2, 1);
+}
+
 footer .rounded-4:hover {
-    transform: translateY(-2px);
-    box-shadow: 0 8px 25px rgba(0, 0, 0, 0.1);
+    transform: translateY(-4px);
+    box-shadow: 0 12px 35px rgba(0, 0, 0, 0.15);
+}
+
+footer a {
+    transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
 }
 
 footer a:hover {
     color: var(--bs-btn-primary-bg) !important;
-    transform: translateX(3px);
+    transform: translateX(5px);
+    text-shadow: 0 2px 8px rgba(79, 70, 229, 0.3);
+}
+
+footer .rounded-circle {
+    transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
 }
 
 footer .rounded-circle:hover {
     background-color: var(--bs-btn-primary-bg) !important;
     color: var(--bs-card-bg) !important;
+    transform: scale(1.1);
+    box-shadow: 0 8px 25px rgba(79, 70, 229, 0.4);
 }
 
 /* Smooth Transitions */
@@ -190,19 +223,72 @@ footer .text-muted {
     color: var(--bs-text-muted) !important;
 }
 
-/* Responsive Design */
+/* Stats Cards Animation */
+footer .p-3 {
+    transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+}
+
+footer .p-3:hover {
+    transform: translateY(-2px);
+    box-shadow: 0 6px 20px rgba(0, 0, 0, 0.1);
+}
+
+/* Heart Pulse Animation */
+@keyframes heartPulse {
+    0%, 100% { transform: scale(1); }
+    50% { transform: scale(1.2); }
+}
+
+/* Responsive Design - Ultra Professional */
+@media (max-width: 1200px) {
+    footer .col-lg-4 {
+        margin-bottom: 2rem;
+    }
+}
+
+@media (max-width: 992px) {
+    footer .container {
+        padding-left: 1rem;
+        padding-right: 1rem;
+    }
+
+    footer .p-5 {
+        padding: 2rem !important;
+    }
+
+    footer .display-6 {
+        font-size: 2rem !important;
+    }
+}
+
 @media (max-width: 768px) {
     footer {
         text-align: center;
+        padding: 2rem 0;
+    }
+
+    footer .container {
+        padding-left: 0.5rem;
+        padding-right: 0.5rem;
+    }
+
+    footer .row {
+        flex-direction: column;
+        gap: 2rem;
+    }
+
+    footer .col-lg-4 {
+        margin-bottom: 0;
+    }
+
+    footer .p-5 {
+        padding: 1.5rem !important;
+        margin-bottom: 1rem;
     }
 
     footer .text-end {
         text-align: center !important;
         margin-top: 1rem;
-    }
-
-    footer .row {
-        flex-direction: column;
     }
 
     footer .col-md-6 {
@@ -211,13 +297,152 @@ footer .text-muted {
     }
 
     footer .lead {
-        font-size: 1rem !important;
+        font-size: 0.9rem !important;
+        line-height: 1.4;
+    }
+
+    footer .display-6 {
+        font-size: 1.5rem !important;
+    }
+
+    footer .rounded-circle {
+        width: 45px !important;
+        height: 45px !important;
+        padding: 0.75rem !important;
+        margin: 0.25rem;
+    }
+
+    footer .btn-lg {
+        padding: 0.75rem !important;
+    }
+
+    footer .d-flex.justify-content-center.gap-3 {
+        justify-content: center;
+        flex-wrap: wrap;
+    }
+
+    footer .list-unstyled li {
+        margin-bottom: 0.75rem;
+    }
+
+    footer .p-3.rounded-3 {
+        padding: 0.75rem !important;
+        margin-bottom: 0.5rem;
+    }
+
+    footer .row.text-center.mb-4 .col-4 {
+        margin-bottom: 1rem;
+    }
+
+    footer .mt-5.pt-4 {
+        margin-top: 2rem !important;
+        padding-top: 1.5rem !important;
+    }
+
+    footer .px-3.py-2 {
+        padding: 0.5rem 1rem !important;
+        margin: 0.25rem;
+        display: inline-block;
+    }
+}
+
+@media (max-width: 576px) {
+    footer {
+        padding: 1.5rem 0;
+    }
+
+    footer .container {
+        padding-left: 0.25rem;
+        padding-right: 0.25rem;
+    }
+
+    footer .p-5 {
+        padding: 1rem !important;
+    }
+
+    footer .display-6 {
+        font-size: 1.25rem !important;
+    }
+
+    footer .lead {
+        font-size: 0.8rem !important;
     }
 
     footer .rounded-circle {
         width: 40px !important;
         height: 40px !important;
         padding: 0.5rem !important;
+    }
+
+    footer .btn-lg {
+        padding: 0.5rem !important;
+    }
+
+    footer .h3 {
+        font-size: 1.25rem !important;
+    }
+
+    footer .h4 {
+        font-size: 1.1rem !important;
+    }
+
+    footer .p-3.rounded-3 {
+        padding: 0.5rem !important;
+    }
+
+    footer .row.text-center.mb-4 .col-4 {
+        padding-left: 0.25rem;
+        padding-right: 0.25rem;
+    }
+
+    footer .mt-4 {
+        margin-top: 1.5rem !important;
+    }
+
+    footer .mb-0.lead {
+        font-size: 0.75rem !important;
+    }
+}
+
+/* Touch Device Optimizations */
+@media (hover: none) and (pointer: coarse) {
+    footer .rounded-4:hover {
+        transform: none;
+    }
+
+    footer a:hover {
+        transform: none;
+    }
+
+    footer .rounded-circle:hover {
+        transform: none;
+    }
+
+    footer .p-3:hover {
+        transform: none;
+    }
+}
+
+/* High Contrast Mode Support */
+@media (prefers-contrast: high) {
+    footer {
+        border-top: 4px solid #000;
+    }
+
+    footer .rounded-4 {
+        border: 2px solid #000;
+    }
+}
+
+/* Reduced Motion Support */
+@media (prefers-reduced-motion: reduce) {
+    footer * {
+        transition: none;
+    }
+
+    @keyframes heartPulse {
+        0%, 100% { transform: none; }
+        50% { transform: none; }
     }
 }
 </style>

@@ -601,14 +601,9 @@
 
         // Initialize
         document.addEventListener('DOMContentLoaded', function() {
-            // Check URL parameters for filter visibility
-            const urlParams = new URLSearchParams(window.location.search);
-            if (urlParams.toString()) {
-                setTimeout(() => {
-                    if (window.toggleFilters) window.toggleFilters();
-                }, 100);
-            }
-
+            // Keep filters collapsed by default
+            // Don't auto-expand even with URL parameters
+            
             // Handle message from session
             @if(session('success'))
                 showMessage('{{ session('success') }}', 'success', 4000);
