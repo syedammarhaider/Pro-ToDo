@@ -1,277 +1,360 @@
 @extends('layouts.app')
 
-@section('title', 'Profile Settings')
+@section('title', 'Profile Settings - Professional Todo App')
 
 @section('content')
-<div class="py-4">
-    <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
-        <!-- Header -->
-        <div class="mb-8">
-            <h1 class="text-3xl font-bold text-gray-900 dark:text-white">Profile Settings</h1>
-            <p class="mt-2 text-sm text-gray-600 dark:text-gray-400">
-                Update your account information and manage your profile settings.
-            </p>
-        </div>
+<div class="message-container" id="messageContainer" aria-live="assertive" aria-atomic="true" aria-relevant="additions"></div>
 
-        <div class="grid grid-cols-1 lg:grid-cols-3 gap-6">
-            <!-- Profile Information -->
-            <div class="lg:col-span-2 space-y-6">
-                <!-- Update Profile Information -->
-                <div class="bg-white dark:bg-gray-800 shadow-sm rounded-lg p-6">
-                    <div class="flex items-center gap-3 mb-6">
-                        <div class="p-2 bg-indigo-100 dark:bg-indigo-900/50 rounded-lg">
-                            <svg class="w-6 h-6 text-indigo-600 dark:text-indigo-400" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M16 7a4 4 0 11-8 0 4 4 0 018 0zM12 14a7 7 0 00-7 7h14a7 7 0 00-7-7z" />
-                            </svg>
-                        </div>
-                        <h2 class="text-xl font-semibold text-gray-900 dark:text-white">Profile Information</h2>
+<!-- Quick Actions Bar -->
+<div class="quick-actions-bar" id="quickActionsBar" role="toolbar" aria-label="Quick actions">
+    <button class="quick-btn quick-btn-primary" data-tooltip="Back to Todos" aria-label="Back to Todos" onclick="window.location.href='{{ route('todos.index') }}'">
+        <i class="fas fa-arrow-left"></i>
+    </button>
+    <button class="quick-btn quick-btn-success" data-tooltip="Save Profile" aria-label="Save Profile" onclick="document.querySelector('#profileForm').submit()">
+        <i class="fas fa-save"></i>
+    </button>
+    <button class="quick-btn" data-tooltip="Toggle Theme" aria-label="Toggle Theme" onclick="toggleTheme()" style="background: linear-gradient(135deg, #8b5cf6, #ec4899)">
+        <i class="fas fa-moon" id="themeIcon"></i>
+    </button>
+</div>
+
+<div class="container-fluid px-2 px-md-3">
+    <!-- Page Header -->
+    <header class="page-header compact" id="pageHeader" role="banner">
+        <div class="d-flex justify-content-between align-items-center flex-wrap gap-3">
+            <div class="d-flex align-items-center gap-4 flex-wrap">
+                <div class="welcome-section">
+                    <h1 tabindex="0" class="welcome-text">
+                        Profile Settings
+                    </h1>
+                    <p class="welcome-subtitle">Manage your account and preferences</p>
+                </div>
+                <div class="todos-count-badge">
+                    <div class="count-content d-flex align-items-center gap-2">
+                        <span class="count-number">{{ Auth::user()->todos()->count() ?? 0 }}</span>
+                        <span class="count-label">Total Tasks</span>
                     </div>
-                    
-                    <form method="POST" action="{{ route('profile.update') }}" class="space-y-6">
+                </div>
+            </div>
+            <div class="d-flex gap-2">
+                <a href="{{ route('todos.index') }}" class="action-btn todos-btn" role="button" aria-label="Back to todos">
+                    <i class="fas fa-tasks"></i>
+                    <span class="btn-text">Todos</span>
+                </a>
+                <form action="{{ route('logout') }}" method="POST" class="d-inline">
+                    @csrf
+                    <button type="submit" class="action-btn logout-btn" aria-label="Logout">
+                        <i class="fas fa-sign-out-alt"></i>
+                        <span class="btn-text">Logout</span>
+                    </button>
+                </form>
+            </div>
+        </div>
+    </header>
+
+    <div class="row g-3 g-md-4">
+        <!-- Profile Information Section -->
+        <div class="col-12 col-lg-8">
+            <div class="card glass-effect border-0 mb-4">
+                <div class="card-header bg-gradient-primary text-white d-flex align-items-center gap-3">
+                    <div class="icon-box">
+                        <i class="fas fa-user-edit"></i>
+                    </div>
+                    <div>
+                        <h5 class="card-title mb-0">Profile Information</h5>
+                        <small class="opacity-75">Update your personal details</small>
+                    </div>
+                </div>
+                <div class="card-body">
+                    <form id="profileForm" method="POST" action="{{ route('profile.update') }}" class="needs-validation" novalidate>
                         @csrf
                         @method('PATCH')
                         
-                        <!-- Name -->
-                        <div>
-                            <label for="name" class="block text-sm font-medium text-gray-700 dark:text-gray-300 mb-1">
-                                Name
-                            </label>
-                            <input 
-                                type="text" 
-                                name="name" 
-                                id="name" 
-                                value="{{ old('name', Auth::user()->name) }}"
-                                class="w-full px-4 py-2 border border-gray-300 dark:border-gray-600 rounded-lg focus:ring-2 focus:ring-indigo-500 focus:border-indigo-500 bg-white dark:bg-gray-700 text-gray-900 dark:text-white transition-colors"
-                                required
-                                autocomplete="name"
-                            >
-                            @error('name')
-                                <p class="mt-2 text-sm text-red-600 dark:text-red-400">{{ $message }}</p>
-                            @enderror
-                        </div>
-                        
-                        <!-- Email -->
-                        <div>
-                            <label for="email" class="block text-sm font-medium text-gray-700 dark:text-gray-300 mb-1">
-                                Email Address
-                            </label>
-                            <input 
-                                type="email" 
-                                name="email" 
-                                id="email" 
-                                value="{{ old('email', Auth::user()->email) }}"
-                                class="w-full px-4 py-2 border border-gray-300 dark:border-gray-600 rounded-lg focus:ring-2 focus:ring-indigo-500 focus:border-indigo-500 bg-white dark:bg-gray-700 text-gray-900 dark:text-white transition-colors"
-                                required
-                                autocomplete="email"
-                            >
-                            @error('email')
-                                <p class="mt-2 text-sm text-red-600 dark:text-red-400">{{ $message }}</p>
-                            @enderror
+                        <div class="row g-3">
+                            <!-- Name Field -->
+                            <div class="col-12">
+                                <label for="name" class="form-label fw-semibold">
+                                    <i class="fas fa-user me-2 text-primary"></i>Full Name
+                                </label>
+                                <input 
+                                    type="text" 
+                                    name="name" 
+                                    id="name" 
+                                    value="{{ old('name', Auth::user()->name) }}"
+                                    class="form-control form-control-lg"
+                                    required
+                                    autocomplete="name"
+                                    placeholder="Enter your full name"
+                                >
+                                @error('name')
+                                    <div class="invalid-feedback d-block mt-2">
+                                        <i class="fas fa-exclamation-circle me-1"></i>{{ $message }}
+                                    </div>
+                                @enderror
+                            </div>
                             
-                            @if (Auth::user()->hasVerifiedEmail())
-                                <p class="mt-2 text-sm text-green-600 dark:text-green-400 flex items-center gap-1">
-                                    <svg class="w-4 h-4" fill="currentColor" viewBox="0 0 20 20">
-                                        <path fill-rule="evenodd" d="M10 18a8 8 0 100-16 8 8 0 000 16zm3.707-9.293a1 1 0 00-1.414-1.414L9 10.586 7.707 9.293a1 1 0 00-1.414 1.414l2 2a1 1 0 001.414 0l4-4z" clip-rule="evenodd"/>
-                                    </svg>
-                                    Verified
-                                </p>
-                            @else
-                                <p class="mt-2 text-sm text-yellow-600 dark:text-yellow-400">
-                                    Your email is not verified.
-                                    <button type="button" class="text-indigo-600 dark:text-indigo-400 hover:underline ml-1" onclick="document.getElementById('send-verification').submit();">
-                                        Send verification email
-                                    </button>
-                                </p>
-                                <form id="send-verification" method="POST" action="{{ route('verification.send') }}" class="hidden">
-                                    @csrf
-                                </form>
-                            @endif
-                        </div>
-                        
-                        <!-- Submit Button -->
-                        <div class="flex items-center gap-4">
-                            <button type="submit" class="px-6 py-2.5 bg-indigo-600 hover:bg-indigo-700 text-white font-medium rounded-lg transition-colors focus:outline-none focus:ring-2 focus:ring-indigo-500 focus:ring-offset-2">
-                                Save Changes
-                            </button>
+                            <!-- Email Field -->
+                            <div class="col-12">
+                                <label for="email" class="form-label fw-semibold">
+                                    <i class="fas fa-envelope me-2 text-primary"></i>Email Address
+                                </label>
+                                <input 
+                                    type="email" 
+                                    name="email" 
+                                    id="email" 
+                                    value="{{ old('email', Auth::user()->email) }}"
+                                    class="form-control form-control-lg"
+                                    required
+                                    autocomplete="email"
+                                    placeholder="Enter your email address"
+                                >
+                                @error('email')
+                                    <div class="invalid-feedback d-block mt-2">
+                                        <i class="fas fa-exclamation-circle me-1"></i>{{ $message }}
+                                    </div>
+                                @enderror
+                                
+                                @if (Auth::user()->hasVerifiedEmail())
+                                    <div class="alert alert-success alert-sm mt-3 d-flex align-items-center">
+                                        <i class="fas fa-check-circle me-2"></i>
+                                        <span class="fw-medium">Email verified</span>
+                                    </div>
+                                @else
+                                    <div class="alert alert-warning alert-sm mt-3 d-flex align-items-center justify-content-between">
+                                        <div>
+                                            <i class="fas fa-exclamation-triangle me-2"></i>
+                                            <span>Email not verified</span>
+                                        </div>
+                                        <button type="button" class="btn btn-sm btn-outline-primary" onclick="document.getElementById('send-verification').submit();">
+                                            <i class="fas fa-paper-plane me-1"></i>Send verification
+                                        </button>
+                                    </div>
+                                    <form id="send-verification" method="POST" action="{{ route('verification.send') }}" class="hidden">
+                                        @csrf
+                                    </form>
+                                @endif
+                            </div>
                             
-                            @if (session('status') === 'profile-updated')
-                                <p class="text-sm text-green-600 dark:text-green-400 animate-pulse">
-                                    ✓ Saved
-                                </p>
-                            @endif
-                        </div>
-                    </form>
-                </div>
-
-                <!-- Update Password -->
-                <div class="bg-white dark:bg-gray-800 shadow-sm rounded-lg p-6">
-                    <div class="flex items-center gap-3 mb-6">
-                        <div class="p-2 bg-yellow-100 dark:bg-yellow-900/50 rounded-lg">
-                            <svg class="w-6 h-6 text-yellow-600 dark:text-yellow-400" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 15v2m-6 4h12a2 2 0 002-2v-6a2 2 0 00-2-2H6a2 2 0 00-2 2v6a2 2 0 002 2zm10-10V7a4 4 0 00-8 0v4h8z" />
-                            </svg>
-                        </div>
-                        <h2 class="text-xl font-semibold text-gray-900 dark:text-white">Update Password</h2>
-                    </div>
-                    
-                    <form method="POST" action="{{ route('password.update') }}" class="space-y-6">
-                        @csrf
-                        @method('PUT')
-                        
-                        <!-- Current Password -->
-                        <div>
-                            <label for="current_password" class="block text-sm font-medium text-gray-700 dark:text-gray-300 mb-1">
-                                Current Password
-                            </label>
-                            <input 
-                                type="password" 
-                                name="current_password" 
-                                id="current_password" 
-                                class="w-full px-4 py-2 border border-gray-300 dark:border-gray-600 rounded-lg focus:ring-2 focus:ring-indigo-500 focus:border-indigo-500 bg-white dark:bg-gray-700 text-gray-900 dark:text-white transition-colors"
-                                required
-                                autocomplete="current-password"
-                            >
-                            @error('current_password')
-                                <p class="mt-2 text-sm text-red-600 dark:text-red-400">{{ $message }}</p>
-                            @enderror
-                        </div>
-                        
-                        <!-- New Password -->
-                        <div>
-                            <label for="password" class="block text-sm font-medium text-gray-700 dark:text-gray-300 mb-1">
-                                New Password
-                            </label>
-                            <input 
-                                type="password" 
-                                name="password" 
-                                id="password" 
-                                class="w-full px-4 py-2 border border-gray-300 dark:border-gray-600 rounded-lg focus:ring-2 focus:ring-indigo-500 focus:border-indigo-500 bg-white dark:bg-gray-700 text-gray-900 dark:text-white transition-colors"
-                                required
-                                autocomplete="new-password"
-                            >
-                            @error('password')
-                                <p class="mt-2 text-sm text-red-600 dark:text-red-400">{{ $message }}</p>
-                            @enderror
-                        </div>
-                        
-                        <!-- Confirm Password -->
-                        <div>
-                            <label for="password_confirmation" class="block text-sm font-medium text-gray-700 dark:text-gray-300 mb-1">
-                                Confirm New Password
-                            </label>
-                            <input 
-                                type="password" 
-                                name="password_confirmation" 
-                                id="password_confirmation" 
-                                class="w-full px-4 py-2 border border-gray-300 dark:border-gray-600 rounded-lg focus:ring-2 focus:ring-indigo-500 focus:border-indigo-500 bg-white dark:bg-gray-700 text-gray-900 dark:text-white transition-colors"
-                                required
-                                autocomplete="new-password"
-                            >
-                        </div>
-                        
-                        <!-- Password Requirements -->
-                        <div class="bg-gray-50 dark:bg-gray-700/50 rounded-lg p-4">
-                            <p class="text-sm font-medium text-gray-700 dark:text-gray-300 mb-2">Password requirements:</p>
-                            <ul class="text-xs text-gray-600 dark:text-gray-400 space-y-1">
-                                <li class="flex items-center gap-2">
-                                    <span class="w-1 h-1 bg-gray-400 rounded-full"></span>
-                                    At least 8 characters long
-                                </li>
-                                <li class="flex items-center gap-2">
-                                    <span class="w-1 h-1 bg-gray-400 rounded-full"></span>
-                                    Contains at least one uppercase letter
-                                </li>
-                                <li class="flex items-center gap-2">
-                                    <span class="w-1 h-1 bg-gray-400 rounded-full"></span>
-                                    Contains at least one number
-                                </li>
-                            </ul>
-                        </div>
-                        
-                        <!-- Submit Button -->
-                        <div class="flex items-center gap-4">
-                            <button type="submit" class="px-6 py-2.5 bg-yellow-600 hover:bg-yellow-700 text-white font-medium rounded-lg transition-colors focus:outline-none focus:ring-2 focus:ring-yellow-500 focus:ring-offset-2">
-                                Update Password
-                            </button>
-                            
-                            @if (session('status') === 'password-updated')
-                                <p class="text-sm text-green-600 dark:text-green-400 animate-pulse">
-                                    ✓ Password updated
-                                </p>
-                            @endif
+                            <!-- Submit Button -->
+                            <div class="col-12">
+                                <button type="submit" class="btn btn-primary btn-lg px-5">
+                                    <i class="fas fa-save me-2"></i>Save Changes
+                                </button>
+                                
+                                @if (session('status') === 'profile-updated')
+                                    <div class="alert alert-success alert-sm mt-3 d-inline-flex align-items-center animate-pulse">
+                                        <i class="fas fa-check-circle me-2"></i>Profile updated successfully!
+                                    </div>
+                                @endif
+                            </div>
                         </div>
                     </form>
                 </div>
             </div>
 
-            <!-- Sidebar - Account Summary & Danger Zone -->
-            <div class="lg:col-span-1 space-y-6">
-                <!-- Account Summary -->
-                <div class="bg-white dark:bg-gray-800 shadow-sm rounded-lg p-6">
-                    <div class="flex items-center gap-3 mb-6">
-                        <div class="p-2 bg-purple-100 dark:bg-purple-900/50 rounded-lg">
-                            <svg class="w-6 h-6 text-purple-600 dark:text-purple-400" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 12h6m-6 4h6m2 5H7a2 2 0 01-2-2V5a2 2 0 012-2h5.586a1 1 0 01.707.293l5.414 5.414a1 1 0 01.293.707V19a2 2 0 01-2 2z" />
-                            </svg>
-                        </div>
-                        <h3 class="text-lg font-semibold text-gray-900 dark:text-white">Account Summary</h3>
+            <!-- Password Update Section -->
+            <div class="card glass-effect border-0">
+                <div class="card-header bg-gradient-warning text-white d-flex align-items-center gap-3">
+                    <div class="icon-box">
+                        <i class="fas fa-key"></i>
                     </div>
-                    
-                    <div class="space-y-4">
-                        <div class="flex items-center justify-between p-3 bg-gray-50 dark:bg-gray-700/50 rounded-lg">
-                            <span class="text-sm text-gray-600 dark:text-gray-400">Member since</span>
-                            <span class="text-sm font-medium text-gray-900 dark:text-white">
+                    <div>
+                        <h5 class="card-title mb-0">Update Password</h5>
+                        <small class="opacity-75">Change your account password</small>
+                    </div>
+                </div>
+                <div class="card-body">
+                    <form method="POST" action="{{ route('password.update') }}" class="needs-validation" novalidate>
+                        @csrf
+                        @method('PUT')
+                        
+                        <div class="row g-3">
+                            <!-- Current Password -->
+                            <div class="col-12">
+                                <label for="current_password" class="form-label fw-semibold">
+                                    <i class="fas fa-lock me-2 text-warning"></i>Current Password
+                                </label>
+                                <input 
+                                    type="password" 
+                                    name="current_password" 
+                                    id="current_password" 
+                                    class="form-control form-control-lg"
+                                    required
+                                    autocomplete="current-password"
+                                    placeholder="Enter your current password"
+                                >
+                                @error('current_password')
+                                    <div class="invalid-feedback d-block mt-2">
+                                        <i class="fas fa-exclamation-circle me-1"></i>{{ $message }}
+                                    </div>
+                                @enderror
+                            </div>
+                            
+                            <!-- New Password -->
+                            <div class="col-md-6">
+                                <label for="password" class="form-label fw-semibold">
+                                    <i class="fas fa-lock-open me-2 text-warning"></i>New Password
+                                </label>
+                                <input 
+                                    type="password" 
+                                    name="password" 
+                                    id="password" 
+                                    class="form-control form-control-lg"
+                                    required
+                                    autocomplete="new-password"
+                                    placeholder="Enter new password"
+                                >
+                                @error('password')
+                                    <div class="invalid-feedback d-block mt-2">
+                                        <i class="fas fa-exclamation-circle me-1"></i>{{ $message }}
+                                    </div>
+                                @enderror
+                            </div>
+                            
+                            <!-- Confirm Password -->
+                            <div class="col-md-6">
+                                <label for="password_confirmation" class="form-label fw-semibold">
+                                    <i class="fas fa-lock me-2 text-warning"></i>Confirm Password
+                                </label>
+                                <input 
+                                    type="password" 
+                                    name="password_confirmation" 
+                                    id="password_confirmation" 
+                                    class="form-control form-control-lg"
+                                    required
+                                    autocomplete="new-password"
+                                    placeholder="Confirm new password"
+                                >
+                            </div>
+                            
+                            <!-- Password Requirements -->
+                            <div class="col-12">
+                                <div class="alert alert-info alert-sm">
+                                    <h6 class="alert-heading mb-2">
+                                        <i class="fas fa-info-circle me-2"></i>Password Requirements:
+                                    </h6>
+                                    <ul class="mb-0 small">
+                                        <li><i class="fas fa-check text-success me-1"></i>At least 8 characters long</li>
+                                        <li><i class="fas fa-check text-success me-1"></i>Contains at least one uppercase letter</li>
+                                        <li><i class="fas fa-check text-success me-1"></i>Contains at least one number</li>
+                                    </ul>
+                                </div>
+                            </div>
+                            
+                            <!-- Submit Button -->
+                            <div class="col-12">
+                                <button type="submit" class="btn btn-warning btn-lg px-5">
+                                    <i class="fas fa-key me-2"></i>Update Password
+                                </button>
+                                
+                                @if (session('status') === 'password-updated')
+                                    <div class="alert alert-success alert-sm mt-3 d-inline-flex align-items-center animate-pulse">
+                                        <i class="fas fa-check-circle me-2"></i>Password updated successfully!
+                                    </div>
+                                @endif
+                            </div>
+                        </div>
+                    </form>
+                </div>
+            </div>
+        </div>
+
+        <!-- Sidebar -->
+        <div class="col-12 col-lg-4">
+            <!-- Account Summary Card -->
+            <div class="card glass-effect border-0 mb-4">
+                <div class="card-header bg-gradient-info text-white d-flex align-items-center gap-3">
+                    <div class="icon-box">
+                        <i class="fas fa-info-circle"></i>
+                    </div>
+                    <div>
+                        <h5 class="card-title mb-0">Account Summary</h5>
+                        <small class="opacity-75">Your account details</small>
+                    </div>
+                </div>
+                <div class="card-body">
+                    <div class="space-y-3">
+                        <!-- Member Since -->
+                        <div class="d-flex justify-content-between align-items-center p-3 bg-light rounded-lg">
+                            <div class="d-flex align-items-center gap-2">
+                                <i class="fas fa-calendar-alt text-primary"></i>
+                                <span class="fw-medium">Member Since</span>
+                            </div>
+                            <span class="badge bg-primary text-white">
                                 {{ Auth::user()->created_at->format('M d, Y') }}
                             </span>
                         </div>
                         
-                        <div class="flex items-center justify-between p-3 bg-gray-50 dark:bg-gray-700/50 rounded-lg">
-                            <span class="text-sm text-gray-600 dark:text-gray-400">Account status</span>
-                            <span class="inline-flex items-center px-2.5 py-0.5 rounded-full text-xs font-medium bg-green-100 text-green-800 dark:bg-green-900/50 dark:text-green-400">
+                        <!-- Account Status -->
+                        <div class="d-flex justify-content-between align-items-center p-3 bg-light rounded-lg">
+                            <div class="d-flex align-items-center gap-2">
+                                <i class="fas fa-check-circle text-success"></i>
+                                <span class="fw-medium">Account Status</span>
+                            </div>
+                            <span class="badge bg-success text-white">
                                 Active
                             </span>
                         </div>
                         
-                        <div class="flex items-center justify-between p-3 bg-gray-50 dark:bg-gray-700/50 rounded-lg">
-                            <span class="text-sm text-gray-600 dark:text-gray-400">Email verified</span>
+                        <!-- Email Verification -->
+                        <div class="d-flex justify-content-between align-items-center p-3 bg-light rounded-lg">
+                            <div class="d-flex align-items-center gap-2">
+                                @if (Auth::user()->hasVerifiedEmail())
+                                    <i class="fas fa-check-circle text-success"></i>
+                                    <span class="fw-medium">Email Verified</span>
+                                @else
+                                    <i class="fas fa-exclamation-triangle text-warning"></i>
+                                    <span class="fw-medium">Email Status</span>
+                                @endif
+                            </div>
                             @if (Auth::user()->hasVerifiedEmail())
-                                <span class="text-green-600 dark:text-green-400">
-                                    <svg class="w-5 h-5" fill="currentColor" viewBox="0 0 20 20">
-                                        <path fill-rule="evenodd" d="M10 18a8 8 0 100-16 8 8 0 000 16zm3.707-9.293a1 1 0 00-1.414-1.414L9 10.586 7.707 9.293a1 1 0 00-1.414 1.414l2 2a1 1 0 001.414 0l4-4z" clip-rule="evenodd"/>
-                                    </svg>
+                                <span class="badge bg-success text-white">
+                                    <i class="fas fa-check me-1"></i>Verified
                                 </span>
                             @else
-                                <span class="text-yellow-600 dark:text-yellow-400">
-                                    <svg class="w-5 h-5" fill="currentColor" viewBox="0 0 20 20">
-                                        <path fill-rule="evenodd" d="M8.257 3.099c.765-1.36 2.722-1.36 3.486 0l5.58 9.92c.75 1.334-.213 2.98-1.742 2.98H4.42c-1.53 0-2.493-1.646-1.743-2.98l5.58-9.92zM11 13a1 1 0 11-2 0 1 1 0 012 0zm-1-8a1 1 0 00-1 1v3a1 1 0 002 0V6a1 1 0 00-1-1z" clip-rule="evenodd"/>
-                                    </svg>
+                                <span class="badge bg-warning text-dark">
+                                    <i class="fas fa-clock me-1"></i>Pending
                                 </span>
                             @endif
                         </div>
+                        
+                        <!-- Total Tasks -->
+                        <div class="d-flex justify-content-between align-items-center p-3 bg-light rounded-lg">
+                            <div class="d-flex align-items-center gap-2">
+                                <i class="fas fa-tasks text-info"></i>
+                                <span class="fw-medium">Total Tasks</span>
+                            </div>
+                            <span class="badge bg-info text-white">
+                                {{ Auth::user()->todos()->count() ?? 0 }}
+                            </span>
+                        </div>
                     </div>
                 </div>
+            </div>
 
-                <!-- Danger Zone - Delete Account -->
-                <div class="bg-white dark:bg-gray-800 shadow-sm rounded-lg p-6 border-2 border-red-200 dark:border-red-900/50">
-                    <div class="flex items-center gap-3 mb-6">
-                        <div class="p-2 bg-red-100 dark:bg-red-900/50 rounded-lg">
-                            <svg class="w-6 h-6 text-red-600 dark:text-red-400" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M19 7l-.867 12.142A2 2 0 0116.138 21H7.862a2 2 0 01-1.995-1.858L5 7m5 4v6m4-6v6m1-10V4a1 1 0 00-1-1h-4a1 1 0 00-1 1v3M4 7h16" />
-                            </svg>
-                        </div>
-                        <h3 class="text-lg font-semibold text-red-600 dark:text-red-400">Danger Zone</h3>
+            <!-- Danger Zone Card -->
+            <div class="card glass-effect border-0 border-danger">
+                <div class="card-header bg-gradient-danger text-white d-flex align-items-center gap-3">
+                    <div class="icon-box">
+                        <i class="fas fa-exclamation-triangle"></i>
                     </div>
-                    
-                    <p class="text-sm text-gray-600 dark:text-gray-400 mb-4">
-                        Once you delete your account, all of your data including todos, tasks, and settings will be permanently deleted. This action cannot be undone.
-                    </p>
+                    <div>
+                        <h5 class="card-title mb-0">Danger Zone</h5>
+                        <small class="opacity-75">Irreversible actions</small>
+                    </div>
+                </div>
+                <div class="card-body">
+                    <div class="alert alert-danger alert-sm mb-4">
+                        <i class="fas fa-exclamation-triangle me-2"></i>
+                        <strong>Warning:</strong> Once you delete your account, all of your data including todos, tasks, and settings will be permanently deleted. This action cannot be undone.
+                    </div>
                     
                     <button 
                         type="button" 
                         onclick="document.getElementById('confirm-user-deletion').classList.remove('hidden')"
-                        class="w-full px-4 py-3 bg-red-600 hover:bg-red-700 text-white font-medium rounded-lg transition-colors focus:outline-none focus:ring-2 focus:ring-red-500 focus:ring-offset-2"
+                        class="btn btn-danger btn-lg w-100"
                     >
-                        Delete Account
+                        <i class="fas fa-trash-alt me-2"></i>Delete Account
                     </button>
                 </div>
             </div>
@@ -280,70 +363,63 @@
 </div>
 
 <!-- Delete Account Confirmation Modal -->
-<div id="confirm-user-deletion" class="fixed inset-0 z-50 overflow-y-auto hidden" aria-labelledby="modal-title" role="dialog" aria-modal="true">
-    <div class="flex items-end justify-center min-h-screen pt-4 px-4 pb-20 text-center sm:block sm:p-0">
-        <!-- Background overlay -->
-        <div class="fixed inset-0 bg-gray-900/75 transition-opacity" aria-hidden="true" onclick="document.getElementById('confirm-user-deletion').classList.add('hidden')"></div>
-
-        <!-- Modal panel -->
-        <div class="inline-block align-bottom bg-white dark:bg-gray-800 rounded-lg text-left overflow-hidden shadow-xl transform transition-all sm:my-8 sm:align-middle sm:max-w-lg sm:w-full">
-            <div class="bg-white dark:bg-gray-800 px-4 pt-5 pb-4 sm:p-6 sm:pb-4">
-                <div class="sm:flex sm:items-start">
-                    <div class="mx-auto flex-shrink-0 flex items-center justify-center h-12 w-12 rounded-full bg-red-100 dark:bg-red-900/50 sm:mx-0 sm:h-10 sm:w-10">
-                        <svg class="h-6 w-6 text-red-600 dark:text-red-400" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 9v2m0 4h.01m-6.938 4h13.856c1.54 0 2.502-1.667 1.732-3L13.732 4c-.77-1.333-2.694-1.333-3.464 0L3.34 16c-.77 1.333.192 3 1.732 3z" />
-                        </svg>
-                    </div>
-                    <div class="mt-3 text-center sm:mt-0 sm:ml-4 sm:text-left">
-                        <h3 class="text-lg leading-6 font-medium text-gray-900 dark:text-white" id="modal-title">
-                            Delete Account
-                        </h3>
-                        <div class="mt-2">
-                            <p class="text-sm text-gray-500 dark:text-gray-400">
-                                Are you sure you want to delete your account? This will permanently remove your account and all associated data. This action cannot be undone.
-                            </p>
-                        </div>
-                        
-                        <form method="POST" action="{{ route('profile.destroy') }}" class="mt-4">
-                            @csrf
-                            @method('DELETE')
-                            
-                            <div>
-                                <label for="password" class="block text-sm font-medium text-gray-700 dark:text-gray-300 mb-1">
-                                    Please enter your password to confirm
-                                </label>
-                                <input 
-                                    type="password" 
-                                    name="password" 
-                                    id="delete_password" 
-                                    class="w-full px-4 py-2 border border-gray-300 dark:border-gray-600 rounded-lg focus:ring-2 focus:ring-red-500 focus:border-red-500 bg-white dark:bg-gray-700 text-gray-900 dark:text-white"
-                                    placeholder="Enter your password"
-                                    required
-                                    autocomplete="current-password"
-                                >
-                                @error('password')
-                                    <p class="mt-2 text-sm text-red-600 dark:text-red-400">{{ $message }}</p>
-                                @enderror
-                            </div>
-                            
-                            <div class="mt-5 sm:mt-6 sm:grid sm:grid-cols-2 sm:gap-3 sm:grid-flow-row-dense">
-                                <button 
-                                    type="submit" 
-                                    class="w-full inline-flex justify-center rounded-md border border-transparent shadow-sm px-4 py-2 bg-red-600 text-base font-medium text-white hover:bg-red-700 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-red-500 sm:col-start-2 sm:text-sm"
-                                >
-                                    Delete Account
-                                </button>
-                                <button 
-                                    type="button" 
-                                    onclick="document.getElementById('confirm-user-deletion').classList.add('hidden')"
-                                    class="mt-3 w-full inline-flex justify-center rounded-md border border-gray-300 dark:border-gray-600 shadow-sm px-4 py-2 bg-white dark:bg-gray-700 text-base font-medium text-gray-700 dark:text-gray-300 hover:bg-gray-50 dark:hover:bg-gray-600 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-indigo-500 sm:mt-0 sm:col-start-1 sm:text-sm"
-                                >
-                                    Cancel
-                                </button>
-                            </div>
-                        </form>
+<div id="confirm-user-deletion" class="modal fade" tabindex="-1" aria-labelledby="deleteAccountModalLabel" aria-hidden="true">
+    <div class="modal-dialog modal-dialog-centered">
+        <div class="modal-content">
+            <div class="modal-header bg-danger text-white">
+                <h5 class="modal-title" id="deleteAccountModalLabel">
+                    <i class="fas fa-exclamation-triangle me-2"></i>Delete Account
+                </h5>
+                <button type="button" class="btn-close btn-close-white" data-bs-dismiss="modal" aria-label="Close" onclick="document.getElementById('confirm-user-deletion').classList.add('hidden')"></button>
+            </div>
+            <div class="modal-body">
+                <div class="alert alert-danger d-flex align-items-center">
+                    <i class="fas fa-exclamation-triangle me-3 fs-4"></i>
+                    <div>
+                        <strong>Final Warning:</strong> This action cannot be undone. All your todos, settings, and account data will be permanently deleted.
                     </div>
                 </div>
+                
+                <form method="POST" action="{{ route('profile.destroy') }}" class="mt-4">
+                    @csrf
+                    @method('DELETE')
+                    
+                    <div class="mb-3">
+                        <label for="delete_password" class="form-label fw-semibold">
+                            <i class="fas fa-lock me-2 text-danger"></i>Confirm Password
+                        </label>
+                        <input 
+                            type="password" 
+                            name="password" 
+                            id="delete_password" 
+                            class="form-control form-control-lg"
+                            placeholder="Enter your password to confirm deletion"
+                            required
+                            autocomplete="current-password"
+                        >
+                        @error('password')
+                            <div class="invalid-feedback d-block mt-2">
+                                <i class="fas fa-exclamation-circle me-1"></i>{{ $message }}
+                            </div>
+                        @enderror
+                    </div>
+                    
+                    <div class="d-flex gap-2 justify-content-end">
+                        <button 
+                            type="button" 
+                            class="btn btn-secondary btn-lg"
+                            onclick="document.getElementById('confirm-user-deletion').classList.add('hidden')"
+                        >
+                            <i class="fas fa-times me-2"></i>Cancel
+                        </button>
+                        <button 
+                            type="submit" 
+                            class="btn btn-danger btn-lg"
+                        >
+                            <i class="fas fa-trash-alt me-2"></i>Delete Forever
+                        </button>
+                    </div>
+                </form>
             </div>
         </div>
     </div>
@@ -351,21 +427,123 @@
 
 @push('scripts')
 <script>
+    // Initialize tooltips
+    var tooltipTriggerList = [].slice.call(document.querySelectorAll('[data-bs-toggle="tooltip"]'))
+    var tooltipList = tooltipTriggerList.map(function (tooltipTriggerEl) {
+        return new bootstrap.Tooltip(tooltipTriggerEl)
+    });
+
+    // Custom tooltip functionality
+    document.querySelectorAll('[data-tooltip]').forEach(element => {
+        element.addEventListener('mouseenter', function() {
+            const tooltip = document.createElement('div');
+            tooltip.className = 'custom-tooltip';
+            tooltip.textContent = this.getAttribute('data-tooltip');
+            document.body.appendChild(tooltip);
+            
+            const rect = this.getBoundingClientRect();
+            tooltip.style.left = rect.left + (rect.width / 2) - (tooltip.offsetWidth / 2) + 'px';
+            tooltip.style.top = rect.top - tooltip.offsetHeight - 10 + 'px';
+            
+            setTimeout(() => tooltip.classList.add('show'), 10);
+        });
+        
+        element.addEventListener('mouseleave', function() {
+            const tooltip = document.querySelector('.custom-tooltip');
+            if (tooltip) {
+                tooltip.classList.remove('show');
+                setTimeout(() => tooltip.remove(), 200);
+            }
+        });
+    });
+
+    // Modal functionality
+    function showModal(modalId) {
+        const modal = document.getElementById(modalId);
+        if (modal) {
+            modal.classList.remove('hidden');
+            modal.classList.add('show');
+            document.body.style.overflow = 'hidden';
+        }
+    }
+
+    function hideModal(modalId) {
+        const modal = document.getElementById(modalId);
+        if (modal) {
+            modal.classList.add('hidden');
+            modal.classList.remove('show');
+            document.body.style.overflow = '';
+        }
+    }
+
     // Close modal with Escape key
     document.addEventListener('keydown', function(e) {
         if (e.key === 'Escape') {
-            document.getElementById('confirm-user-deletion').classList.add('hidden');
+            hideModal('confirm-user-deletion');
         }
     });
 
-    // Auto-hide success messages after 3 seconds
+    // Close modal on backdrop click
+    document.getElementById('confirm-user-deletion').addEventListener('click', function(e) {
+        if (e.target === this) {
+            hideModal('confirm-user-deletion');
+        }
+    });
+
+    // Show delete confirmation modal
+    window.showDeleteModal = function() {
+        showModal('confirm-user-deletion');
+    };
+
+    // Auto-hide success messages after 5 seconds
     setTimeout(() => {
         document.querySelectorAll('.animate-pulse').forEach(el => {
             el.style.transition = 'opacity 0.5s';
             el.style.opacity = '0';
             setTimeout(() => el.remove(), 500);
         });
-    }, 3000);
+    }, 5000);
+
+    // Theme toggle functionality
+    window.toggleTheme = function() {
+        const html = document.documentElement;
+        const themeIcon = document.getElementById('themeIcon');
+        
+        if (html.getAttribute('data-theme') === 'dark') {
+            html.setAttribute('data-theme', 'light');
+            themeIcon.className = 'fas fa-moon';
+            localStorage.setItem('theme', 'light');
+        } else {
+            html.setAttribute('data-theme', 'dark');
+            themeIcon.className = 'fas fa-sun';
+            localStorage.setItem('theme', 'dark');
+        }
+    };
+
+    // Initialize theme on load
+    document.addEventListener('DOMContentLoaded', function() {
+        const savedTheme = localStorage.getItem('theme') || 'light';
+        const themeIcon = document.getElementById('themeIcon');
+        
+        if (savedTheme === 'dark') {
+            document.documentElement.setAttribute('data-theme', 'dark');
+            if (themeIcon) themeIcon.className = 'fas fa-sun';
+        } else {
+            document.documentElement.setAttribute('data-theme', 'light');
+            if (themeIcon) themeIcon.className = 'fas fa-moon';
+        }
+    });
+
+    // Form validation
+    document.querySelectorAll('.needs-validation').forEach(form => {
+        form.addEventListener('submit', function(event) {
+            if (!form.checkValidity()) {
+                event.preventDefault();
+                event.stopPropagation();
+            }
+            form.classList.add('was-validated');
+        });
+    });
 </script>
 @endpush
 @endsection
