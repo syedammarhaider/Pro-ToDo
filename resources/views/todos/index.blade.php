@@ -46,8 +46,6 @@
             </div>
         </div>
     </header>
-
-    <!-- Filters Section -->
     <section>
         <div class="card glass-effect filters-card" id="filtersCard">
             <div class="card-body p-3">
@@ -230,7 +228,7 @@
             @if($todos->hasPages())
                 <div class="card-footer bg-transparent border-top py-3">
                     <nav aria-label="Pagination navigation">
-                        {{ $todos->withQueryString()->links('vendor.pagination.professional') }}
+                        {{ $todos->withQueryString()->links('vendor.pagination.bootstrap-5-no-arrows') }}
                     </nav>
                 </div>
             @endif
