@@ -9,41 +9,20 @@
     <meta name="mobile-web-app-capable" content="yes">
     <meta name="apple-mobile-web-app-status-bar-style" content="black-translucent">
     
-    <!-- Performance Optimization Meta Tags -->
-    <meta http-equiv="X-UA-Compatible" content="IE=edge">
-    <meta name="format-detection" content="telephone=no">
-    <meta name="msapplication-tap-highlight" content="no">
-    <meta name="apple-mobile-web-app-capable" content="yes">
-    <meta name="apple-mobile-web-app-status-bar-style" content="black-translucent">
-    
     <title>@yield('title', config('app.name', 'PRO TODO'))</title>
     
-    <!-- Preconnect for Performance -->
+    <!-- Fonts -->
     <link rel="preconnect" href="https://fonts.bunny.net">
-    <link rel="preconnect" href="https://cdnjs.cloudflare.com">
-    <link rel="preconnect" href="https://cdn.jsdelivr.net">
-    <link rel="dns-prefetch" href="{{ asset('') }}">
+    <link href="https://fonts.bunny.net/css?family=figtree:400,500,600,700,800&display=swap" rel="stylesheet" />
     
-    <!-- Critical CSS Inline -->
-    <style>
-        /* Critical Above-the-Fold CSS */
-        *{box-sizing:border-box;margin:0;padding:0}body{font-family:system-ui,-apple-system,BlinkMacSystemFont,'Segoe UI',Roboto,sans-serif;line-height:1.5;background:#f8fafc;color:#1e293b}.container{max-width:1200px;margin:0 auto;padding:0 15px}.btn{display:inline-block;padding:8px 16px;border:none;border-radius:6px;cursor:pointer;text-decoration:none;transition:all 0.2s}.btn-primary{background:#4f46e5;color:#fff}.btn-primary:hover{background:#4338ca}.form-control{width:100%;padding:8px 12px;border:1px solid #d1d5db;border-radius:6px;font-size:14px}.card{background:#fff;border:1px solid #e2e8f0;border-radius:12px;box-shadow:0 2px 4px rgba(0,0,0,0.1)}.glass-effect{background:rgba(255,255,255,0.8);backdrop-filter:blur(10px);border:1px solid rgba(255,255,255,0.2)}[data-theme="dark"]{background:#0f172a;color:#f8fafc}[data-theme="dark"] .card{background:#1e293b;border-color:#334155}[data-theme="dark"] .glass-effect{background:rgba(30,41,59,0.8);border-color:rgba(51,65,85,0.2)}.loading{opacity:0.6;pointer-events:none}.fade-in{animation:fadeIn 0.3s ease-in}@keyframes fadeIn{from{opacity:0;transform:translateY(10px)}to{opacity:1;transform:translateY(0)}}
-    </style>
-    
-    <!-- Fonts with font-display: swap -->
-    <link rel="preload" href="https://fonts.bunny.net/css?family=figtree:400,500,600,700,800&display=swap" as="style" onload="this.onload=null;this.rel='stylesheet'">
-    <noscript><link rel="stylesheet" href="https://fonts.bunny.net/css?family=figtree:400,500,600,700,800&display=swap"></noscript>
-    
-    <!-- Font Awesome 6 - Optimized -->
-    <link rel="preload" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css" as="style" onload="this.onload=null;this.rel='stylesheet'">
-    <noscript><link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css"></noscript>
+    <!-- Font Awesome 6 -->
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css">
 
-    <!-- Bootstrap 5 - Optimized -->
-    <link rel="preload" href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/css/bootstrap.min.css" as="style" onload="this.onload=null;this.rel='stylesheet'">
-    <noscript><link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/css/bootstrap.min.css"></noscript>
+    <!-- Bootstrap 5 (Lightweight) -->
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/css/bootstrap.min.css" rel="stylesheet">
 
-    <!-- Custom CSS - Deferred -->
-    <link rel="stylesheet" href="{{ asset('css/app.css') }}?v={{ time() }}" media="print" onload="this.media='all'">
+    <!-- Custom CSS - External -->
+    <link rel="stylesheet" href="{{ asset('css/app.css') }}?v=1.0.0">
     
     <!-- Theme Initialization Script (Must be in head to prevent flash) -->
     <script>
@@ -967,42 +946,8 @@
         @include('layouts.footer')
     </div>
     
-    <!-- Bootstrap JS - Deferred for Performance -->
-    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/js/bootstrap.bundle.min.js" defer></script>
-    
-    <!-- Performance Monitoring -->
-    <script>
-        // Performance optimization
-        if ('requestIdleCallback' in window) {
-            requestIdleCallback(() => {
-                // Preload critical resources
-                const criticalLinks = document.querySelectorAll('link[rel="preload"]');
-                criticalLinks.forEach(link => {
-                    if (link.rel === 'preload' && link.as === 'style') {
-                        link.onload = null;
-                        link.rel = 'stylesheet';
-                    }
-                });
-            });
-        }
-        
-        // Lazy load images
-        const lazyImages = document.querySelectorAll('img[data-src]');
-        if ('IntersectionObserver' in window) {
-            const imageObserver = new IntersectionObserver((entries) => {
-                entries.forEach(entry => {
-                    if (entry.isIntersecting) {
-                        const img = entry.target;
-                        img.src = img.dataset.src;
-                        img.classList.remove('lazy');
-                        imageObserver.unobserve(img);
-                    }
-                });
-            });
-            
-            lazyImages.forEach(img => imageObserver.observe(img));
-        }
-    </script>
+    <!-- Bootstrap JS -->
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/js/bootstrap.bundle.min.js"></script>
 
     @stack('scripts')
 </body>
