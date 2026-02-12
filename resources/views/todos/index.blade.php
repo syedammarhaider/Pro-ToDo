@@ -104,15 +104,7 @@
                                 <option value="desc" {{ request('direction') == 'desc' ? 'selected' : '' }}>⬇️ Descending</option>
                             </select>
                         </div>
-                        <div class="col-12 col-md-6 col-lg-2">
-                            <select name="category" class="form-select-micro" aria-label="Filter by category">
-                                @foreach($categories as $category)
-                                    <option value="{{ $category }}" {{ request('category') == $category ? 'selected' : '' }}>
-                                        {{ $category }}
-                                    </option>
-                                @endforeach
-                            </select>
-                        </div>
+                       
                         <div class="col-12 col-lg-2">
                             <div class="d-flex gap-2">
                                 <button type="submit" class="btn btn-primary flex-fill" style="min-height:42px;" aria-label="Apply filters">
