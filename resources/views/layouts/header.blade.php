@@ -1,9 +1,9 @@
-<nav class="navbar navbar-expand-lg navbar-dark bg-dark shadow-lg mb-4">
+<nav class="navbar navbar-expand-lg navbar-dark shadow-lg mb-4" style="background-color: var(--bs-navbar-bg) !important;">
 
     <div class="container">
 
         <!-- Logo/Brand Name -->
-        <a class="navbar-brand" href="{{ route('todos.index') }}">
+        <a class="navbar-brand" href="{{ route('todos.index') }}" style="color: var(--bs-navbar-color) !important;">
             <i class="fas fa-tasks me-2"></i>
             <strong>PRO TODO</strong>
         </a>
@@ -17,11 +17,15 @@
             <!-- Navigation Links -->
             <ul class="navbar-nav me-auto">
                 <li class="nav-item">
-                    <a class="nav-link" href="{{ route('todos.index') }}">
+                    <a class="nav-link" href="{{ route('todos.index') }}" style="color: var(--bs-navbar-color) !important;">
                         <i class="fas fa-home me-1"></i> Dashboard
                     </a>
                 </li>
-                
+                <li class="nav-item">
+                    <a class="nav-link" href="{{ route('profile.show') }}" style="color: var(--bs-navbar-color) !important;">
+                        <i class="fas fa-user me-1"></i> Profile
+                    </a>
+                </li>
             </ul>
 
             <!-- Search Form -->
@@ -40,7 +44,7 @@
 
             <!-- Dark/Light Mode Toggle -->
             <div class="d-flex align-items-center me-3">
-                <button class="btn btn-outline-light btn-sm" id="themeToggle" title="Toggle theme">
+                <button class="btn btn-outline-light btn-sm" id="themeToggle" title="Toggle theme" style="border: 2px solid var(--bs-navbar-color); color: var(--bs-navbar-color); transition: all 0.3s ease;">
                     <i class="fas fa-moon" id="themeIcon"></i>
                 </button>
             </div>
@@ -48,7 +52,7 @@
             <!-- User Authentication Links -->
             @auth
                 <div class="dropdown">
-                    <button class="btn btn-outline-light dropdown-toggle" type="button" id="userDropdown" data-bs-toggle="dropdown" aria-expanded="false">
+                    <button class="btn btn-outline-light dropdown-toggle" type="button" id="userDropdown" data-bs-toggle="dropdown" aria-expanded="false" style="border: 2px solid var(--bs-navbar-color); color: var(--bs-navbar-color);">
                         <i class="fas fa-user me-1"></i>{{ Auth::user()->name }}
                     </button>
                     <ul class="dropdown-menu" aria-labelledby="userDropdown">
@@ -70,7 +74,7 @@
                     </ul>
                 </div>
             @else
-                <a href="{{ route('login') }}" class="btn btn-outline-light me-2">
+                <a href="{{ route('login') }}" class="btn btn-outline-light me-2" style="border: 2px solid var(--bs-navbar-color); color: var(--bs-navbar-color);">
                     <i class="fas fa-sign-in-alt me-1"></i>Login
                 </a>
                 <a href="{{ route('register') }}" class="btn btn-primary">
@@ -88,26 +92,29 @@ document.addEventListener('DOMContentLoaded', function() {
     const themeIcon = document.getElementById('themeIcon');
     const html = document.documentElement;
     
-    // Get current theme
+    // Set initial theme
     const currentTheme = localStorage.getItem('theme') || 'light';
     html.setAttribute('data-theme', currentTheme);
     updateThemeIcon(currentTheme);
     
-    // Toggle theme
-    themeToggle.addEventListener('click', function() {
-        const newTheme = html.getAttribute('data-theme') === 'dark' ? 'light' : 'dark';
-        html.setAttribute('data-theme', newTheme);
-        localStorage.setItem('theme', newTheme);
-        updateThemeIcon(newTheme);
-    });
+    // Theme toggle functionality
+    if (themeToggle && themeIcon) {
+        themeToggle.addEventListener('click', function() {
+            const newTheme = html.getAttribute('data-theme') === 'dark' ? 'light' : 'dark';
+            html.setAttribute('data-theme', newTheme);
+            localStorage.setItem('theme', newTheme);
+            updateThemeIcon(newTheme);
+            
+            // Show success message
+            if (window.showMessage) {
+                window.showMessage(`${newTheme.charAt(0).toUpperCase() + newTheme.slice(1)} mode activated`, 'success', 2000);
+            }
+        });
+    }
     
     function updateThemeIcon(theme) {
-        if (theme === 'dark') {
-            themeIcon.classList.remove('fa-moon');
-            themeIcon.classList.add('fa-sun');
-        } else {
-            themeIcon.classList.remove('fa-sun');
-            themeIcon.classList.add('fa-moon');
+        if (themeIcon) {
+            themeIcon.className = theme === 'dark' ? 'fas fa-sun' : 'fas fa-moon';
         }
     }
 });
