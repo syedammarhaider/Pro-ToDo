@@ -65,7 +65,7 @@
                         <i class="fas fa-tasks"></i>
                     </div>
                     <div class="stat-content">
-                        <div class="stat-number">{{ $todos->total() }}</div>
+                        <div class="stat-number" data-stat="total">{{ $todos->total() }}</div>
                         <div class="stat-label">Total Tasks</div>
                     </div>
                 </div>
@@ -87,7 +87,7 @@
                         <i class="fas fa-percentage"></i>
                     </div>
                     <div class="stat-content">
-                        <div class="stat-number">{{ $todos->total() > 0 ? round(($todos->where('completed', true)->count() / $todos->total()) * 100) : 0 }}%</div>
+                        <div class="stat-number" data-stat="done">{{ $todos->total() > 0 ? round(($todos->where('completed', true)->count() / $todos->total()) * 100) : 0 }}%</div>
                         <div class="stat-label">Done</div>
                     </div>
                 </div>
@@ -692,6 +692,62 @@
             }
         };
 
+        // Real-time Updates
+        let realTimeInterval;
+        let lastUpdateTime = Date.now();
+
+        window.startRealTimeUpdates = function() {
+            if (realTimeInterval) clearInterval(realTimeInterval);
+
+            realTimeInterval = setInterval(async () => {
+                try {
+                    const response = await fetch(window.location.href, {
+                        headers: {
+                            'X-Requested-With': 'XMLHttpRequest',
+                            'Accept': 'application/json'
+                        }
+                    });
+
+                    if (response.ok) {
+                        const data = await response.json();
+                        updateStats(data.stats);
+                        updateLastUpdate();
+                    }
+                } catch (error) {
+                    console.log('Real-time update failed:', error);
+                }
+            }, 30000); // Update every 30 seconds
+        };
+
+        window.updateStats = function(stats) {
+            if (stats) {
+                Object.keys(stats).forEach(key => {
+                    const element = document.querySelector(`[data-stat="${key}"]`);
+                    if (element) {
+                        element.textContent = stats[key];
+                    }
+                });
+            }
+        };
+
+        window.updateLastUpdate = function() {
+            const now = new Date();
+            const timeString = now.toLocaleTimeString([], { hour: '2-digit', minute: '2-digit' });
+            const lastUpdateElement = document.getElementById('lastUpdate');
+            if (lastUpdateElement) {
+                lastUpdateElement.textContent = timeString;
+            }
+
+            // Animate the real-time icon
+            const icon = document.getElementById('realTimeIcon');
+            if (icon) {
+                icon.style.animation = 'none';
+                setTimeout(() => {
+                    icon.style.animation = 'spin 1s ease-in-out';
+                }, 10);
+            }
+        };
+
         // Initialize
         document.addEventListener('DOMContentLoaded', function() {
             // Check URL parameters for filter visibility
@@ -701,7 +757,10 @@
                     if (window.toggleFilters) window.toggleFilters();
                 }, 100);
             }
-            
+
+            // Start real-time updates
+            startRealTimeUpdates();
+
             // Handle message from session
             @if(session('success'))
                 showMessage('{{ session('success') }}', 'success', 4000);
