@@ -17,10 +17,13 @@
     
     <!-- Font Awesome 6 -->
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css">
-    
+
     <!-- Bootstrap 5 (Lightweight) -->
     <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/css/bootstrap.min.css" rel="stylesheet">
-    
+
+    <!-- Tailwind CSS -->
+    <script src="https://cdn.tailwindcss.com"></script>
+
     <!-- Custom CSS - External -->
     <link rel="stylesheet" href="{{ asset('css/app.css') }}?v=1.0.0">
     
@@ -37,23 +40,7 @@
     
     <div class="min-vh-100">
         <!-- Navigation -->
-        @include('layouts.navigation')
-        
-        <!-- Page Header -->
-        @isset($header)
-            <header class="page-header container-fluid px-2 px-md-3 mt-20">
-                <div class="d-flex justify-content-between align-items-center">
-                    <h1 class="welcome-text mb-0">{{ $header }}</h1>
-                    @auth
-                        <div class="d-flex gap-2">
-                            <button id="themeToggle" class="theme-toggle">
-                                <i class="fas fa-moon"></i>
-                            </button>
-                        </div>
-                    @endauth
-                </div>
-            </header>
-        @endisset
+        @include('layouts.header')
         
         <!-- Main Content -->
         <main class="container-fluid px-2 px-md-3 py-4">
