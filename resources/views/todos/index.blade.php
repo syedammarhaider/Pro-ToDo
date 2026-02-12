@@ -25,11 +25,11 @@
     <!-- Page Header -->
     <header class="page-header compact" id="pageHeader" role="banner">
         <div class="d-flex justify-content-between align-items-center flex-wrap gap-3">
-            <div class="welcome-section">
-                <h1 tabindex="0" class="welcome-text" style="font-size: 1rem !important;">
+            <div class="welcome-section d-flex align-items-center gap-3">
+                <h1 tabindex="0" class="welcome-text" style="font-size: 1rem !important; margin: 0;">
                     Welcome, <span class="user-name">{{ Auth::user()->name }}</span>!
                 </h1>
-                <div class="todos-count-badge" style="font-size: 0.75rem !important; margin-top: 0.25rem;">
+                <div class="todos-count-badge" style="font-size: 0.75rem !important; margin: 0;">
                     <div class="count-content d-flex align-items-center gap-2">
                         <span class="count-number">{{ $todos->total() }}</span>
                         <span class="count-label">Total Tasks</span>
