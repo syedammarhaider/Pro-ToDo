@@ -27,7 +27,7 @@
         <div class="d-flex justify-content-between align-items-center flex-wrap gap-3">
             <div class="d-flex align-items-center gap-4 flex-wrap">
                 <div class="welcome-section">
-                    <h1 tabindex="0" class="welcome-text">
+                    <h1 tabindex="0" class="welcome-text text-center">
                         Welcome, <span class="user-name">{{ Auth::user()->name }}</span>!
                     </h1>
                 </div>
