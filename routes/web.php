@@ -29,6 +29,7 @@ Route::middleware('auth')->group(function () {
     // Route::delete('/todos/{todo}/force-delete', [TodoController::class, 'forceDelete'])->name('todos.force-delete');
     Route::get('/todos/{todo}/edit', [TodoController::class, 'edit'])->name('todos.edit');
     Route::patch('/todos/{todo}', [TodoController::class, 'update'])->name('todos.update');
+    Route::put('/todos/{todo}', [TodoController::class, 'update'])->name('todos.update.put');
     Route::delete('/todos/{todo}', [TodoController::class, 'destroy'])->name('todos.destroy');
 
     // Todo status routes
