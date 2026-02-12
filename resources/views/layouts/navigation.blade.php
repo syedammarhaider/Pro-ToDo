@@ -179,73 +179,6 @@
     </div>
 </nav>
 
-<!-- Statistics Section -->
-<div class="collapse max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 mt-24 mb-8" id="stats">
-    <div class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-4 lg:gap-6">
-        <!-- Total Tasks -->
-        <div class="bg-white rounded-2xl p-6 shadow-lg hover:shadow-xl transition-all duration-300 transform hover:-translate-y-1">
-            <div class="flex items-center justify-between mb-4">
-                <div class="w-12 h-12 bg-gradient-to-br from-indigo-500 to-indigo-600 rounded-xl flex items-center justify-center text-white shadow-lg">
-                    <i class="fas fa-clipboard-list text-xl"></i>
-                </div>
-                <span class="text-sm font-semibold text-indigo-600 bg-indigo-50 px-3 py-1 rounded-full">Total</span>
-            </div>
-            <h3 class="text-3xl font-bold text-gray-900 mb-1">{{ App\Models\Todo::count() }}</h3>
-            <p class="text-sm text-gray-600">Total Tasks</p>
-            <div class="mt-4 w-full h-2 bg-gray-100 rounded-full overflow-hidden">
-                <div class="w-full h-full bg-gradient-to-r from-indigo-500 to-indigo-600 rounded-full"></div>
-            </div>
-        </div>
-        
-        <!-- Completed Tasks -->
-        <div class="bg-white rounded-2xl p-6 shadow-lg hover:shadow-xl transition-all duration-300 transform hover:-translate-y-1">
-            <div class="flex items-center justify-between mb-4">
-                <div class="w-12 h-12 bg-gradient-to-br from-green-500 to-green-600 rounded-xl flex items-center justify-center text-white shadow-lg">
-                    <i class="fas fa-check-circle text-xl"></i>
-                </div>
-                <span class="text-sm font-semibold text-green-600 bg-green-50 px-3 py-1 rounded-full">Done</span>
-            </div>
-            <h3 class="text-3xl font-bold text-gray-900 mb-1">{{ App\Models\Todo::completed()->count() }}</h3>
-            <p class="text-sm text-gray-600">Completed Tasks</p>
-            @php $total = App\Models\Todo::count(); $completed = App\Models\Todo::completed()->count(); $percentage = $total > 0 ? ($completed / $total) * 100 : 0; @endphp
-            <div class="mt-4 w-full h-2 bg-gray-100 rounded-full overflow-hidden">
-                <div class="h-full bg-gradient-to-r from-green-500 to-green-600 rounded-full" style="width: {{ $percentage }}%"></div>
-            </div>
-        </div>
-        
-        <!-- Active Tasks -->
-        <div class="bg-white rounded-2xl p-6 shadow-lg hover:shadow-xl transition-all duration-300 transform hover:-translate-y-1">
-            <div class="flex items-center justify-between mb-4">
-                <div class="w-12 h-12 bg-gradient-to-br from-yellow-500 to-orange-500 rounded-xl flex items-center justify-center text-white shadow-lg">
-                    <i class="fas fa-clock text-xl"></i>
-                </div>
-                <span class="text-sm font-semibold text-yellow-600 bg-yellow-50 px-3 py-1 rounded-full">Active</span>
-            </div>
-            <h3 class="text-3xl font-bold text-gray-900 mb-1">{{ App\Models\Todo::active()->count() }}</h3>
-            <p class="text-sm text-gray-600">In Progress</p>
-            @php $active = App\Models\Todo::active()->count(); $percentage_active = $total > 0 ? ($active / $total) * 100 : 0; @endphp
-            <div class="mt-4 w-full h-2 bg-gray-100 rounded-full overflow-hidden">
-                <div class="h-full bg-gradient-to-r from-yellow-500 to-orange-500 rounded-full" style="width: {{ $percentage_active }}%"></div>
-            </div>
-        </div>
-        
-        <!-- Overdue Tasks -->
-        <div class="bg-white rounded-2xl p-6 shadow-lg hover:shadow-xl transition-all duration-300 transform hover:-translate-y-1">
-            <div class="flex items-center justify-between mb-4">
-                <div class="w-12 h-12 bg-gradient-to-br from-red-500 to-pink-600 rounded-xl flex items-center justify-center text-white shadow-lg">
-                    <i class="fas fa-exclamation-triangle text-xl"></i>
-                </div>
-                <span class="text-sm font-semibold text-red-600 bg-red-50 px-3 py-1 rounded-full">Urgent</span>
-            </div>
-            <h3 class="text-3xl font-bold text-gray-900 mb-1">{{ App\Models\Todo::overdue()->count() }}</h3>
-            <p class="text-sm text-gray-600">Overdue Tasks</p>
-            @php $overdue = App\Models\Todo::overdue()->count(); $percentage_overdue = $total > 0 ? ($overdue / $total) * 100 : 0; @endphp
-            <div class="mt-4 w-full h-2 bg-gray-100 rounded-full overflow-hidden">
-                <div class="h-full bg-gradient-to-r from-red-500 to-pink-600 rounded-full" style="width: {{ $percentage_overdue }}%"></div>
-            </div>
-        </div>
-    </div>
-</div>
 
 <style>
     /* Mobile Toggle Animation */
@@ -262,7 +195,50 @@
     }
     
     /* Navbar Scroll Effect */
-    .neo-nav.bg-white\/98 {
+    .neo-nav.scrolled {
         background: rgba(255, 255, 255, 0.98);
+        box-shadow: var(--shadow-lg);
+    }
+    
+    [data-theme="dark"] .neo-nav.scrolled {
+        background: rgba(15, 23, 42, 0.98);
     }
 </style>
+
+<script>
+document.addEventListener('DOMContentLoaded', function() {
+    // Mobile Menu Toggle
+    const mobileToggle = document.querySelector('.mobile-toggle');
+    const mobileMenu = document.querySelector('.mobile-menu');
+    
+    if (mobileToggle && mobileMenu) {
+        mobileToggle.addEventListener('click', function() {
+            mobileToggle.classList.toggle('active');
+            mobileMenu.classList.toggle('hidden');
+        });
+    }
+    
+    // Navbar Scroll Effect
+    const navbar = document.querySelector('.neo-nav');
+    if (navbar) {
+        window.addEventListener('scroll', function() {
+            if (window.scrollY > 50) {
+                navbar.classList.add('scrolled');
+            } else {
+                navbar.classList.remove('scrolled');
+            }
+        });
+    }
+    
+    // Close mobile menu when clicking links
+    const mobileLinks = document.querySelectorAll('.mobile-menu a');
+    mobileLinks.forEach(link => {
+        link.addEventListener('click', function() {
+            if (mobileToggle && mobileMenu) {
+                mobileToggle.classList.remove('active');
+                mobileMenu.classList.add('hidden');
+            }
+        });
+    });
+});
+</script>
