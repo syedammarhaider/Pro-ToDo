@@ -25,21 +25,19 @@
     <!-- Page Header -->
     <header class="page-header compact" id="pageHeader" role="banner">
         <div class="d-flex justify-content-between align-items-center flex-wrap gap-3">
-            <div class="d-flex align-items-center gap-4 flex-wrap">
-                <div class="welcome-section">
-                    <h1 tabindex="0" class="welcome-text text-center">
-                        Welcome, <span class="user-name">{{ Auth::user()->name }}</span>!
-                    </h1>
-                </div>
-                <div class="todos-count-badge">
+            <div class="welcome-section">
+                <h1 tabindex="0" class="welcome-text" style="font-size: 1rem !important;">
+                    Welcome, <span class="user-name">{{ Auth::user()->name }}</span>!
+                </h1>
+                <div class="todos-count-badge" style="font-size: 0.75rem !important; margin-top: 0.25rem;">
                     <div class="count-content d-flex align-items-center gap-2">
                         <span class="count-number">{{ $todos->total() }}</span>
                         <span class="count-label">Total Tasks</span>
                     </div>
                 </div>
             </div>
-            <div class="d-flex gap-2">
-                <a href="{{ route('profile.edit') }}" class="action-btn profile-btn" role="button" aria-label="Edit profile">
+            <div class="d-flex gap-2" style="display: flex !important;">
+                <a href="{{ route('profile.show') }}" class="action-btn profile-btn" role="button" aria-label="View profile">
                     <i class="fas fa-user"></i>
                     <span class="btn-text">Profile</span>
                 </a>
