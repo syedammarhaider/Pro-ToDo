@@ -127,10 +127,7 @@
                             </label>
                         </div>
                         <div class="d-flex gap-2">
-                          <a href="{{ route('todos.trashed') }}" class="btn btn-outline-warning btn-sm px-3">     <i class="fas fa-trash-restore"></i>
-                                <span class="d-none d-md-inline">Trash</span>
-                            </a>
-                            <button type="button" class="btn btn-success btn-sm px-3" onclick="bulkComplete()" aria-label="Mark selected todos complete">
+                                                      <button type="button" class="btn btn-success btn-sm px-3" onclick="bulkComplete()" aria-label="Mark selected todos complete">
                                 <i class="fas fa-check-double"></i>
                                 <span class="d-none d-md-inline">Complete</span>
                             </button>

@@ -154,56 +154,31 @@ class TodoController extends Controller
 
 
 
-    // Trash page
+    // Trash page - REMOVED
+    // public function trash()
+    // {
+    //     // Gate::authorize('delete todos');
+    //     $trashedTodos = Todo::onlyTrashed()->where('user_id', Auth::id())->paginate(15);
+    //     return view('todos.trash', compact('trashedTodos'));
+    // }
 
-    public function trash()
+    // Restore trashed todo - REMOVED
+    // public function restore($id)
+    // {
+    //     // Gate::authorize('delete todos');
+    //     $todo = Todo::withTrashed()->where('user_id', Auth::id())->findOrFail($id);
+    //     $todo->restore();
+    //     return back()->with('success', 'Todo restored.');
+    // }
 
-    {
-        // Gate::authorize('delete todos');
-
-        $trashedTodos = Todo::onlyTrashed()->where('user_id', Auth::id())->paginate(15);
-
-
-
-        return view('todos.trash', compact('trashedTodos'));
-
-    }
-
-
-
-    // Restore trashed todo
-
-    public function restore($id)
-
-    {
-        // Gate::authorize('delete todos');
-
-        $todo = Todo::withTrashed()->where('user_id', Auth::id())->findOrFail($id);
-        $todo->restore();
-
-
-
-        return back()->with('success', 'Todo restored.');
-
-    }
-
-
-
-    // Permanently delete
-
-    public function forceDelete($id)
-
-    {
-        // Gate::authorize('delete todos');
-
-        $todo = Todo::withTrashed()->where('user_id', Auth::id())->findOrFail($id);
-        $todo->forceDelete();
-
-
-
-        return back()->with('success', 'Todo permanently deleted.');
-
-    }
+    // Permanently delete - REMOVED
+    // public function forceDelete($id)
+    // {
+    //     // Gate::authorize('delete todos');
+    //     $todo = Todo::withTrashed()->where('user_id', Auth::id())->findOrFail($id);
+    //     $todo->forceDelete();
+    //     return back()->with('success', 'Todo permanently deleted.');
+    // }
 
 
 
