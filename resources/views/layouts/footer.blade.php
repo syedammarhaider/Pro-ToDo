@@ -1,185 +1,162 @@
-<footer class="bg-gradient-to-br from-gray-900 to-gray-800 text-white mt-auto">
-    <!-- Wave Effect -->
-    <div class="relative -mt-16">
-        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 1440 120" class="w-full h-auto">
-            <path fill="#0f172a" fill-opacity="1" d="M0,64L80,69.3C160,75,320,85,480,80C640,75,800,53,960,48C1120,43,1280,53,1360,58.7L1440,64L1440,0L1360,0C1280,0,1120,0,960,0C800,0,640,0,480,0C320,0,160,0,80,0L0,0Z"></path>
-        </svg>
-    </div>
-    
-    <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 pb-8">
-        <!-- Main Footer Content -->
-        <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-8 lg:gap-12">
+<footer class="text-center py-4 mt-5" style="background-color: var(--bs-card-bg); border-top: 1px solid var(--bs-border-color); color: var(--bs-body-color);">
+    <div class="container">
+        <div class="row">
             <!-- Brand Column -->
-            <div class="space-y-4">
-                <div class="flex items-center space-x-2">
-                    <i class="fas fa-tasks text-2xl bg-gradient-to-r from-indigo-400 to-teal-400 bg-clip-text text-transparent"></i>
-                    <span class="text-xl font-bold">
-                        <span class="text-white">PRO</span>
-                        <span class="bg-gradient-to-r from-indigo-400 to-teal-400 bg-clip-text text-transparent">TODO</span>
-                    </span>
-                </div>
-                <p class="text-gray-300 text-sm leading-relaxed">
+            <div class="col-lg-4 mb-4">
+                <h5 class="mb-3">
+                    <i class="fas fa-tasks text-primary me-2"></i>
+                    <span class="text-primary fw-bold">PRO</span>
+                    <span class="text-warning fw-bold">TODO</span>
+                </h5>
+                <p class="text-muted">
                     Professional Todo Management Application. Stay organized and productive with our advanced task management system.
                 </p>
                 
                 <!-- Social Links -->
-                <div class="flex space-x-4 pt-2">
-                    <a href="#" class="w-10 h-10 bg-gray-800 rounded-lg flex items-center justify-center text-gray-300 hover:text-white hover:bg-gradient-to-r hover:from-indigo-500 hover:to-teal-500 transition-all duration-300 transform hover:scale-110">
+                <div class="mt-3">
+                    <a href="#" class="btn btn-outline-secondary btn-sm me-2" title="Facebook">
                         <i class="fab fa-facebook-f"></i>
                     </a>
-                    <a href="#" class="w-10 h-10 bg-gray-800 rounded-lg flex items-center justify-center text-gray-300 hover:text-white hover:bg-gradient-to-r hover:from-indigo-500 hover:to-teal-500 transition-all duration-300 transform hover:scale-110">
+                    <a href="#" class="btn btn-outline-secondary btn-sm me-2" title="Twitter">
                         <i class="fab fa-twitter"></i>
                     </a>
-                    <a href="#" class="w-10 h-10 bg-gray-800 rounded-lg flex items-center justify-center text-gray-300 hover:text-white hover:bg-gradient-to-r hover:from-indigo-500 hover:to-teal-500 transition-all duration-300 transform hover:scale-110">
+                    <a href="#" class="btn btn-outline-secondary btn-sm me-2" title="LinkedIn">
                         <i class="fab fa-linkedin-in"></i>
                     </a>
-                    <a href="#" class="w-10 h-10 bg-gray-800 rounded-lg flex items-center justify-center text-gray-300 hover:text-white hover:bg-gradient-to-r hover:from-indigo-500 hover:to-teal-500 transition-all duration-300 transform hover:scale-110">
+                    <a href="#" class="btn btn-outline-secondary btn-sm" title="GitHub">
                         <i class="fab fa-github"></i>
                     </a>
                 </div>
             </div>
             
             <!-- Quick Links -->
-            <div class="space-y-4">
-                <h4 class="text-lg font-semibold relative inline-block">
-                    Quick Links
-                    <span class="absolute -bottom-2 left-0 w-12 h-0.5 bg-gradient-to-r from-indigo-400 to-teal-400"></span>
-                </h4>
-                <ul class="space-y-3">
-                    <li>
-                        <a href="{{ route('todos.index') }}" class="text-gray-300 hover:text-white flex items-center space-x-2 group">
-                            <i class="fas fa-chevron-right text-xs text-indigo-400 group-hover:translate-x-1 transition-transform"></i>
-                            <span>All Tasks</span>
+            <div class="col-lg-4 mb-4">
+                <h5 class="mb-3">Quick Links</h5>
+                <ul class="list-unstyled">
+                    <li class="mb-2">
+                        <a href="{{ route('todos.index') }}" class="text-decoration-none" style="color: var(--bs-body-color);">
+                            <i class="fas fa-chevron-right text-primary me-2"></i>
+                            All Tasks
                         </a>
                     </li>
-                    <li>
-                        <a href="{{ route('todos.create') }}" class="text-gray-300 hover:text-white flex items-center space-x-2 group">
-                            <i class="fas fa-chevron-right text-xs text-indigo-400 group-hover:translate-x-1 transition-transform"></i>
-                            <span>Create New Task</span>
+                    <li class="mb-2">
+                        <a href="{{ route('todos.create') }}" class="text-decoration-none" style="color: var(--bs-body-color);">
+                            <i class="fas fa-chevron-right text-primary me-2"></i>
+                            Create New Task
                         </a>
                     </li>
-                    <li>
-                        <a href="#" class="text-gray-300 hover:text-white flex items-center space-x-2 group">
-                            <i class="fas fa-chevron-right text-xs text-indigo-400 group-hover:translate-x-1 transition-transform"></i>
-                            <span>Completed Tasks</span>
+                    <li class="mb-2">
+                        <a href="{{ route('profile.show') }}" class="text-decoration-none" style="color: var(--bs-body-color);">
+                            <i class="fas fa-chevron-right text-primary me-2"></i>
+                            My Profile
                         </a>
                     </li>
-                    <li>
-                        <a href="#" class="text-gray-300 hover:text-white flex items-center space-x-2 group">
-                            <i class="fas fa-chevron-right text-xs text-indigo-400 group-hover:translate-x-1 transition-transform"></i>
-                            <span>Overdue Tasks</span>
-                        </a>
-                    </li>
-                    <li>
-                        <a href="#" class="text-gray-300 hover:text-white flex items-center space-x-2 group">
-                            <i class="fas fa-chevron-right text-xs text-indigo-400 group-hover:translate-x-1 transition-transform"></i>
-                            <span>Categories</span>
+                    <li class="mb-2">
+                        <a href="#" class="text-decoration-none" style="color: var(--bs-body-color);">
+                            <i class="fas fa-chevron-right text-primary me-2"></i>
+                            Completed Tasks
                         </a>
                     </li>
                 </ul>
             </div>
             
             <!-- Features -->
-            <div class="space-y-4">
-                <h4 class="text-lg font-semibold relative inline-block">
-                    Features
-                    <span class="absolute -bottom-2 left-0 w-12 h-0.5 bg-gradient-to-r from-indigo-400 to-teal-400"></span>
-                </h4>
-                <ul class="space-y-3">
-                    <li class="text-gray-300 flex items-center space-x-2">
-                        <i class="fas fa-check-circle text-green-400"></i>
-                        <span>Priority Levels</span>
+            <div class="col-lg-4 mb-4">
+                <h5 class="mb-3">Features</h5>
+                <ul class="list-unstyled">
+                    <li class="mb-2" style="color: var(--bs-body-color);">
+                        <i class="fas fa-check-circle text-success me-2"></i>
+                        Priority Levels
                     </li>
-                    <li class="text-gray-300 flex items-center space-x-2">
-                        <i class="fas fa-check-circle text-green-400"></i>
-                        <span>Categories & Tags</span>
+                    <li class="mb-2" style="color: var(--bs-body-color);">
+                        <i class="fas fa-check-circle text-success me-2"></i>
+                        Categories & Tags
                     </li>
-                    <li class="text-gray-300 flex items-center space-x-2">
-                        <i class="fas fa-check-circle text-green-400"></i>
-                        <span>Due Dates & Reminders</span>
+                    <li class="mb-2" style="color: var(--bs-body-color);">
+                        <i class="fas fa-check-circle text-success me-2"></i>
+                        Due Dates & Reminders
                     </li>
-                    <li class="text-gray-300 flex items-center space-x-2">
-                        <i class="fas fa-check-circle text-green-400"></i>
-                        <span>Drag & Drop Interface</span>
-                    </li>
-                    <li class="text-gray-300 flex items-center space-x-2">
-                        <i class="fas fa-check-circle text-green-400"></i>
-                        <span>Real-time Updates</span>
-                    </li>
-                    <li class="text-gray-300 flex items-center space-x-2">
-                        <i class="fas fa-check-circle text-green-400"></i>
-                        <span>Analytics Dashboard</span>
+                    <li class="mb-2" style="color: var(--bs-body-color);">
+                        <i class="fas fa-check-circle text-success me-2"></i>
+                        Real-time Updates
                     </li>
                 </ul>
-            </div>
-            
-            <!-- Newsletter -->
-            <div class="space-y-4">
-                <h4 class="text-lg font-semibold relative inline-block">
-                    Newsletter
-                    <span class="absolute -bottom-2 left-0 w-12 h-0.5 bg-gradient-to-r from-indigo-400 to-teal-400"></span>
-                </h4>
-                <p class="text-gray-300 text-sm">
-                    Subscribe to get updates on new features and productivity tips.
-                </p>
-                
-                <form class="space-y-3">
-                    <div class="relative">
-                        <input type="email" 
-                               placeholder="Enter your email" 
-                               class="w-full px-4 py-3 bg-gray-800 border border-gray-700 rounded-lg text-white placeholder-gray-400 focus:outline-none focus:border-indigo-500 focus:ring-2 focus:ring-indigo-500/20 transition-all">
-                        <i class="fas fa-envelope absolute right-3 top-3 text-gray-400"></i>
-                    </div>
-                    <button type="submit" 
-                            class="w-full px-4 py-3 bg-gradient-to-r from-indigo-500 to-teal-500 text-white rounded-lg font-medium hover:from-indigo-600 hover:to-teal-600 transition-all duration-300 transform hover:scale-[1.02] shadow-lg hover:shadow-xl">
-                        <i class="fas fa-paper-plane mr-2"></i>
-                        Subscribe
-                    </button>
-                </form>
-                
-                <p class="text-xs text-gray-400">
-                    <i class="fas fa-shield-alt mr-1"></i>
-                    We respect your privacy. No spam.
-                </p>
             </div>
         </div>
         
         <!-- Bottom Bar -->
-        <div class="mt-12 pt-8 border-t border-gray-800">
-            <div class="flex flex-col md:flex-row justify-between items-center space-y-4 md:space-y-0">
-                <p class="text-sm text-gray-400">
+        <hr class="my-4" style="border-color: var(--bs-border-color);">
+        <div class="row">
+            <div class="col-md-6">
+                <p class="text-muted mb-0">
                     &copy; {{ date('Y') }} PRO TODO. All rights reserved.
                 </p>
-                
-                <div class="flex space-x-6">
-                    <a href="#" class="text-sm text-gray-400 hover:text-white transition-colors">Privacy Policy</a>
-                    <a href="#" class="text-sm text-gray-400 hover:text-white transition-colors">Terms of Service</a>
-                    <a href="#" class="text-sm text-gray-400 hover:text-white transition-colors">Contact</a>
-                </div>
             </div>
-            
-            <div class="text-center mt-6">
-                <p class="text-sm text-gray-400">
-                    Made with <i class="fas fa-heart text-red-500 animate-pulse-slow"></i> for productivity
-                </p>
+            <div class="col-md-6 text-end">
+                <a href="#" class="text-decoration-none me-3" style="color: var(--bs-text-muted);">Privacy Policy</a>
+                <a href="#" class="text-decoration-none me-3" style="color: var(--bs-text-muted);">Terms of Service</a>
+                <a href="#" class="text-decoration-none" style="color: var(--bs-text-muted);">Contact</a>
             </div>
+        </div>
+        
+        <div class="text-center mt-3">
+            <p class="text-muted mb-0">
+                Made with <i class="fas fa-heart text-danger"></i> for productivity
+            </p>
         </div>
     </div>
 </footer>
 
 <style>
-    /* Footer Animation */
-    .fa-heart.animate-pulse-slow {
-        animation: heartPulse 2s infinite;
+/* Footer Dark Mode Styles */
+footer {
+    transition: all 0.3s ease;
+}
+
+footer h5 {
+    color: var(--bs-body-color);
+    font-weight: 600;
+}
+
+footer a {
+    transition: color 0.3s ease;
+}
+
+footer a:hover {
+    color: var(--bs-btn-primary-bg) !important;
+}
+
+footer .btn-outline-secondary {
+    border-color: var(--bs-text-muted);
+    color: var(--bs-text-muted);
+}
+
+footer .btn-outline-secondary:hover {
+    background-color: var(--bs-text-muted);
+    border-color: var(--bs-text-muted);
+    color: var(--bs-card-bg);
+}
+
+/* Heart Animation */
+.fa-heart {
+    animation: heartPulse 1.5s ease-in-out infinite;
+}
+
+@keyframes heartPulse {
+    0% { transform: scale(1); }
+    50% { transform: scale(1.1); }
+    100% { transform: scale(1); }
+}
+
+/* Responsive Footer */
+@media (max-width: 768px) {
+    footer {
+        text-align: left;
     }
     
-    @keyframes heartPulse {
-        0%, 100% { transform: scale(1); }
-        50% { transform: scale(1.2); }
+    footer .text-end {
+        text-align: left !important;
+        margin-top: 1rem;
     }
-    
-    /* Smooth Hover Effects */
-    .bg-gray-800 {
-        transition: all 0.3s ease;
-    }
+}
 </style>

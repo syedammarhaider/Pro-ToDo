@@ -21,11 +21,7 @@
                         <i class="fas fa-home me-1"></i> Dashboard
                     </a>
                 </li>
-                <li class="nav-item">
-                    <a class="nav-link" href="{{ route('profile.show') }}">
-                        <i class="fas fa-user me-1"></i> Profile
-                    </a>
-                </li>
+                
             </ul>
 
             <!-- Search Form -->
