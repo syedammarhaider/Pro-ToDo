@@ -25,19 +25,19 @@
     <!-- Page Header -->
     <header class="page-header compact" id="pageHeader" role="banner">
         <div class="d-flex justify-content-between align-items-center flex-wrap gap-3">
-            <div class="welcome-section d-flex align-items-center gap-3">
-                <h1 tabindex="0" class="welcome-text" style="font-size: 1rem !important; margin: 0;">
+            <div class="d-flex align-items-center gap-3">
+                <h1 tabindex="0" class="welcome-text mb-0" style="font-size: 1.5rem !important;">
                     Welcome, <span class="user-name">{{ Auth::user()->name }}</span>!
                 </h1>
-                <div class="todos-count-badge" style="font-size: 0.75rem !important; margin: 0;">
+                <div class="todos-count-badge">
                     <div class="count-content d-flex align-items-center gap-2">
-                        <span class="count-number" data-welcome-total>{{ $stats['total'] }}</span>
+                        <span class="count-number" id="totalTasksCount">{{ $todos->total() }}</span>
                         <span class="count-label">Total Tasks</span>
                     </div>
                 </div>
             </div>
-            <div class="d-flex gap-2" style="display: flex !important;">
-                <a href="{{ route('profile.show') }}" class="action-btn profile-btn" role="button" aria-label="View profile">
+            <div class="d-flex gap-2">
+                <a href="{{ route('profile.edit') }}" class="action-btn profile-btn" role="button" aria-label="View profile">
                     <i class="fas fa-user"></i>
                     <span class="btn-text">Profile</span>
                 </a>
@@ -60,13 +60,13 @@
     <section>
         <div class="card glass-effect filters-card" id="filtersCard">
             <div class="card-body p-3">
-                <button class="filter-toggle-btn mb-3 w-100 d-flex align-items-center" aria-expanded="false" aria-controls="filterContent" onclick="toggleFilters()">
+                <button class="filter-toggle-btn mb-3 w-100 d-flex align-items-center" type="button" aria-expanded="false" aria-controls="filterContent" onclick="toggleFilters()">
                     <i class="fas fa-sliders-h"></i>
                     <span class="fw-bold">Filters & Search</span>
                     <i class="fas fa-chevron-down ms-auto" id="filterArrow"></i>
                 </button>
                 
-                <div id="filterContent" style="display:none;">
+                <div id="filterContent" style="display: none;">
                     <form action="{{ route('todos.index') }}" method="GET" class="row g-2" role="search" aria-label="Todo search and filters">
                         <div class="col-12 col-md-6 col-lg-2">
                             <input type="search" name="search" class="form-control-micro" placeholder="🔍 Search tasks..." value="{{ request('search') }}" aria-label="Search todos">
@@ -125,7 +125,11 @@
                             </label>
                         </div>
                         <div class="d-flex gap-2">
-                                                      <button type="button" class="btn btn-success btn-sm px-3" onclick="bulkComplete()" aria-label="Mark selected todos complete">
+                            <a href="{{ route('todos.trashed') }}" class="btn btn-outline-warning btn-sm px-3">
+                                <i class="fas fa-trash-restore"></i>
+                                <span class="d-none d-md-inline">Trash</span>
+                            </a>
+                            <button type="button" class="btn btn-success btn-sm px-3" onclick="bulkComplete()" aria-label="Mark selected todos complete">
                                 <i class="fas fa-check-double"></i>
                                 <span class="d-none d-md-inline">Complete</span>
                             </button>
@@ -249,7 +253,7 @@
             @if($todos->hasPages())
                 <div class="card-footer bg-transparent border-top py-3">
                     <nav aria-label="Pagination navigation">
-                        {{ $todos->withQueryString()->links('vendor.pagination.custom') }}
+                        {{ $todos->withQueryString()->links('pagination::bootstrap-5') }}
                     </nav>
                 </div>
             @endif
@@ -260,31 +264,39 @@
 
 @push('scripts')
 <script>
-    (() => {
+    (function() {
         'use strict';
         
-        let filtersVisible = false;
+        // DOM Elements
         const messageContainer = document.getElementById('messageContainer');
         const filterContent = document.getElementById('filterContent');
         const filterArrow = document.getElementById('filterArrow');
         const filtersCard = document.getElementById('filtersCard');
         const filterIcon = document.getElementById('filterIcon');
+        
+        // State
+        let filtersVisible = false;
 
         // Toggle Filters
         window.toggleFilters = function() {
             filtersVisible = !filtersVisible;
+            
             if (filterContent) {
                 filterContent.style.display = filtersVisible ? 'block' : 'none';
             }
+            
             if (filterArrow) {
                 filterArrow.className = filtersVisible ? 'fas fa-chevron-up ms-auto' : 'fas fa-chevron-down ms-auto';
             }
+            
             if (filtersCard) {
                 filtersCard.classList.toggle('filters-collapsed', !filtersVisible);
             }
+            
             if (filterIcon) {
                 filterIcon.className = filtersVisible ? 'fas fa-times' : 'fas fa-filter';
             }
+            
             showMessage(`Filters ${filtersVisible ? 'expanded' : 'collapsed'}`, 'info', 1500);
         };
 
@@ -312,15 +324,20 @@
                         <div class="fw-bold">${type.charAt(0).toUpperCase() + type.slice(1)}</div>
                         <div class="small">${text}</div>
                     </div>
-                    <button class="btn-close" onclick="removeMessage('${messageId}')" aria-label="Close"></button>
+                    <button type="button" class="btn-close" onclick="removeMessage('${messageId}')" aria-label="Close"></button>
                 </div>
             `;
             
             messageContainer.appendChild(message);
-            setTimeout(() => message.classList.add('show'), 10);
+            
+            setTimeout(() => {
+                message.classList.add('show');
+            }, 10);
             
             if (duration > 0) {
-                setTimeout(() => removeMessage(messageId), duration);
+                setTimeout(() => {
+                    removeMessage(messageId);
+                }, duration);
             }
         };
 
@@ -329,11 +346,13 @@
             const message = document.getElementById(id);
             if (message) {
                 message.classList.remove('show');
-                setTimeout(() => message.remove(), 300);
+                setTimeout(() => {
+                    message.remove();
+                }, 300);
             }
         };
 
-        // Handle Todo Actions (Complete, Incomplete, Delete)
+        // Handle Todo Actions
         window.handleTodoAction = async function(form, action, event) {
             if (event) {
                 event.preventDefault();
@@ -341,28 +360,30 @@
             }
             
             const todoItem = form.closest('.todo-item-micro');
-            const todoId = todoItem?.dataset.id;
+            const todoId = todoItem ? todoItem.dataset.id : null;
             
             if (!todoItem || !todoId) return;
+            
+            const formData = new FormData(form);
             
             try {
                 const response = await fetch(form.action, {
                     method: 'POST',
                     headers: {
-                        'X-CSRF-TOKEN': '{{ csrf_token() }}',
+                        'X-CSRF-TOKEN': document.querySelector('meta[name="csrf-token"]').getAttribute('content'),
                         'Accept': 'application/json',
-                        'Content-Type': 'application/x-www-form-urlencoded'
+                        'X-Requested-With': 'XMLHttpRequest'
                     },
-                    body: new URLSearchParams(new FormData(form))
+                    body: formData
                 });
                 
+                const result = await response.json();
+                
                 if (response.ok) {
-                    const result = await response.json();
                     showMessage(result.message || `${action} successful!`, 'success');
                     
                     if (action === 'delete') {
-                        // Delete animation
-                        todoItem.style.transition = 'all 0.3s';
+                        todoItem.style.transition = 'all 0.3s ease';
                         todoItem.style.opacity = '0';
                         todoItem.style.transform = 'scale(0.8)';
                         
@@ -371,11 +392,10 @@
                             updateTodoCount();
                             
                             if (document.querySelectorAll('.todo-item-micro').length === 0) {
-                                location.reload(); // Reload to show empty state
+                                window.location.reload();
                             }
                         }, 300);
                     } else {
-                        // Update status instantly
                         const isCompleted = action === 'complete';
                         todoItem.classList.toggle('completed', isCompleted);
                         
@@ -385,53 +405,57 @@
                             title.classList.toggle('opacity-75', isCompleted);
                         }
                         
-                        // Update the action buttons
+                        // Update action buttons
                         const actionsDiv = todoItem.querySelector('.todo-actions-micro');
                         if (actionsDiv) {
+                            const todoEditUrl = '{{ route("todos.edit", ":id") }}'.replace(':id', todoId);
+                            const todoCompleteUrl = '{{ route("todos.complete", ":id") }}'.replace(':id', todoId);
+                            const todoIncompleteUrl = '{{ route("todos.incomplete", ":id") }}'.replace(':id', todoId);
+                            const todoDestroyUrl = '{{ route("todos.destroy", ":id") }}'.replace(':id', todoId);
+                            
                             if (isCompleted) {
                                 actionsDiv.innerHTML = `
-                                    <form action="{{ route('todos.incomplete', ':id') }}" method="POST" onclick="event.stopPropagation()">
+                                    <form action="${todoIncompleteUrl}" method="POST" onclick="event.stopPropagation()">
                                         @csrf
-                                        <button type="button" class="btn-micro btn-warning" title="Mark Incomplete" onclick="handleTodoAction(this.closest('form'), 'incomplete', event);">
+                                        <button type="button" class="btn-micro btn-warning" title="Mark Incomplete" aria-pressed="true" onclick="handleTodoAction(this.closest('form'), 'incomplete', event);">
                                             <i class="fas fa-rotate-left"></i>
                                         </button>
                                     </form>
-                                    <a href="{{ route('todos.edit', ':id') }}" class="btn-micro btn-primary" title="Edit" onclick="event.stopPropagation()">
+                                    <a href="${todoEditUrl}" class="btn-micro btn-primary" title="Edit" onclick="event.stopPropagation()">
                                         <i class="fas fa-edit"></i>
                                     </a>
-                                    <form action="{{ route('todos.destroy', ':id') }}" method="POST" onclick="event.stopPropagation()" class="d-inline">
+                                    <form action="${todoDestroyUrl}" method="POST" onclick="event.stopPropagation()" class="d-inline">
                                         @csrf
                                         @method('DELETE')
                                         <button type="button" class="btn-micro btn-danger" onclick="handleTodoAction(this.closest('form'), 'delete', event);" title="Delete">
                                             <i class="fas fa-trash"></i>
                                         </button>
                                     </form>
-                                `.replace(/:id/g, todoId);
+                                `;
                             } else {
                                 actionsDiv.innerHTML = `
-                                    <form action="{{ route('todos.complete', ':id') }}" method="POST" onclick="event.stopPropagation()">
+                                    <form action="${todoCompleteUrl}" method="POST" onclick="event.stopPropagation()">
                                         @csrf
-                                        <button type="button" class="btn-micro btn-success" title="Mark Complete" onclick="handleTodoAction(this.closest('form'), 'complete', event);">
+                                        <button type="button" class="btn-micro btn-success" title="Mark Complete" aria-pressed="false" onclick="handleTodoAction(this.closest('form'), 'complete', event);">
                                             <i class="fas fa-check"></i>
                                         </button>
                                     </form>
-                                    <a href="{{ route('todos.edit', ':id') }}" class="btn-micro btn-primary" title="Edit" onclick="event.stopPropagation()">
+                                    <a href="${todoEditUrl}" class="btn-micro btn-primary" title="Edit" onclick="event.stopPropagation()">
                                         <i class="fas fa-edit"></i>
                                     </a>
-                                    <form action="{{ route('todos.destroy', ':id') }}" method="POST" onclick="event.stopPropagation()" class="d-inline">
+                                    <form action="${todoDestroyUrl}" method="POST" onclick="event.stopPropagation()" class="d-inline">
                                         @csrf
                                         @method('DELETE')
                                         <button type="button" class="btn-micro btn-danger" onclick="handleTodoAction(this.closest('form'), 'delete', event);" title="Delete">
                                             <i class="fas fa-trash"></i>
                                         </button>
                                     </form>
-                                `.replace(/:id/g, todoId);
+                                `;
                             }
                         }
                     }
                 } else {
-                    const error = await response.json().catch(() => ({}));
-                    showMessage(error.message || 'Action failed', 'error');
+                    showMessage(result.message || 'Action failed', 'error');
                 }
             } catch (error) {
                 console.error('Error:', error);
@@ -441,7 +465,10 @@
 
         // Toggle Todo Select
         window.toggleTodoSelect = function(todoElement, event) {
-            if (['INPUT', 'BUTTON', 'A'].includes(event.target.tagName) || 
+            if (!todoElement || !event) return;
+            
+            const tagName = event.target.tagName;
+            if (tagName === 'INPUT' || tagName === 'BUTTON' || tagName === 'A' || 
                 event.target.closest('a') || 
                 event.target.closest('button') || 
                 event.target.closest('form')) {
@@ -452,7 +479,7 @@
             if (checkbox) {
                 checkbox.checked = !checkbox.checked;
                 
-                const count = document.querySelectorAll('.form-check-input:checked').length;
+                const count = document.querySelectorAll('.form-check-input:checked:not(#selectAll)').length;
                 if (count > 0) {
                     showMessage(`${count} task${count > 1 ? 's' : ''} selected`, 'info', 1500);
                 }
@@ -466,6 +493,8 @@
 
         // Toggle All Checkboxes
         window.toggleAllCheckboxes = function(source) {
+            if (!source) return;
+            
             const checkboxes = document.querySelectorAll('.form-check-input');
             checkboxes.forEach(cb => {
                 if (cb.id !== 'selectAll') {
@@ -498,16 +527,18 @@
                     method: 'POST',
                     headers: {
                         'Content-Type': 'application/json',
-                        'X-CSRF-TOKEN': '{{ csrf_token() }}',
-                        'Accept': 'application/json'
+                        'X-CSRF-TOKEN': document.querySelector('meta[name="csrf-token"]').getAttribute('content'),
+                        'Accept': 'application/json',
+                        'X-Requested-With': 'XMLHttpRequest'
                     },
                     body: JSON.stringify({ ids: checked })
                 });
                 
+                const result = await response.json();
+                
                 if (response.ok) {
-                    showMessage(`${checked.length} task${checked.length > 1 ? 's' : ''} completed successfully!`, 'success');
+                    showMessage(result.message || `${checked.length} task${checked.length > 1 ? 's' : ''} completed successfully!`, 'success');
                     
-                    // Update UI instantly
                     checked.forEach(id => {
                         const todoItem = document.querySelector(`.todo-item-micro[data-id="${id}"]`);
                         if (todoItem) {
@@ -519,17 +550,16 @@
                         }
                     });
                     
-                    // Uncheck all
                     document.querySelectorAll('.form-check-input').forEach(cb => {
                         if (cb.id !== 'selectAll') cb.checked = false;
                     });
-                    if (document.getElementById('selectAll')) {
-                        document.getElementById('selectAll').checked = false;
-                    }
+                    
+                    const selectAll = document.getElementById('selectAll');
+                    if (selectAll) selectAll.checked = false;
                     
                     updateTodoCount();
                 } else {
-                    showMessage('Failed to complete tasks', 'error');
+                    showMessage(result.message || 'Failed to complete tasks', 'error');
                 }
             } catch (error) {
                 console.error('Error:', error);
@@ -548,7 +578,7 @@
                 return;
             }
             
-            if (!confirm(`Permanently delete ${checked.length} task${checked.length > 1 ? 's' : ''}? This cannot be undone.`)) {
+            if (!confirm(`Delete ${checked.length} task${checked.length > 1 ? 's' : ''}? This cannot be undone.`)) {
                 return;
             }
             
@@ -559,20 +589,22 @@
                     method: 'POST',
                     headers: {
                         'Content-Type': 'application/json',
-                        'X-CSRF-TOKEN': '{{ csrf_token() }}',
-                        'Accept': 'application/json'
+                        'X-CSRF-TOKEN': document.querySelector('meta[name="csrf-token"]').getAttribute('content'),
+                        'Accept': 'application/json',
+                        'X-Requested-With': 'XMLHttpRequest'
                     },
                     body: JSON.stringify({ ids: checked })
                 });
                 
+                const result = await response.json();
+                
                 if (response.ok) {
-                    showMessage(`${checked.length} task${checked.length > 1 ? 's' : ''} deleted successfully!`, 'success');
+                    showMessage(result.message || `${checked.length} task${checked.length > 1 ? 's' : ''} deleted successfully!`, 'success');
                     
-                    // Remove items instantly
                     checked.forEach(id => {
                         const todoItem = document.querySelector(`.todo-item-micro[data-id="${id}"]`);
                         if (todoItem) {
-                            todoItem.style.transition = 'all 0.3s';
+                            todoItem.style.transition = 'all 0.3s ease';
                             todoItem.style.opacity = '0';
                             todoItem.style.transform = 'scale(0.8)';
                             setTimeout(() => todoItem.remove(), 300);
@@ -581,7 +613,7 @@
                     
                     updateTodoCount();
                 } else {
-                    showMessage('Failed to delete tasks', 'error');
+                    showMessage(result.message || 'Failed to delete tasks', 'error');
                 }
             } catch (error) {
                 console.error('Error:', error);
@@ -592,7 +624,7 @@
         // Update Todo Count
         window.updateTodoCount = function() {
             const count = document.querySelectorAll('.todo-item-micro').length;
-            const countElement = document.querySelector('.count-number');
+            const countElement = document.getElementById('totalTasksCount');
             if (countElement) {
                 countElement.textContent = count;
             }
@@ -600,10 +632,18 @@
 
         // Initialize
         document.addEventListener('DOMContentLoaded', function() {
-            // Keep filters collapsed by default
-            // Don't auto-expand even with URL parameters
+            // Ensure filters are collapsed by default
+            if (filterContent) {
+                filterContent.style.display = 'none';
+            }
+            if (filterArrow) {
+                filterArrow.className = 'fas fa-chevron-down ms-auto';
+            }
+            if (filterIcon) {
+                filterIcon.className = 'fas fa-filter';
+            }
             
-            // Handle message from session
+            // Session messages
             @if(session('success'))
                 showMessage('{{ session('success') }}', 'success', 4000);
             @endif

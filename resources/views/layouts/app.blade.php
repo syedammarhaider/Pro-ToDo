@@ -105,6 +105,10 @@
             color: var(--bs-body-color) !important;
         }
         
+        [data-theme="dark"] body {
+            color: #f8fafc !important;
+        }
+        
         [data-theme="dark"] h1,
         [data-theme="dark"] h2,
         [data-theme="dark"] h3,
@@ -114,6 +118,18 @@
             color: #f8fafc !important;
             font-weight: 700;
             text-shadow: 0 1px 2px rgba(0, 0, 0, 0.3);
+        }
+        
+        [data-theme="dark"] p,
+        [data-theme="dark"] span,
+        [data-theme="dark"] div,
+        [data-theme="dark"] small,
+        [data-theme="dark"] label,
+        [data-theme="dark"] td,
+        [data-theme="dark"] th,
+        [data-theme="dark"] li,
+        [data-theme="dark"] a {
+            color: #f8fafc !important;
         }
         
         [data-theme="dark"] .text-primary {
@@ -142,6 +158,244 @@
         
         [data-theme="dark"] .text-info {
             color: #60a5fa !important;
+        }
+        
+        [data-theme="dark"] .text-dark {
+            color: #f8fafc !important;
+        }
+        
+        [data-theme="dark"] .text-light {
+            color: #e2e8f0 !important;
+        }
+        
+        [data-theme="dark"] .text-white {
+            color: #ffffff !important;
+        }
+        
+        [data-theme="dark"] .lead {
+            color: #e2e8f0 !important;
+        }
+        
+        [data-theme="dark"] .fw-bold,
+        [data-theme="dark"] .fw-semibold {
+            color: #f8fafc !important;
+        }
+        
+        [data-theme="dark"] .card-title,
+        [data-theme="dark"] .card-text {
+            color: #f8fafc !important;
+        }
+        
+        [data-theme="dark"] .dropdown-item {
+            color: #f8fafc !important;
+        }
+        
+        [data-theme="dark"] .nav-link {
+            color: #f8fafc !important;
+        }
+        
+        [data-theme="dark"] .navbar-brand {
+            color: #f8fafc !important;
+        }
+        
+        [data-theme="dark"] .btn {
+            color: #f8fafc !important;
+        }
+        
+        [data-theme="dark"] .btn-outline-primary {
+            color: #818cf8 !important;
+        }
+        
+        [data-theme="dark"] .btn-outline-secondary {
+            color: #cbd5e1 !important;
+        }
+        
+        [data-theme="dark"] .btn-outline-light {
+            color: #e2e8f0 !important;
+        }
+        
+        [data-theme="dark"] .form-label {
+            color: #e2e8f0 !important;
+        }
+        
+        [data-theme="dark"] .form-text {
+            color: #94a3b8 !important;
+        }
+        
+        [data-theme="dark"] .placeholder {
+            color: #64748b !important;
+        }
+        
+        [data-theme="dark"] .table {
+            color: #f8fafc !important;
+        }
+        
+        [data-theme="dark"] .table th {
+            color: #f8fafc !important;
+        }
+        
+        [data-theme="dark"] .table td {
+            color: #f8fafc !important;
+        }
+        
+        [data-theme="dark"] .list-group-item {
+            color: #f8fafc !important;
+        }
+        
+        [data-theme="dark"] .modal-title {
+            color: #f8fafc !important;
+        }
+        
+        [data-theme="dark"] .modal-body {
+            color: #f8fafc !important;
+        }
+        
+        [data-theme="dark"] .toast-body {
+            color: #f8fafc !important;
+        }
+        
+        [data-theme="dark"] .accordion-button {
+            color: #f8fafc !important;
+        }
+        
+        [data-theme="dark"] .badge {
+            color: #f8fafc !important;
+        }
+        
+        [data-theme="dark"] .alert {
+            color: #f8fafc !important;
+        }
+        
+        [data-theme="dark"] .blockquote {
+            color: #e2e8f0 !important;
+        }
+        
+        [data-theme="dark"] .input-group-text {
+            color: #f8fafc !important;
+        }
+        
+        [data-theme="dark"] .page-link {
+            color: #f8fafc !important;
+        }
+        
+        [data-theme="dark"] .breadcrumb-item {
+            color: #f8fafc !important;
+        }
+        
+        [data-theme="dark"] .breadcrumb-item.active {
+            color: #cbd5e1 !important;
+        }
+        
+        [data-theme="dark"] .progress-bar {
+            color: #f8fafc !important;
+        }
+        
+        [data-theme="dark"] .spinner-border {
+            border-color: #f8fafc !important;
+        }
+        
+        [data-theme="dark"] .spinner-grow {
+            background-color: #f8fafc !important;
+        }
+        
+        [data-theme="dark"] .close,
+        [data-theme="dark"] .btn-close {
+            color: #f8fafc !important;
+        }
+        
+        /* Footer specific dark mode fixes */
+        [data-theme="dark"] footer {
+            color: #f8fafc !important;
+        }
+        
+        [data-theme="dark"] footer p,
+        [data-theme="dark"] footer span,
+        [data-theme="dark"] footer div,
+        [data-theme="dark"] footer h1,
+        [data-theme="dark"] footer h2,
+        [data-theme="dark"] footer h3,
+        [data-theme="dark"] footer h4,
+        [data-theme="dark"] footer h5,
+        [data-theme="dark"] footer h6,
+        [data-theme="dark"] footer a,
+        [data-theme="dark"] footer small,
+        [data-theme="dark"] footer li {
+            color: #f8fafc !important;
+        }
+        
+        [data-theme="dark"] footer .text-muted {
+            color: #94a3b8 !important;
+        }
+        
+        [data-theme="dark"] footer .lead {
+            color: #e2e8f0 !important;
+        }
+        
+        /* Header specific dark mode fixes */
+        [data-theme="dark"] header {
+            color: #f8fafc !important;
+        }
+        
+        [data-theme="dark"] header p,
+        [data-theme="dark"] header span,
+        [data-theme="dark"] header div,
+        [data-theme="dark"] header h1,
+        [data-theme="dark"] header h2,
+        [data-theme="dark"] header h3,
+        [data-theme="dark"] header h4,
+        [data-theme="dark"] header h5,
+        [data-theme="dark"] header h6,
+        [data-theme="dark"] header a,
+        [data-theme="dark"] header small {
+            color: #f8fafc !important;
+        }
+        
+        /* Todo specific dark mode fixes */
+        [data-theme="dark"] .todo-item-micro {
+            color: #f8fafc !important;
+        }
+        
+        [data-theme="dark"] .todo-item-micro p,
+        [data-theme="dark"] .todo-item-micro span,
+        [data-theme="dark"] .todo-item-micro div,
+        [data-theme="dark"] .todo-item-micro small {
+            color: #f8fafc !important;
+        }
+        
+        [data-theme="dark"] .todo-item-micro .text-muted {
+            color: #94a3b8 !important;
+        }
+        
+        /* Filter specific dark mode fixes */
+        [data-theme="dark"] .filter-toggle-btn {
+            color: #f8fafc !important;
+        }
+        
+        [data-theme="dark"] .filter-toggle-btn span {
+            color: #f8fafc !important;
+        }
+        
+        /* Override any remaining text colors */
+        [data-theme="dark"] * {
+            color: inherit !important;
+        }
+        
+        [data-theme="dark"] p,
+        [data-theme="dark"] span,
+        [data-theme="dark"] div,
+        [data-theme="dark"] small,
+        [data-theme="dark"] label,
+        [data-theme="dark"] h1,
+        [data-theme="dark"] h2,
+        [data-theme="dark"] h3,
+        [data-theme="dark"] h4,
+        [data-theme="dark"] h5,
+        [data-theme="dark"] h6,
+        [data-theme="dark"] a,
+        [data-theme="dark"] li,
+        [data-theme="dark"] td,
+        [data-theme="dark"] th {
+            color: #f8fafc !important;
         }
         
         /* Form Controls Dark Mode */
