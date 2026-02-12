@@ -56,6 +56,100 @@
         </div>
     </header>
 
+    <!-- Stats Dashboard -->
+    <section class="stats-dashboard mb-4" aria-label="Dashboard statistics">
+        <div class="row g-3">
+            <div class="col-12 col-sm-6 col-md-3">
+                <div class="stat-card glass-effect">
+                    <div class="stat-icon">
+                        <i class="fas fa-tasks"></i>
+                    </div>
+                    <div class="stat-content">
+                        <div class="stat-number">{{ $todos->total() }}</div>
+                        <div class="stat-label">Total Tasks</div>
+                    </div>
+                </div>
+            </div>
+            <div class="col-12 col-sm-6 col-md-3">
+                <div class="stat-card glass-effect">
+                    <div class="stat-icon">
+                        <i class="fas fa-check-circle"></i>
+                    </div>
+                    <div class="stat-content">
+                        <div class="stat-number">{{ $todos->where('completed', true)->count() }}</div>
+                        <div class="stat-label">Completed</div>
+                    </div>
+                </div>
+            </div>
+            <div class="col-12 col-sm-6 col-md-3">
+                <div class="stat-card glass-effect">
+                    <div class="stat-icon">
+                        <i class="fas fa-percentage"></i>
+                    </div>
+                    <div class="stat-content">
+                        <div class="stat-number">{{ $todos->total() > 0 ? round(($todos->where('completed', true)->count() / $todos->total()) * 100) : 0 }}%</div>
+                        <div class="stat-label">Done</div>
+                    </div>
+                </div>
+            </div>
+            <div class="col-12 col-sm-6 col-md-3">
+                <div class="stat-card glass-effect">
+                    <div class="stat-icon">
+                        <i class="fas fa-clock"></i>
+                    </div>
+                    <div class="stat-content">
+                        <div class="stat-number">{{ $todos->where('completed', false)->count() }}</div>
+                        <div class="stat-label">Pending</div>
+                    </div>
+                </div>
+            </div>
+            <div class="col-12 col-sm-6 col-md-3">
+                <div class="stat-card glass-effect">
+                    <div class="stat-icon">
+                        <i class="fas fa-flag"></i>
+                    </div>
+                    <div class="stat-content">
+                        <div class="stat-number">{{ $todos->where('priority', 'high')->count() }}</div>
+                        <div class="stat-label">High Priority</div>
+                    </div>
+                </div>
+            </div>
+            <div class="col-12 col-sm-6 col-md-3">
+                <div class="stat-card glass-effect">
+                    <div class="stat-icon">
+                        <i class="fas fa-tag"></i>
+                    </div>
+                    <div class="stat-content">
+                        <div class="stat-number">{{ $todos->whereNotNull('category')->unique('category')->count() }}</div>
+                        <div class="stat-label">Categories</div>
+                    </div>
+                </div>
+            </div>
+            <div class="col-12 col-sm-6 col-md-3">
+                <div class="stat-card glass-effect">
+                    <div class="stat-icon">
+                        <i class="fas fa-headset"></i>
+                    </div>
+                    <div class="stat-content">
+                        <div class="stat-number">24/7</div>
+                        <div class="stat-label">Support</div>
+                    </div>
+                </div>
+            </div>
+            <div class="col-12 col-sm-6 col-md-3">
+                <div class="stat-card glass-effect">
+                    <div class="stat-icon">
+                        <i class="fas fa-sync-alt" id="realTimeIcon"></i>
+                    </div>
+                    <div class="stat-content">
+                        <div class="stat-number" id="lastUpdate">Live</div>
+                        <div class="stat-label">Real-time Updates</div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
     <!-- Filters Section -->
     <section>
         <div class="card glass-effect filters-card" id="filtersCard">
