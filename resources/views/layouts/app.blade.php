@@ -1,5 +1,5 @@
 <!DOCTYPE html>
-<html lang="{{ str_replace('_', '-', app()->getLocale()) }}" data-theme="light">
+<html lang="{{ str_replace('_', '-', app()->getLocale()) }}">
 <head>
     <meta charset="utf-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=5.0, user-scalable=yes, viewport-fit=cover">
@@ -23,6 +23,17 @@
 
     <!-- Custom CSS - External -->
     <link rel="stylesheet" href="{{ asset('css/app.css') }}?v=1.0.0">
+    
+    <!-- Theme Initialization Script (Must be in head to prevent flash) -->
+    <script>
+        // Initialize theme immediately to prevent flash
+        (function() {
+            const theme = localStorage.getItem('theme') || 'light';
+            document.documentElement.setAttribute('data-theme', theme);
+            // Set initial theme on html tag
+            document.querySelector('html').setAttribute('data-theme', theme);
+        })();
+    </script>
     
     <!-- Dark Mode Styles -->
     <style>
@@ -376,9 +387,15 @@
             const themeIcon = document.getElementById('themeIcon');
             const html = document.documentElement;
             
-            // Set initial theme
-            const currentTheme = localStorage.getItem('theme') || 'light';
-            html.setAttribute('data-theme', currentTheme);
+            // Update theme icon based on current theme
+            function updateThemeIcon(theme) {
+                if (themeIcon) {
+                    themeIcon.className = theme === 'dark' ? 'fas fa-sun' : 'fas fa-moon';
+                }
+            }
+            
+            // Set initial icon
+            const currentTheme = html.getAttribute('data-theme') || 'light';
             updateThemeIcon(currentTheme);
             
             // Theme toggle functionality
@@ -394,12 +411,6 @@
                         window.showMessage(`${newTheme.charAt(0).toUpperCase() + newTheme.slice(1)} mode activated`, 'success', 2000);
                     }
                 });
-            }
-            
-            function updateThemeIcon(theme) {
-                if (themeIcon) {
-                    themeIcon.className = theme === 'dark' ? 'fas fa-sun' : 'fas fa-moon';
-                }
             }
         });
     </script>
