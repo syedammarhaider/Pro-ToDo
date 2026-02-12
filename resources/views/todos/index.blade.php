@@ -2,6 +2,13 @@
 
 @section('title', 'All Todos - Professional Todo App')
 
+@push('styles')
+<style>
+/* Critical CSS for Todos Page */
+.todo-item-micro{transition:all 0.2s ease}.todo-item-micro:hover{transform:translateY(-2px)}.filter-toggle-btn{transition:all 0.2s ease}.quick-btn{transition:all 0.2s ease}.quick-btn:hover{transform:scale(1.1)}.fade-in{animation:fadeIn 0.3s ease-in}@keyframes fadeIn{from{opacity:0;transform:translateY(10px)}to{opacity:1;transform:translateY(0)}}.loading{opacity:0.6;pointer-events:none}
+</style>
+@endpush
+
 @section('content')
 <div class="message-container" id="messageContainer" aria-live="assertive" aria-atomic="true" aria-relevant="additions"></div>
 
@@ -626,30 +633,40 @@
             }
         };
 
-        // Initialize
+        // Performance-optimized initialization
         document.addEventListener('DOMContentLoaded', function() {
-            // Ensure filters are collapsed by default
-            if (filterContent) {
-                filterContent.style.display = 'none';
-            }
-            if (filterArrow) {
-                filterArrow.className = 'fas fa-chevron-down ms-auto';
-            }
-            if (filterIcon) {
-                filterIcon.className = 'fas fa-filter';
-            }
-            
-            // Session messages
-            @if(session('success'))
-                showMessage('{{ session('success') }}', 'success', 4000);
-            @endif
-            @if(session('error'))
-                showMessage('{{ session('error') }}', 'error', 4000);
-            @endif
-            @if(session('warning'))
-                showMessage('{{ session('warning') }}', 'warning', 4000);
-            @endif
+            // Use requestAnimationFrame for smooth initialization
+            requestAnimationFrame(() => {
+                // Ensure filters are collapsed by default
+                if (filterContent) {
+                    filterContent.style.display = 'none';
+                }
+                if (filterArrow) {
+                    filterArrow.className = 'fas fa-chevron-down ms-auto';
+                }
+                if (filterIcon) {
+                    filterIcon.className = 'fas fa-filter';
+                }
+                
+                // Session messages - delayed for performance
+                setTimeout(() => {
+                    @if(session('success'))
+                        showMessage('{{ session('success') }}', 'success', 4000);
+                    @endif
+                    @if(session('error'))
+                        showMessage('{{ session('error') }}', 'error', 4000);
+                    @endif
+                    @if(session('warning'))
+                        showMessage('{{ session('warning') }}', 'warning', 4000);
+                    @endif
+                }, 100);
+            });
         });
+        
+        // Performance monitoring
+        if ('performance' in window && 'mark' in performance) {
+            performance.mark('todos-page-init-end');
+        }
     })();
 </script>
 @endpush
