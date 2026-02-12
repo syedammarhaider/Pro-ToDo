@@ -582,12 +582,42 @@ main {
     flex-wrap: wrap !important;
 }
 
+/* Force pagination numbers to show on all screens */
+.pagination .page-item {
+    display: inline-block !important;
+}
+
+.pagination .page-item .page-link {
+    display: inline-flex !important;
+    visibility: visible !important;
+    opacity: 1 !important;
+}
+
+/* Override Bootstrap hidden classes */
+.pagination .d-none,
+.pagination .d-md-none,
+.pagination .d-lg-none {
+    display: inline-block !important;
+}
+
 @media (max-width: 768px) {
     .pagination .page-link {
         font-size: 0.875rem !important;
         padding: 0.5rem 0.75rem !important;
         min-width: 36px !important;
         min-height: 36px !important;
+        display: inline-flex !important;
+        visibility: visible !important;
+    }
+    
+    .pagination .page-item {
+        display: inline-block !important;
+    }
+    
+    /* Force all pagination elements to be visible */
+    .pagination * {
+        visibility: visible !important;
+        display: inline-block !important;
     }
 }
 

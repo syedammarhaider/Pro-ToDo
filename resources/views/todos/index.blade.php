@@ -66,7 +66,7 @@
                     <i class="fas fa-chevron-down ms-auto" id="filterArrow"></i>
                 </button>
                 
-                <div id="filterContent" style="display:none;">
+                <div id="filterContent" style="display:block;">
                     <form action="{{ route('todos.index') }}" method="GET" class="row g-2" role="search" aria-label="Todo search and filters">
                         <div class="col-12 col-md-6 col-lg-2">
                             <input type="search" name="search" class="form-control-micro" placeholder="🔍 Search tasks..." value="{{ request('search') }}" aria-label="Search todos">
