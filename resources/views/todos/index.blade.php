@@ -31,7 +31,7 @@
                 </h1>
                 <div class="todos-count-badge" style="font-size: 0.75rem !important; margin: 0;">
                     <div class="count-content d-flex align-items-center gap-2">
-                        <span class="count-number">{{ $todos->total() }}</span>
+                        <span class="count-number" data-welcome-total>{{ $stats['total'] }}</span>
                         <span class="count-label">Total Tasks</span>
                     </div>
                 </div>

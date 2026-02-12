@@ -46,6 +46,38 @@ class TodoController extends Controller
 
         $categories = Todo::where('user_id', Auth::id())->distinct()->pluck('category')->filter();
 
+        // Get accurate statistics
+
+        $stats = $this->todoService->getStatistics();
+
+
+
+        // Return JSON for AJAX requests (real-time updates)
+
+        if ($request->expectsJson()) {
+
+            return response()->json([
+
+                'stats' => [
+
+                    'total' => $stats['total'],
+
+                    'done' => $stats['total'] > 0 ? round(($stats['completed'] / $stats['total']) * 100) : 0,
+
+                    'completed' => $stats['completed'],
+
+                    'pending' => $stats['active'],
+
+                    'high_priority' => $stats['high_priority'],
+
+                    'categories' => $stats['by_category']->count(),
+
+                ]
+
+            ]);
+
+        }
+
 
 
         return view('todos.index', [
@@ -53,6 +85,8 @@ class TodoController extends Controller
             'todos' => $todos,
 
             'categories' => $categories,
+
+            'stats' => $stats,
 
         ]);
 

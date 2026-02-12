@@ -146,8 +146,8 @@ class TodoService
 
     public function clearTodoCaches(): void
     {
-        // Clear statistics cache
-        Cache::forget('todo_stats');
+        // Clear statistics cache for current user
+        Cache::forget('todo_stats_' . auth()->id());
 
         // Clear all todo-related cache keys by flushing the entire cache
         // This ensures immediate consistency after any todo modification
