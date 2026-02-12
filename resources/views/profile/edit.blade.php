@@ -275,7 +275,7 @@
                 <div class="card-body">
                     <div class="space-y-3">
                         <!-- User ID -->
-                        <div class="d-flex justify-content-between align-items-center p-3 bg-light rounded-lg">
+                        <div class="d-flex justify-content-between align-items-center p-3 bg-light rounded-lg flex-wrap gap-2">
                             <div class="d-flex align-items-center gap-2">
                                 <i class="fas fa-fingerprint text-primary"></i>
                                 <span class="fw-medium">User ID</span>
@@ -286,7 +286,7 @@
                         </div>
                         
                         <!-- Full Name -->
-                        <div class="d-flex justify-content-between align-items-center p-3 bg-light rounded-lg">
+                        <div class="d-flex justify-content-between align-items-center p-3 bg-light rounded-lg flex-wrap gap-2">
                             <div class="d-flex align-items-center gap-2">
                                 <i class="fas fa-user text-primary"></i>
                                 <span class="fw-medium">Full Name</span>
@@ -297,18 +297,18 @@
                         </div>
                         
                         <!-- Email Address -->
-                        <div class="d-flex justify-content-between align-items-center p-3 bg-light rounded-lg">
+                        <div class="d-flex justify-content-between align-items-center p-3 bg-light rounded-lg flex-wrap gap-2">
                             <div class="d-flex align-items-center gap-2">
                                 <i class="fas fa-envelope text-primary"></i>
                                 <span class="fw-medium">Email</span>
                             </div>
-                            <small class="text-muted text-truncate" style="max-width: 150px;">
+                            <small class="text-muted text-truncate flex-grow-1" style="max-width: 200px;">
                                 {{ Auth::user()->email }}
                             </small>
                         </div>
                         
                         <!-- Member Since -->
-                        <div class="d-flex justify-content-between align-items-center p-3 bg-light rounded-lg">
+                        <div class="d-flex justify-content-between align-items-center p-3 bg-light rounded-lg flex-wrap gap-2">
                             <div class="d-flex align-items-center gap-2">
                                 <i class="fas fa-calendar-alt text-primary"></i>
                                 <span class="fw-medium">Member Since</span>
@@ -319,7 +319,7 @@
                         </div>
                         
                         <!-- Last Updated -->
-                        <div class="d-flex justify-content-between align-items-center p-3 bg-light rounded-lg">
+                        <div class="d-flex justify-content-between align-items-center p-3 bg-light rounded-lg flex-wrap gap-2">
                             <div class="d-flex align-items-center gap-2">
                                 <i class="fas fa-clock text-info"></i>
                                 <span class="fw-medium">Last Updated</span>
@@ -328,53 +328,9 @@
                                 {{ Auth::user()->updated_at->format('M d, Y') }}
                             </span>
                         </div>
-                        
-                        <!-- Email Verification -->
-                        <div class="d-flex justify-content-between align-items-center p-3 bg-light rounded-lg">
-                            <div class="d-flex align-items-center gap-2">
-                                @if (Auth::user()->hasVerifiedEmail())
-                                    <i class="fas fa-check-circle text-success"></i>
-                                    <span class="fw-medium">Email Verified</span>
-                                @else
-                                    <i class="fas fa-exclamation-triangle text-warning"></i>
-                                    <span class="fw-medium">Email Status</span>
-                                @endif
-                            </div>
-                            @if (Auth::user()->hasVerifiedEmail())
-                                <span class="badge bg-success text-white">
-                                    <i class="fas fa-check me-1"></i>Verified
-                                </span>
-                            @else
-                                <span class="badge bg-warning text-dark">
-                                    <i class="fas fa-clock me-1"></i>Pending
-                                </span>
-                            @endif
-                        </div>
-                        
-                        <!-- Two Factor Status -->
-                        <div class="d-flex justify-content-between align-items-center p-3 bg-light rounded-lg">
-                            <div class="d-flex align-items-center gap-2">
-                                @if (Auth::user()->two_factor_secret)
-                                    <i class="fas fa-shield-alt text-success"></i>
-                                    <span class="fw-medium">2FA Status</span>
-                                @else
-                                    <i class="fas fa-shield-alt text-warning"></i>
-                                    <span class="fw-medium">2FA Status</span>
-                                @endif
-                            </div>
-                            @if (Auth::user()->two_factor_secret)
-                                <span class="badge bg-success text-white">
-                                    <i class="fas fa-lock me-1"></i>Enabled
-                                </span>
-                            @else
-                                <span class="badge bg-warning text-dark">
-                                    <i class="fas fa-unlock me-1"></i>Disabled
-                                </span>
-                            @endif
-                        </div>
-                        
+                                                
                         <!-- Total Tasks -->
-                        <div class="d-flex justify-content-between align-items-center p-3 bg-light rounded-lg">
+                        <div class="d-flex justify-content-between align-items-center p-3 bg-light rounded-lg flex-wrap gap-2">
                             <div class="d-flex align-items-center gap-2">
                                 <i class="fas fa-tasks text-info"></i>
                                 <span class="fw-medium">Total Tasks</span>
@@ -385,7 +341,7 @@
                         </div>
                         
                         <!-- Account Status -->
-                        <div class="d-flex justify-content-between align-items-center p-3 bg-light rounded-lg">
+                        <div class="d-flex justify-content-between align-items-center p-3 bg-light rounded-lg flex-wrap gap-2">
                             <div class="d-flex align-items-center gap-2">
                                 <i class="fas fa-check-circle text-success"></i>
                                 <span class="fw-medium">Account Status</span>
