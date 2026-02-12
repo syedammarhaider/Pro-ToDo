@@ -19,38 +19,76 @@
 </div>
 
 <div class="container-fluid px-2 px-md-3">
-    <!-- Page Header -->
-    <header class="page-header compact" id="pageHeader" role="banner">
-        <div class="d-flex justify-content-between align-items-center flex-wrap gap-3">
-            <div class="d-flex align-items-center gap-4 flex-wrap">
-                <div class="welcome-section">
-                    <h1 tabindex="0" class="welcome-text">
-                        Profile Settings
-                    </h1>
-                    <p class="welcome-subtitle">Manage your account and preferences</p>
-                </div>
-                <div class="todos-count-badge">
-                    <div class="count-content d-flex align-items-center gap-2">
-                        <span class="count-number">{{ Auth::user()->todos()->count() }}</span>
-                        <span class="count-label">Total Tasks</span>
+    <!-- Professional Welcome Section -->
+    <div class="row mb-5">
+        <div class="col-12">
+            <div class="card border-0 bg-gradient-primary text-white shadow-lg" style="border-radius: 20px; background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);">
+                <div class="card-body p-4 p-md-5">
+                    <div class="row align-items-center">
+                        <div class="col-12 col-md-8">
+                            <div class="d-flex align-items-center gap-4 mb-4">
+                                <div class="avatar-circle bg-white bg-opacity-25 rounded-circle d-flex align-items-center justify-content-center" style="width: 80px; height: 80px;">
+                                    <i class="fas fa-user fs-1"></i>
+                                </div>
+                                <div>
+                                    <h1 class="mb-1 fw-bold" style="font-size: 2.5rem; letter-spacing: -0.5px;">
+                                        Welcome, {{ Auth::user()->name }}!
+                                    </h1>
+                                    <p class="mb-0 opacity-75" style="font-size: 1.1rem;">
+                                        Manage your profile settings and preferences
+                                    </p>
+                                </div>
+                            </div>
+                            
+                            <div class="row g-3">
+                                <div class="col-6 col-md-3">
+                                    <div class="stat-card bg-white bg-opacity-10 rounded-3 p-3 text-center">
+                                        <i class="fas fa-tasks fs-3 mb-2 d-block"></i>
+                                        <div class="fs-2 fw-bold">{{ Auth::user()->todos()->count() }}</div>
+                                        <div class="small opacity-75">Total Tasks</div>
+                                    </div>
+                                </div>
+                                <div class="col-6 col-md-3">
+                                    <div class="stat-card bg-white bg-opacity-10 rounded-3 p-3 text-center">
+                                        <i class="fas fa-calendar-check fs-3 mb-2 d-block"></i>
+                                        <div class="fs-2 fw-bold">{{ Auth::user()->created_at->format('M Y') }}</div>
+                                        <div class="small opacity-75">Member Since</div>
+                                    </div>
+                                </div>
+                                <div class="col-6 col-md-3">
+                                    <div class="stat-card bg-white bg-opacity-10 rounded-3 p-3 text-center">
+                                        <i class="fas fa-clock fs-3 mb-2 d-block"></i>
+                                        <div class="fs-2 fw-bold">{{ Auth::user()->updated_at->diffForHumans() }}</div>
+                                        <div class="small opacity-75">Last Updated</div>
+                                    </div>
+                                </div>
+                                <div class="col-6 col-md-3">
+                                    <div class="stat-card bg-white bg-opacity-10 rounded-3 p-3 text-center">
+                                        <i class="fas fa-shield-alt fs-3 mb-2 d-block"></i>
+                                        <div class="fs-2 fw-bold">Active</div>
+                                        <div class="small opacity-75">Account Status</div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="col-12 col-md-4 text-md-end">
+                            <div class="d-flex flex-column gap-2 align-items-md-end">
+                                <a href="{{ route('todos.index') }}" class="btn btn-light btn-lg px-4" style="border-radius: 50px; font-weight: 600;">
+                                    <i class="fas fa-arrow-left me-2"></i>Back to Todos
+                                </a>
+                                <form action="{{ route('logout') }}" method="POST" class="d-inline">
+                                    @csrf
+                                    <button type="submit" class="btn btn-outline-light btn-lg px-4" style="border-radius: 50px; font-weight: 600;">
+                                        <i class="fas fa-sign-out-alt me-2"></i>Logout
+                                    </button>
+                                </form>
+                            </div>
+                        </div>
                     </div>
                 </div>
             </div>
-            <div class="d-flex gap-2">
-                <a href="{{ route('todos.index') }}" class="action-btn todos-btn" role="button" aria-label="Back to todos">
-                    <i class="fas fa-tasks"></i>
-                    <span class="btn-text">Todos</span>
-                </a>
-                <form action="{{ route('logout') }}" method="POST" class="d-inline">
-                    @csrf
-                    <button type="submit" class="action-btn logout-btn" aria-label="Logout">
-                        <i class="fas fa-sign-out-alt"></i>
-                        <span class="btn-text">Logout</span>
-                    </button>
-                </form>
-            </div>
         </div>
-    </header>
+    </div>
 
     <div class="row g-3 g-md-4">
         <!-- Profile Information Section -->

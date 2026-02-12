@@ -14,14 +14,7 @@
 
 
 
-        <!-- Mobile Toggle Button - Mobile ke liye toggle button -->
-
-        <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarNav">
-
-            <span class="navbar-toggler-icon"></span>
-
-        </button>
-
+        
 
 
         <!-- Navigation Links - Navigation links -->
