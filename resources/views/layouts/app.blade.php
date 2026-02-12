@@ -24,6 +24,72 @@
     <!-- Custom CSS - External -->
     <link rel="stylesheet" href="{{ asset('css/app.css') }}?v=1.0.0">
     
+    <!-- Dark Mode Styles -->
+    <style>
+        :root {
+            --bs-body-bg: #fff;
+            --bs-body-color: #212529;
+            --bs-card-bg: #fff;
+            --bs-border-color: #dee2e6;
+        }
+        
+        [data-theme="dark"] {
+            --bs-body-bg: #1a1a1a;
+            --bs-body-color: #fff;
+            --bs-card-bg: #2d2d2d;
+            --bs-border-color: #404040;
+        }
+        
+        [data-theme="dark"] body {
+            background-color: var(--bs-body-bg);
+            color: var(--bs-body-color);
+        }
+        
+        [data-theme="dark"] .card {
+            background-color: var(--bs-card-bg);
+            border-color: var(--bs-border-color);
+        }
+        
+        [data-theme="dark"] .navbar-dark {
+            background-color: #0d1117 !important;
+        }
+        
+        [data-theme="dark"] .form-control {
+            background-color: var(--bs-card-bg);
+            border-color: var(--bs-border-color);
+            color: var(--bs-body-color);
+        }
+        
+        [data-theme="dark"] .form-control:focus {
+            background-color: var(--bs-card-bg);
+            border-color: #6366f1;
+            color: var(--bs-body-color);
+        }
+        
+        [data-theme="dark"] .dropdown-menu {
+            background-color: var(--bs-card-bg);
+            border-color: var(--bs-border-color);
+        }
+        
+        [data-theme="dark"] .dropdown-item {
+            color: var(--bs-body-color);
+        }
+        
+        [data-theme="dark"] .dropdown-item:hover {
+            background-color: #404040;
+        }
+        
+        [data-theme="dark"] .btn-outline-light {
+            border-color: #6c757d;
+            color: #6c757d;
+        }
+        
+        [data-theme="dark"] .btn-outline-light:hover {
+            background-color: #6c757d;
+            color: #fff;
+        }
+    </style>
+    
     @stack('styles')
 </head>
 <body>
