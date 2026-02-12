@@ -76,7 +76,7 @@
             --bs-dropdown-bg: #1e293b;
             --bs-dropdown-color: #f8fafc;
             --bs-dropdown-hover: #334155;
-            --bs-text-muted: #cbd5e1;
+            --bs-text-muted: #94a3b8;
             --bs-text-primary: #f8fafc;
             --bs-text-secondary: #e2e8f0;
             --bs-shadow: rgba(0, 0, 0, 0.4);
@@ -97,6 +97,251 @@
             line-height: 1.6;
             -webkit-font-smoothing: antialiased;
             -moz-osx-font-smoothing: grayscale;
+        }
+        
+        /* Light Mode Text Visibility */
+        :root {
+            color: var(--bs-body-color) !important;
+        }
+        
+        :root body {
+            color: #1e293b !important;
+        }
+        
+        :root h1,
+        :root h2,
+        :root h3,
+        :root h4,
+        :root h5,
+        :root h6 {
+            color: #1e293b !important;
+            font-weight: 700;
+        }
+        
+        :root p,
+        :root span,
+        :root div,
+        :root small,
+        :root label,
+        :root td,
+        :root th,
+        :root li,
+        :root a {
+            color: #1e293b !important;
+        }
+        
+        :root .text-primary {
+            color: #4f46e5 !important;
+        }
+        
+        :root .text-secondary {
+            color: #6b7280 !important;
+        }
+        
+        :root .text-muted {
+            color: #6b7280 !important;
+        }
+        
+        :root .text-success {
+            color: #059669 !important;
+        }
+        
+        :root .text-danger {
+            color: #dc2626 !important;
+        }
+        
+        :root .text-warning {
+            color: #d97706 !important;
+        }
+        
+        :root .text-info {
+            color: #2563eb !important;
+        }
+        
+        :root .text-dark {
+            color: #1e293b !important;
+        }
+        
+        :root .text-light {
+            color: #6b7280 !important;
+        }
+        
+        :root .text-white {
+            color: #ffffff !important;
+        }
+        
+        :root .lead {
+            color: #374151 !important;
+        }
+        
+        :root .fw-bold,
+        :root .fw-semibold {
+            color: #1e293b !important;
+        }
+        
+        :root .card-title,
+        :root .card-text {
+            color: #1e293b !important;
+        }
+        
+        :root .dropdown-item {
+            color: #374151 !important;
+        }
+        
+        :root .nav-link {
+            color: #374151 !important;
+        }
+        
+        :root .navbar-brand {
+            color: #ffffff !important;
+        }
+        
+        :root .form-label {
+            color: #374151 !important;
+        }
+        
+        :root .form-text {
+            color: #6b7280 !important;
+        }
+        
+        :root .table {
+            color: #1e293b !important;
+        }
+        
+        :root .table th {
+            color: #1e293b !important;
+        }
+        
+        :root .table td {
+            color: #1e293b !important;
+        }
+        
+        :root .list-group-item {
+            color: #1e293b !important;
+        }
+        
+        :root .modal-title {
+            color: #1e293b !important;
+        }
+        
+        :root .modal-body {
+            color: #1e293b !important;
+        }
+        
+        :root .toast-body {
+            color: #1e293b !important;
+        }
+        
+        :root .accordion-button {
+            color: #1e293b !important;
+        }
+        
+        :root .badge {
+            color: #ffffff !important;
+        }
+        
+        :root .alert {
+            color: #1e293b !important;
+        }
+        
+        :root .input-group-text {
+            color: #374151 !important;
+        }
+        
+        :root .page-link {
+            color: #4f46e5 !important;
+        }
+        
+        :root .breadcrumb-item {
+            color: #6b7280 !important;
+        }
+        
+        :root .breadcrumb-item.active {
+            color: #374151 !important;
+        }
+        
+        :root .btn-outline-primary {
+            color: #4f46e5 !important;
+        }
+        
+        :root .btn-outline-secondary {
+            color: #6b7280 !important;
+        }
+        
+        :root .btn-outline-light {
+            color: #6b7280 !important;
+        }
+        
+        /* Footer specific light mode */
+        :root footer {
+            color: #1e293b !important;
+        }
+        
+        :root footer p,
+        :root footer span,
+        :root footer div,
+        :root footer h1,
+        :root footer h2,
+        :root footer h3,
+        :root footer h4,
+        :root footer h5,
+        :root footer h6,
+        :root footer a,
+        :root footer small,
+        :root footer li {
+            color: #1e293b !important;
+        }
+        
+        :root footer .text-muted {
+            color: #6b7280 !important;
+        }
+        
+        :root footer .lead {
+            color: #374151 !important;
+        }
+        
+        /* Header specific light mode */
+        :root header {
+            color: #1e293b !important;
+        }
+        
+        :root header p,
+        :root header span,
+        :root header div,
+        :root header h1,
+        :root header h2,
+        :root header h3,
+        :root header h4,
+        :root header h5,
+        :root header h6,
+        :root header a,
+        :root header small {
+            color: #1e293b !important;
+        }
+        
+        /* Todo specific light mode */
+        :root .todo-item-micro {
+            color: #1e293b !important;
+        }
+        
+        :root .todo-item-micro p,
+        :root .todo-item-micro span,
+        :root .todo-item-micro div,
+        :root .todo-item-micro small {
+            color: #1e293b !important;
+        }
+        
+        :root .todo-item-micro .text-muted {
+            color: #6b7280 !important;
+        }
+        
+        /* Filter specific light mode */
+        :root .filter-toggle-btn {
+            color: #1e293b !important;
+        }
+        
+        :root .filter-toggle-btn span {
+            color: #1e293b !important;
         }
         
         /* Ultra Professional Dark Mode Text Visibility */
