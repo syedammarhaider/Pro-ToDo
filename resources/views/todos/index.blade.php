@@ -106,7 +106,7 @@
                         </div>
                         <div class="col-12 col-md-6 col-lg-2">
                             <select name="category" class="form-select-micro" aria-label="Filter by category">
-                                <option value="">🏷️ All Categories</option>
+                                <option value="">All Categories</option>
                                 @foreach($categories as $category)
                                     <option value="{{ $category }}" {{ request('category') == $category ? 'selected' : '' }}>
                                         {{ $category }}
@@ -116,13 +116,13 @@
                         </div>
                         <div class="col-12 col-lg-2">
                             <div class="d-flex gap-2">
-                                <button type="submit" class="btn btn-primary w-100" style="min-height:42px;" aria-label="Apply filters">
+                                <button type="submit" class="btn btn-primary flex-fill" style="min-height:42px;" aria-label="Apply filters">
                                     <i class="fas fa-filter"></i>
-                                    <span class="d-none d-md-inline">Apply</span>
+                                    <span>Apply</span>
                                 </button>
-                                <a href="{{ route('todos.index') }}" class="btn btn-secondary w-100" style="min-height:42px;" aria-label="Reset filters">
+                                <a href="{{ route('todos.index') }}" class="btn btn-secondary flex-fill" style="min-height:42px;" aria-label="Reset filters">
                                     <i class="fas fa-rotate-right"></i>
-                                    <span class="d-none d-md-inline">Reset</span>
+                                    <span>Reset</span>
                                 </a>
                             </div>
                         </div>
