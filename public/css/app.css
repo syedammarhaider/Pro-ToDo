@@ -102,6 +102,16 @@
     border-color: var(--primary);
 }
 
+/* Profile button text visibility fix */
+[data-theme="dark"] .navbar-dark .dropdown-toggle {
+    color: var(--text-primary) !important;
+}
+
+[data-theme="dark"] .navbar-dark .dropdown-toggle:hover {
+    color: var(--primary) !important;
+    background-color: rgba(99, 102, 241, 0.1);
+}
+
 [data-theme="dark"] .form-control {
     background: var(--bg-card);
     border-color: var(--border-color);

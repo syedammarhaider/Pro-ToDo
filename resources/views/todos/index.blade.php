@@ -10,15 +10,6 @@
     <button class="quick-btn quick-btn-primary" data-tooltip="New Todo" aria-label="New Todo" onclick="window.location.href='{{ route('todos.create') }}'">
         <i class="fas fa-plus"></i>
     </button>
-    <button class="quick-btn quick-btn-success" data-tooltip="Bulk Complete" aria-label="Bulk Complete selected todos" onclick="bulkComplete()">
-        <i class="fas fa-check-double"></i>
-    </button>
-    <button class="quick-btn quick-btn-danger" data-tooltip="Bulk Delete" aria-label="Bulk Delete selected todos" onclick="bulkDelete()">
-        <i class="fas fa-trash-can"></i>
-    </button>
-    <button class="quick-btn" data-tooltip="Toggle Filters" aria-label="Toggle Filters" onclick="toggleFilters()" style="background: linear-gradient(135deg, #8b5cf6, #ec4899)">
-        <i class="fas fa-filter" id="filterIcon"></i>
-    </button>
 </div>
 
 <div class="container-fluid px-2 px-md-3">
@@ -117,22 +108,12 @@
                         </div>
                     </form>
 
-                    <div class="mt-3 d-flex justify-content-between align-items-center flex-wrap gap-2" aria-label="Bulk actions">
+                    <div class="mt-3 d-flex justify-content-between align-items-center flex-wrap gap-2" aria-label="Selection options">
                         <div class="form-check">
                             <input class="form-check-input" type="checkbox" id="selectAll" onchange="toggleAllCheckboxes(this)" aria-label="Select or deselect all todos">
                             <label class="form-check-label" for="selectAll" style="font-size:0.875rem;">
                                 Select All ({{ $todos->count() }})
                             </label>
-                        </div>
-                        <div class="d-flex gap-2">
-                                                      <button type="button" class="btn btn-success btn-sm px-3" onclick="bulkComplete()" aria-label="Mark selected todos complete">
-                                <i class="fas fa-check-double"></i>
-                                <span class="d-none d-md-inline">Complete</span>
-                            </button>
-                            <button type="button" class="btn btn-danger btn-sm px-3" onclick="bulkDelete()" aria-label="Delete selected todos">
-                                <i class="fas fa-trash-can"></i>
-                                <span class="d-none d-md-inline">Delete</span>
-                            </button>
                         </div>
                     </div>
                 </div>
