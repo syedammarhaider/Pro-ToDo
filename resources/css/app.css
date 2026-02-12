@@ -1,3 +1,270 @@
 @tailwind base;
 @tailwind components;
 @tailwind utilities;
+
+/* Dark/Light Theme Variables */
+:root {
+    --bs-body-bg: #ffffff;
+    --bs-body-color: #212529;
+    --bs-card-bg: #ffffff;
+    --bs-card-color: #212529;
+    --bs-navbar-bg: #4f46e5;
+    --bs-navbar-color: #ffffff;
+    --bs-btn-primary-bg: #4f46e5;
+    --bs-btn-primary-color: #ffffff;
+    --bs-border-color: #dee2e6;
+    --bs-text-muted: #6c757d;
+    --bs-shadow: rgba(0, 0, 0, 0.1);
+    --bs-gradient-primary: linear-gradient(45deg, #667eea, #764ba2);
+    --bs-gradient-warning: linear-gradient(45deg, #f59e0b, #d97706);
+    --bs-gradient-success: linear-gradient(45deg, #10b981, #059669);
+}
+
+[data-theme="dark"] {
+    --bs-body-bg: #1a1a1a;
+    --bs-body-color: #e9ecef;
+    --bs-card-bg: #2d2d2d;
+    --bs-card-color: #e9ecef;
+    --bs-navbar-bg: #2d2d2d;
+    --bs-navbar-color: #e9ecef;
+    --bs-btn-primary-bg: #4f46e5;
+    --bs-btn-primary-color: #ffffff;
+    --bs-border-color: #495057;
+    --bs-text-muted: #adb5bd;
+    --bs-shadow: rgba(0, 0, 0, 0.3);
+    --bs-gradient-primary: linear-gradient(45deg, #667eea, #764ba2);
+    --bs-gradient-warning: linear-gradient(45deg, #f59e0b, #d97706);
+    --bs-gradient-success: linear-gradient(45deg, #10b981, #059669);
+}
+
+/* Smooth Theme Transitions */
+* {
+    transition: background-color 0.3s ease, color 0.3s ease, border-color 0.3s ease;
+}
+
+/* Professional Glass Effect */
+.glass-effect {
+    background: rgba(255, 255, 255, 0.1);
+    backdrop-filter: blur(10px);
+    -webkit-backdrop-filter: blur(10px);
+    border: 1px solid rgba(255, 255, 255, 0.2);
+    box-shadow: 0 8px 32px rgba(0, 0, 0, 0.1);
+}
+
+/* Professional Button Styles */
+.action-btn {
+    border-radius: 12px;
+    font-weight: 600;
+    text-transform: uppercase;
+    letter-spacing: 0.5px;
+    transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+    box-shadow: 0 4px 15px rgba(0, 0, 0, 0.1);
+}
+
+.action-btn:hover {
+    transform: translateY(-2px);
+    box-shadow: 0 8px 25px rgba(0, 0, 0, 0.15);
+}
+
+.profile-btn {
+    background: linear-gradient(45deg, #667eea, #764ba2);
+    color: white;
+}
+
+.logout-btn {
+    background: linear-gradient(45deg, #ff6b6b, #ee5a24);
+    color: white;
+}
+
+.create-btn {
+    background: linear-gradient(45deg, #00d2d3, #54a0ff);
+    color: white;
+}
+
+/* Professional Form Controls */
+.form-control-micro {
+    border-radius: 12px;
+    border: 2px solid var(--bs-border-color);
+    transition: all 0.3s ease;
+    background: rgba(255, 255, 255, 0.1);
+    backdrop-filter: blur(10px);
+}
+
+.form-control-micro:focus {
+    border-color: var(--bs-btn-primary-bg);
+    box-shadow: 0 0 0 0.2rem rgba(79, 70, 229, 0.25);
+    background: rgba(255, 255, 255, 0.2);
+}
+
+.form-select-micro {
+    border-radius: 12px;
+    border: 2px solid var(--bs-border-color);
+    transition: all 0.3s ease;
+    background: rgba(255, 255, 255, 0.1);
+    backdrop-filter: blur(10px);
+}
+
+.form-select-micro:focus {
+    border-color: var(--bs-btn-primary-bg);
+    box-shadow: 0 0 0 0.2rem rgba(79, 70, 229, 0.25);
+}
+
+/* Professional Todo Items */
+.todo-item-micro {
+    border-radius: 16px;
+    transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+    background: var(--bs-card-bg);
+    border: 1px solid var(--bs-border-color);
+    box-shadow: 0 4px 15px var(--bs-shadow);
+}
+
+.todo-item-micro:hover {
+    transform: translateY(-4px);
+    box-shadow: 0 12px 30px var(--bs-shadow);
+}
+
+.todo-item-micro.completed {
+    opacity: 0.7;
+    background: linear-gradient(135deg, rgba(34, 197, 94, 0.1), rgba(34, 197, 94, 0.05));
+}
+
+/* Priority Colors */
+.todo-item-micro.low {
+    border-left: 4px solid #10b981;
+}
+
+.todo-item-micro.medium {
+    border-left: 4px solid #f59e0b;
+}
+
+.todo-item-micro.high {
+    border-left: 4px solid #ef4444;
+}
+
+/* Professional Buttons */
+.btn-micro {
+    border-radius: 10px;
+    font-weight: 600;
+    transition: all 0.3s ease;
+    box-shadow: 0 2px 8px rgba(0, 0, 0, 0.1);
+}
+
+.btn-micro:hover {
+    transform: scale(1.05);
+    box-shadow: 0 4px 15px rgba(0, 0, 0, 0.15);
+}
+
+/* Message System */
+.message {
+    border-radius: 16px;
+    backdrop-filter: blur(10px);
+    border: 1px solid rgba(255, 255, 255, 0.2);
+    box-shadow: 0 8px 32px rgba(0, 0, 0, 0.1);
+    animation: slideIn 0.3s ease-out;
+}
+
+@keyframes slideIn {
+    from {
+        transform: translateX(100%);
+        opacity: 0;
+    }
+    to {
+        transform: translateX(0);
+        opacity: 1;
+    }
+}
+
+/* Professional Pagination */
+.page-link {
+    border-radius: 12px;
+    margin: 0 2px;
+    transition: all 0.3s ease;
+    border: 2px solid var(--bs-border-color);
+    background: rgba(255, 255, 255, 0.1);
+    backdrop-filter: blur(10px);
+}
+
+.page-link:hover {
+    background: var(--bs-btn-primary-bg);
+    color: white;
+    transform: scale(1.05);
+    box-shadow: 0 4px 15px rgba(79, 70, 229, 0.3);
+}
+
+.page-item.active .page-link {
+    background: var(--bs-btn-primary-bg);
+    border-color: var(--bs-btn-primary-bg);
+    box-shadow: 0 4px 15px rgba(79, 70, 229, 0.3);
+}
+
+/* Filters Card */
+.filters-card {
+    border-radius: 20px;
+    transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+}
+
+.filters-card:hover {
+    transform: translateY(-2px);
+    box-shadow: 0 12px 30px var(--bs-shadow);
+}
+
+/* Responsive Design */
+@media (max-width: 768px) {
+    .welcome-section {
+        text-align: center;
+    }
+
+    .action-btn {
+        width: 100%;
+        margin-bottom: 0.5rem;
+    }
+
+    .todo-item-micro {
+        margin-bottom: 1rem;
+    }
+
+    .stats-grid {
+        grid-template-columns: 1fr;
+        gap: 0.5rem;
+    }
+}
+
+/* Professional Scrollbar */
+::-webkit-scrollbar {
+    width: 8px;
+}
+
+::-webkit-scrollbar-track {
+    background: var(--bs-body-bg);
+}
+
+::-webkit-scrollbar-thumb {
+    background: var(--bs-border-color);
+    border-radius: 4px;
+}
+
+::-webkit-scrollbar-thumb:hover {
+    background: var(--bs-text-muted);
+}
+
+/* Loading States */
+.loading {
+    position: relative;
+    overflow: hidden;
+}
+
+.loading::after {
+    content: '';
+    position: absolute;
+    top: 0;
+    left: -100%;
+    width: 100%;
+    height: 100%;
+    background: linear-gradient(90deg, transparent, rgba(255,255,255,0.4), transparent);
+    animation: loading 1.5s infinite;
+}
+
+@keyframes loading {
+    0% { left: -100%; }
+    100% { left: 100%; }
+}

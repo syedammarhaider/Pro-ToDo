@@ -388,6 +388,11 @@
                     html.setAttribute('data-theme', newTheme);
                     localStorage.setItem('theme', newTheme);
                     updateThemeIcon(newTheme);
+
+                    // Show success message
+                    if (window.showMessage) {
+                        window.showMessage(`${newTheme.charAt(0).toUpperCase() + newTheme.slice(1)} mode activated`, 'success', 2000);
+                    }
                 });
             }
             
@@ -414,17 +419,7 @@
     
     <!-- Bootstrap JS -->
     <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/js/bootstrap.bundle.min.js"></script>
-</body>
-                    
-                    // Show message
-                    if (window.showMessage) {
-                        window.showMessage(`${newTheme.charAt(0).toUpperCase() + newTheme.slice(1)} mode activated`, 'success', 2000);
-                    }
-                });
-            }
-        });
-    </script>
-    
+
     @stack('scripts')
 </body>
 </html>
