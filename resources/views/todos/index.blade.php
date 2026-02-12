@@ -37,7 +37,7 @@
                 </div>
             </div>
             <div class="d-flex gap-2" style="display: flex !important;">
-                <a href="{{ route('profile.show') }}" class="action-btn profile-btn" role="button" aria-label="View profile">
+                <a href="{{ route('profile.edit') }}" class="action-btn profile-btn" role="button" aria-label="View profile">
                     <i class="fas fa-user"></i>
                     <span class="btn-text">Profile</span>
                 </a>
