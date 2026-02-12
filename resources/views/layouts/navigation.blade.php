@@ -73,9 +73,9 @@
                                 <p class="text-sm font-semibold text-gray-900 truncate">{{ Auth::user()->email }}</p>
                             </div>
                             
-                            <a href="{{ route('profile.show') }}" class="flex items-center space-x-2 px-4 py-2 text-sm text-gray-700 hover:bg-indigo-50 hover:text-indigo-600 transition-colors">
-                                <i class="fas fa-user w-4"></i>
-                                <span>Profile</span>
+                            <a href="{{ route('profile.edit') }}" class="flex items-center space-x-2 px-4 py-2 text-sm text-gray-700 hover:bg-indigo-50 hover:text-indigo-600 transition-colors">
+                                <i class="fas fa-user-cog w-4"></i>
+                                <span>Profile Settings</span>
                             </a>
                             
                             <form method="POST" action="{{ route('logout') }}">
