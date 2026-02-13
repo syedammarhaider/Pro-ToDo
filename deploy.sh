@@ -54,6 +54,10 @@ sudo touch /var/www/laravel/storage/logs/laravel.log
 sudo chown nginx:nginx /var/www/laravel/storage/logs/laravel.log
 sudo chmod 777 /var/www/laravel/storage/logs/laravel.log
 
+# Ensure cache directories have proper structure and permissions
+sudo mkdir -p /var/www/laravel/storage/framework/cache/data/2b/51
+sudo mkdir -p /var/www/laravel/storage/framework/cache/data/21/8d
+
 # Restart services if needed
 echo "🔄 Restarting services..."
 sudo systemctl restart nginx
