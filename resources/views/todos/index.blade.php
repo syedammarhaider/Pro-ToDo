@@ -618,11 +618,39 @@
         };
 
         // Update Todo Count
-        window.updateTodoCount = function() {
-            const count = document.querySelectorAll('.todo-item-micro').length;
-            const countElement = document.getElementById('totalTasksCount');
-            if (countElement) {
-                countElement.textContent = count;
+        window.updateTodoCount = async function() {
+            try {
+                const response = await fetch('{{ route("todos.index") }}', {
+                    method: 'GET',
+                    headers: {
+                        'X-CSRF-TOKEN': document.querySelector('meta[name="csrf-token"]').getAttribute('content'),
+                        'Accept': 'application/json',
+                        'X-Requested-With': 'XMLHttpRequest'
+                    }
+                });
+                
+                if (response.ok) {
+                    const result = await response.json();
+                    const countElement = document.getElementById('totalTasksCount');
+                    if (countElement && result.stats && result.stats.total !== undefined) {
+                        countElement.textContent = result.stats.total;
+                    }
+                } else {
+                    // Fallback to counting visible elements if server request fails
+                    const count = document.querySelectorAll('.todo-item-micro').length;
+                    const countElement = document.getElementById('totalTasksCount');
+                    if (countElement) {
+                        countElement.textContent = count;
+                    }
+                }
+            } catch (error) {
+                console.error('Error updating todo count:', error);
+                // Fallback to counting visible elements if network request fails
+                const count = document.querySelectorAll('.todo-item-micro').length;
+                const countElement = document.getElementById('totalTasksCount');
+                if (countElement) {
+                    countElement.textContent = count;
+                }
             }
         };
 
