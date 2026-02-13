@@ -44,7 +44,7 @@
 
 /* Header Background and Text Visibility */
 .page-header {
-    background: linear-gradient(135deg, rgba(79, 70, 229, 0.1), rgba(118, 75, 162, 0.05));
+    background: linear-gradient(135deg, rgba(255, 255, 255, 0.9), rgba(248, 250, 252, 0.8));
     backdrop-filter: blur(15px);
     border: 1px solid var(--bs-border-color);
     border-radius: 16px;
@@ -82,7 +82,7 @@
 
 /* Dark mode adjustments */
 [data-theme="dark"] .page-header {
-    background: linear-gradient(135deg, rgba(79, 70, 229, 0.2), rgba(118, 75, 162, 0.1));
+    background: linear-gradient(135deg, rgba(45, 45, 45, 0.9), rgba(30, 30, 30, 0.8));
     border-color: var(--bs-border-color);
 }
 
