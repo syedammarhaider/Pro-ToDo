@@ -42,6 +42,58 @@
     transition: background-color 0.3s ease, color 0.3s ease, border-color 0.3s ease;
 }
 
+/* Header Background and Text Visibility */
+.page-header {
+    background: linear-gradient(135deg, rgba(79, 70, 229, 0.1), rgba(118, 75, 162, 0.05));
+    backdrop-filter: blur(15px);
+    border: 1px solid var(--bs-border-color);
+    border-radius: 16px;
+    transition: all 0.3s ease;
+}
+
+.page-header .welcome-text {
+    color: var(--bs-body-color) !important;
+    font-weight: 700;
+}
+
+.page-header .user-name {
+    color: var(--bs-btn-primary-bg) !important;
+    font-weight: 800;
+}
+
+.page-header .count-number {
+    color: var(--bs-btn-primary-bg) !important;
+    font-weight: 800;
+}
+
+.page-header .count-label {
+    color: var(--bs-text-muted) !important;
+    font-weight: 600;
+}
+
+.page-header .action-btn {
+    color: white !important;
+    font-weight: 600;
+}
+
+.page-header .btn-text {
+    color: white !important;
+}
+
+/* Dark mode adjustments */
+[data-theme="dark"] .page-header {
+    background: linear-gradient(135deg, rgba(79, 70, 229, 0.2), rgba(118, 75, 162, 0.1));
+    border-color: var(--bs-border-color);
+}
+
+[data-theme="dark"] .page-header .welcome-text {
+    color: #e9ecef !important;
+}
+
+[data-theme="dark"] .page-header .count-label {
+    color: #adb5bd !important;
+}
+
 /* Professional Glass Effect */
 .glass-effect {
     background: rgba(255, 255, 255, 0.1);
