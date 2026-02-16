@@ -42,5 +42,6 @@ Route::middleware('auth')->group(function () {
     // });
 });
 
-// Removed require __DIR__.'/auth.php' to prevent duplicate verification routes
+// Include auth routes
+require __DIR__.'/auth.php';
  
