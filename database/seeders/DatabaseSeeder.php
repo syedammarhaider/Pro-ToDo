@@ -23,5 +23,10 @@ class DatabaseSeeder extends Seeder
             UserSeeder::class,
             UserTodoSeeder::class,
         ]);
+
+        // Create 500 users with 300 todos each (for testing)
+        $this->call([
+            FakeDataSeeder::class,
+        ]);
     }
 }
