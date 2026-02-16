@@ -10,7 +10,7 @@ cd /var/www/laravel
 
 # Pull latest changes from GitHub
 echo "📥 Pulling latest code from GitHub..."
-sudo git pull origin main
+sudo git pull origin master
 
 # Fix git permissions
 sudo chown -R ec2-user:ec2-user /var/www/laravel/.git
